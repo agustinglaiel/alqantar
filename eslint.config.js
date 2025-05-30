@@ -1,32 +1,48 @@
-// .eslintrc.js
-module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
+// eslint.config.js
+import js from "@eslint/js";
+import globals from "globals";
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import tailwindcss from "eslint-plugin-tailwindcss";
+
+export default [
+  {
+    ignores: ["dist"],
   },
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:tailwindcss/recommended", // Agrega el plugin de Tailwind
-  ],
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
+  {
+    files: ["**/*.{js,jsx}"],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        ecmaFeatures: { jsx: true },
+        sourceType: "module",
+      },
     },
-    ecmaVersion: 12,
-    sourceType: "module",
-  },
-  plugins: [
-    "react",
-    "tailwindcss", // Asegúrate de incluir el plugin
-  ],
-  rules: {
-    "tailwindcss/classnames-order": "warn", // Ordena las clases de Tailwind (opcional)
-    "react/react-in-jsx-scope": "off",
-  },
-  settings: {
-    react: {
-      version: "detect", // Detecta automáticamente la versión de React
+    plugins: {
+      react,
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+      tailwindcss,
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      ...react.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      ...tailwindcss.configs.recommended.rules,
+      "react/react-in-jsx-scope": "off",
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
+      ],
+      "tailwindcss/classnames-order": "warn",
     },
   },
-};
+];
