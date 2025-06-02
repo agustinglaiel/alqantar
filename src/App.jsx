@@ -9,12 +9,12 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/gallery" element={<GalleryPage />} />
-          <Route path="/departments" element={<GalleryPage />} /> 
-          <Route path="/location" element={<ContactPage />} /> 
-          <Route path="/progress" element={<GalleryPage />} /> 
-          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/galeria" element={<GalleryPage />} />
+          <Route path="/departamentos" element={<GalleryPage />} /> 
+          <Route path="/ubicacion" element={<ContactPage />} /> 
+          <Route path="/avances" element={<GalleryPage />} /> 
+          <Route path="/contacto" element={<ContactPage />} />
         </Routes>
       </Layout>
     </Router>

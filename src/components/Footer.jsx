@@ -3,7 +3,7 @@ import { Facebook, Instagram } from 'lucide-react';
 
 function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-8" style={{ backgroundColor: '#1f2937' }}>
+    <footer className="bg-gray-800 text-white py-8 bg-gray-800">
       <div className="max-w-screen-xl mx-auto px-4">
         <div className="grid grid-cols-3 items-center gap-8">
           {/* Izquierda: Dirección */}

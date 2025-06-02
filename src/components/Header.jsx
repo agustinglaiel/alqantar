@@ -34,15 +34,15 @@ function Header() {
 
   // Mapa de rutas a etiquetas para los enlaces
   const navLinksLeft = [
-    { path: '/', label: 'Inicio' },
-    { path: '/gallery', label: 'Galería' },
-    { path: '/departments', label: 'Departamentos' },
+    { path: '/home', label: 'Inicio' },
+    { path: '/galeria', label: 'Galería' },
+    { path: '/departamentos', label: 'Departamentos' },
   ];
 
   const navLinksRight = [
-    { path: '/location', label: 'Ubicación' },
-    { path: '/progress', label: 'Avances' },
-    { path: '/contact', label: 'Contacto' },
+    { path: '/ubicacion', label: 'Ubicación' },
+    { path: '/avances', label: 'Avances' },
+    { path: '/contacto', label: 'Contacto' },
   ];
 
   return (
@@ -53,7 +53,7 @@ function Header() {
           : '-translate-y-full'
       } ${
         isScrolled || !isVisible
-          ? 'bg-gray-800 bg-opacity-30'
+          ? 'bg-gray-800 bg-opacity-55'
           : 'bg-gray-800 bg-opacity-0'
       }`}
     >

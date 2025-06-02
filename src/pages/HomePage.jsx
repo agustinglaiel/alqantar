@@ -13,16 +13,29 @@ function HomePage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 4000); // Cambia cada 5 segundos
+    }, 4000);
 
-    return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
+    return () => clearInterval(interval);
   }, [images.length]);
 
   return (
-    <div
-      className="min-h-screen bg-cover bg-center transition-all duration-1000"
-      style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
-    />
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Background Image Slider */}
+      <div
+        className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out"
+        style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
+      />
+      
+      {/* Optional: Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black bg-opacity-20" />
+      
+      {/* Incomparable Image Overlay */}
+      <img
+        src="/images/incomparable.png"
+        alt=""
+        className="absolute top-1/2 left-8 md:left-16 lg:left-20 transform -translate-y-1/2 w-1/3 max-w-sm md:max-w-md lg:max-w-lg drop-shadow-2xl z-10"
+      />
+    </div>
   );
 }
 
