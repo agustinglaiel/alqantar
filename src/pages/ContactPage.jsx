@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import SectionWrapper from '../components/SectionWrapper';
 import Button from '../components/Button';
 
 function ContactPage() {

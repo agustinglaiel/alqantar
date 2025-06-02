@@ -1,18 +1,28 @@
-import SectionWrapper from '../components/SectionWrapper';
+import { useState, useEffect } from 'react';
 
 function HomePage() {
+  const images = [
+    '/images/01.png',
+    '/images/02.png',
+    '/images/03.png',
+    '/images/05.png',
+  ];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 4000); // Cambia cada 5 segundos
+
+    return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
+  }, [images.length]);
+
   return (
     <div
-      className="min-h-screen bg-cover bg-center"
-      style={{ backgroundImage: "../../public/images/logo.png" }}
-    >
-      <SectionWrapper className="pt-20 bg-gray-100 bg-opacity-80">
-        <h2 className="text-4xl font-bold text-center mb-6 cursive">Bienvenidos a Alqantar</h2>
-        <p className="text-lg text-center max-w-prose mx-auto">
-          Explora nuestra colección de imágenes y videos, y contáctanos para cualquier consulta.
-        </p>
-      </SectionWrapper>
-    </div>
+      className="min-h-screen bg-cover bg-center transition-all duration-1000"
+      style={{ backgroundImage: `url(${images[currentImageIndex]})` }}
+    />
   );
 }
 

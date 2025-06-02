@@ -1,4 +1,3 @@
-import SectionWrapper from '../components/SectionWrapper';
 import ImageCard from '../components/ImageCard';
 import VideoPlayer from '../components/VideoPlayer';
 
