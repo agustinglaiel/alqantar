@@ -58,15 +58,17 @@ function OptionCardWithHover() {
             <div className="absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-300 group-hover:bg-opacity-60" />
           </div>
           {/* Contenido (título, descripción y botón) */}
-          <div className="relative w-full h-full flex flex-col items-center justify-center p-4">
-            <div className="flex flex-col items-center justify-center h-full group-hover:h-auto transition-all duration-300">
-              <h3 className="text-white text-2xl font-semibold text-center mb-2">
+          <div className="relative w-full h-full flex items-center justify-center p-4">
+            <div className="flex flex-col items-center justify-center w-full">
+              {/* Título siempre visible */}
+              <h3 className="text-white text-2xl font-semibold text-center">
                 {option.title}
               </h3>
-              <p className="text-white text-sm text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-sans mb-2">
-                {option.description}
-              </p>
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {/* Contenedor para descripción y botón, oculto sin hover */}
+              <div className="hidden group-hover:flex flex-col items-center justify-center w-full mt-2 transition-all duration-300">
+                <p className="text-white text-sm text-center font-sans mb-2">
+                  {option.description}
+                </p>
                 <span className="inline-block px-4 py-2 text-white text-sm font-semibold border border-white rounded-full hover:bg-white hover:text-black transition-colors duration-200">
                   VER MÁS
                 </span>
