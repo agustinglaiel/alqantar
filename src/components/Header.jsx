@@ -34,7 +34,7 @@ function Header() {
 
   // Mapa de rutas a etiquetas para los enlaces
   const navLinksLeft = [
-    { path: '/home', label: 'Inicio' },
+    { path: '/', label: 'Inicio' },
     { path: '/galeria', label: 'Galería' },
     { path: '/departamentos', label: 'Departamentos' },
   ];
