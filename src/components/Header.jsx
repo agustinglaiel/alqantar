@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../public/images/logo.png";
 
 function Header() {
@@ -7,24 +7,19 @@ function Header() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Determinar la dirección del scroll
       if (currentScrollY > lastScrollY) {
-        // Scroll hacia abajo: ocultar el header
         setIsVisible(false);
       } else if (currentScrollY < lastScrollY) {
-        // Scroll hacia arriba: mostrar el header
         setIsVisible(true);
       }
 
-      // Verificar si estamos en el tope de la página
       setIsScrolled(currentScrollY > 10);
-
-      // Actualizar la posición del último scroll
       setLastScrollY(currentScrollY);
     };
 
@@ -32,7 +27,20 @@ function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
-  // Mapa de rutas a etiquetas para los enlaces
+  const handleContactClick = (e) => {
+    // Si ya estamos en la HomePage, evitar la navegación completa y solo desplazar
+    if (location.pathname === "/" || location.pathname === "/contacto") {
+      e.preventDefault();
+      const element = document.getElementById("contacto");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        // Actualizar la URL sin recargar la página
+        navigate("/contacto#contacto", { replace: true });
+      }
+    }
+    // Si estamos en otra página, el Link manejará la navegación normalmente
+  };
+
   const navLinksLeft = [
     { path: "/", label: "Inicio" },
     { path: "/galeria", label: "Galería" },
@@ -42,7 +50,11 @@ function Header() {
   const navLinksRight = [
     { path: "/ubicacion", label: "Ubicación" },
     { path: "/avances", label: "Avances" },
-    { path: "/contacto", label: "Contacto" },
+    {
+      path: "/contacto#contacto",
+      label: "Contacto",
+      onClick: handleContactClick,
+    },
   ];
 
   return (
@@ -56,7 +68,6 @@ function Header() {
       }`}
     >
       <div className="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center h-full">
-        {/* Enlaces izquierda */}
         <nav>
           <ul className="flex space-x-6">
             {navLinksLeft.map((link) => (
@@ -76,18 +87,17 @@ function Header() {
           </ul>
         </nav>
 
-        {/* Logo centrado */}
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <img src={logo} alt="Alqantar Logo" className="h-16" />
         </div>
 
-        {/* Enlaces derecha */}
         <nav>
           <ul className="flex space-x-6">
             {navLinksRight.map((link) => (
               <li key={link.path}>
                 <Link
                   to={link.path}
+                  onClick={link.onClick || (() => {})}
                   className={`text-white hover:text-blue-300 text-lg ${
                     location.pathname === link.path
                       ? "border-b-2 border-white"

@@ -1,11 +1,21 @@
-// src/pages/HomePage.jsx
-
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import BackgroundSlider from "../components/BackgroundSlider";
 import OptionCardWithHover from "../components/OptionCardWithHover";
 import ContactSection from "../components/ContactSection";
 
 function HomePage() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   return (
     <div>
       <BackgroundSlider />
@@ -17,7 +27,11 @@ function HomePage() {
           <OptionCardWithHover />
         </div>
       </section>
-      <ContactSection />
+      <section id="contacto" className="py-12 bg-gray-100">
+        <div className="max-w-screen-xl mx-auto px-4">
+          <ContactSection />
+        </div>
+      </section>
     </div>
   );
 }
