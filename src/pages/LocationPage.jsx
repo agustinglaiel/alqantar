@@ -23,6 +23,9 @@ function LocationPage() {
     lng: -64.30234,
   };
 
+  // URL para abrir Google Maps con las coordenadas
+  const googleMapsLink = `https://www.google.com/maps?q=${mapCenter.lat},${mapCenter.lng}`;
+
   // Estilo del contenedor del mapa
   const mapContainerStyle = {
     width: "100%",
@@ -79,23 +82,28 @@ function LocationPage() {
 
   return (
     <div>
-      {scriptError ? (
-        <div className="flex items-center justify-center h-screen bg-gray-200">
-          <p className="text-red-500 text-xl">{scriptError}</p>
-        </div>
-      ) : isScriptLoaded ? (
-        <>
-          <BackgroundSlider />
-          <section className="py-12 bg-gray-100">
-            <div className="max-w-screen-xl mx-auto px-4">
-              <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">
-                UBICACIÓN
-              </h2>
-              <div className="mb-6 text-center">
-                <p className="text-lg text-gray-600">
-                  José María Eguía Zanón 9932, Villa Warcalde, Córdoba
-                </p>
+      <BackgroundSlider />
+      <section className="py-12 bg-gray-100">
+        <div className="max-w-screen-xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">
+            UBICACIÓN
+          </h2>
+          <div className="mb-6 text-center">
+            <a
+              href={googleMapsLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg text-gray-600 hover:text-blue-500 hover:underline transition-colors duration-200"
+            >
+              José María Eguía Zanón 9932, Villa Warcalde, Córdoba
+            </a>
+          </div>
+          <div style={mapContainerStyle} className="relative">
+            {scriptError ? (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                <p className="text-red-500 text-lg">{scriptError}</p>
               </div>
+            ) : isScriptLoaded ? (
               <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 center={mapCenter}
@@ -104,14 +112,14 @@ function LocationPage() {
               >
                 <Marker position={mapCenter} />
               </GoogleMap>
-            </div>
-          </section>
-        </>
-      ) : (
-        <div className="flex items-center justify-center h-screen bg-gray-200">
-          <p className="text-xl text-gray-700">Cargando el mapa...</p>
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+                <p className="text-lg text-gray-700">Cargando el mapa...</p>
+              </div>
+            )}
+          </div>
         </div>
-      )}
+      </section>
       {/* Asegurar que LoadScript se monte siempre, con un key para forzar recarga */}
       <LoadScript
         key={`load-script-${retryCount}`} // Cambia el key para forzar remount

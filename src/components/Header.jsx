@@ -88,7 +88,9 @@ function Header() {
         </nav>
 
         <div className="absolute left-1/2 transform -translate-x-1/2">
-          <img src={logo} alt="Alqantar Logo" className="h-16" />
+          <Link to="/">
+            <img src={logo} alt="Alqantar Logo" className="h-16" />
+          </Link>
         </div>
 
         <nav>
