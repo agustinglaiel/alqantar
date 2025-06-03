@@ -51,7 +51,7 @@ function Header() {
         isVisible ? "translate-y-0" : "-translate-y-full"
       } ${
         isScrolled || !isVisible
-          ? "bg-gray-800 bg-opacity-80"
+          ? "bg-gray-800 bg-opacity-90"
           : "bg-gray-800 bg-opacity-0"
       }`}
     >

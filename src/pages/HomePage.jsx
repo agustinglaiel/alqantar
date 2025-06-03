@@ -3,6 +3,7 @@
 import React from "react";
 import BackgroundSlider from "../components/BackgroundSlider";
 import OptionCardWithHover from "../components/OptionCardWithHover";
+import ContactSection from "../components/ContactSection";
 
 function HomePage() {
   return (
@@ -16,6 +17,7 @@ function HomePage() {
           <OptionCardWithHover />
         </div>
       </section>
+      <ContactSection />
     </div>
   );
 }
