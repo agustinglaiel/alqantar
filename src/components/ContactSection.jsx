@@ -145,7 +145,7 @@ function ContactSection() {
                 href="https://wa.me/5493513173344"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-green-500 transition-colors duration-200 flex items-center"
+                className="text-gray-300 hover:text-green-500 transition-colors duration-200 flex items-center"
               >
                 <MessageCircleMore size={20} className="mr-2" />
                 +54 9 351 131-73344
@@ -156,7 +156,7 @@ function ContactSection() {
                 href="https://www.instagram.com/alqantar_condominio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-pink-500 transition-colors duration-200 flex items-center"
+                className="text-gray-300 hover:text-pink-500 transition-colors duration-200 flex items-center"
               >
                 <Instagram size={20} className="mr-2" />
                 @alqantar_condominio
@@ -167,7 +167,7 @@ function ContactSection() {
                 href="https://www.facebook.com/alqantar.condominio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-500 transition-colors duration-200 flex items-center"
+                className="text-gray-300 hover:text-blue-500 transition-colors duration-200 flex items-center"
               >
                 <Facebook size={20} className="mr-2" />
                 @alqantar.condominio
@@ -176,7 +176,7 @@ function ContactSection() {
             <p>
               <a
                 href="mailto:info@alqantar.com"
-                className="text-gray-400 hover:text-gray-300 transition-colors duration-200 flex items-center"
+                className="text-gray-300 hover:text-gray-300 transition-colors duration-200 flex items-center"
               >
                 <Mail size={20} className="mr-2" />
                 info@alqantar.com

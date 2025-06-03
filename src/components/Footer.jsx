@@ -1,9 +1,9 @@
 import logo from "../../public/images/logo.png";
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, MessageCircleMore, Mail } from "lucide-react";
 
 function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-8 bg-gray-800">
+    <footer className="bg-gray-800 text-white py-8">
       <div className="max-w-screen-xl mx-auto px-4">
         <div className="grid grid-cols-3 items-center gap-8">
           {/* Izquierda: Dirección */}
@@ -37,6 +37,20 @@ function Footer() {
                 className="text-gray-400 hover:text-pink-500 transition-colors duration-200"
               >
                 <Instagram size={20} />
+              </a>
+              <a
+                href="https://wa.me/5493511234567"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-green-500 transition-colors duration-200"
+              >
+                <MessageCircleMore size={20} />
+              </a>
+              <a
+                href="mailto:info@alqantar.com"
+                className="text-gray-400 hover:text-gray-300 transition-colors duration-200"
+              >
+                <Mail size={20} />
               </a>
             </div>
           </div>
