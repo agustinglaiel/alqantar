@@ -142,13 +142,13 @@ function ContactSection() {
           <div className="space-y-2">
             <p>
               <a
-                href="https://wa.me/5493513173344"
+                href="https://wa.me/5493517496383"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-300 hover:text-green-500 transition-colors duration-200 flex items-center"
               >
                 <MessageCircleMore size={20} className="mr-2" />
-                +54 9 351 131-73344
+                +54 9 351 749-6383
               </a>
             </p>
             <p>
