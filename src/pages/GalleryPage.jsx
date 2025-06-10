@@ -1,28 +1,32 @@
-import ImageCard from '../components/ImageCard';
-import VideoPlayer from '../components/VideoPlayer';
+import BackgroundSlider from "../components/BackgroundSlider";
+import MediaDisplay from "../components/MediaDisplay";
 
 function GalleryPage() {
-  // Ejemplo de datos, reemplazar con tus imágenes y videos
-  const images = [
-    { src: 'https://via.placeholder.com/400x300', alt: 'Imagen 1', caption: 'Descripción de la imagen 1' },
-    { src: 'https://via.placeholder.com/400x300', alt: 'Imagen 2', caption: 'Descripción de la imagen 2' },
-  ];
-  const videos = [
-    { src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', title: 'Video 1' },
+  const mediaItems = [
+    { src: "/images/01.png", alt: "Imagen 1", title: "Imagen 1", type: "image", caption: "Descripción de la imagen 1" },
+    { src: "/images/02.png", alt: "Imagen 2", title: "Imagen 2", type: "image", caption: "Descripción de la imagen 2" },
+    { src: "/images/03.png", alt: "Imagen 3", title: "Imagen 3", type: "image" },
+    { src: "/images/04.png", alt: "Imagen 4", title: "Imagen 4", type: "image" },
   ];
 
   return (
-    <SectionWrapper>
-      <h2 className="text-4xl font-bold text-center mb-6 cursive">Galería</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {images.map((image, index) => (
-          <ImageCard key={index} src={image.src} alt={image.alt} caption={image.caption} />
-        ))}
-        {videos.map((video, index) => (
-          <VideoPlayer key={index} src={video.src} title={video.title} />
-        ))}
+    <section className=" bg-gray-100">
+      <BackgroundSlider />
+      <div className="max-w-screen-xl mx-auto px-4 mt-12 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {mediaItems.map((item, index) => (
+            <MediaDisplay
+              key={index}
+              src={item.src}
+              type={item.type}
+              alt={item.alt}
+              title={item.title}
+              caption={item.caption}
+            />
+          ))}
+        </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }
 

@@ -176,7 +176,7 @@ function ContactSection() {
             <p>
               <a
                 href="mailto:info@alqantar.com"
-                className="text-gray-300 hover:text-gray-300 transition-colors duration-200 flex items-center"
+                className="text-gray-300 hover:text-gray-400 transition-colors duration-200 flex items-center"
               >
                 <Mail size={20} className="mr-2" />
                 info@alqantar.com
