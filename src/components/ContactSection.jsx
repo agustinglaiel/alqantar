@@ -113,7 +113,7 @@ function ContactSection() {
                 required
               />
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex flex-col items-center">
               <button
                 onClick={handleSubmit}
                 className="px-6 py-2 bg-cyan-500 text-white rounded-full hover:bg-cyan-700 transition-colors duration-200"
@@ -122,7 +122,7 @@ function ContactSection() {
               </button>
               {status && (
                 <div
-                  className={`text-sm ml-4 ${
+                  className={`text-sm mt-2 ${
                     status === "¡Operación exitosa!"
                       ? "text-green-600"
                       : "text-red-600"
@@ -139,7 +139,7 @@ function ContactSection() {
             Envíe su consulta a nuestro equipo de asesores o comuníquese a
             través de los siguientes medios:
           </p>
-          <div className="space-y-2">
+          <div className="space-y-3">
             <p>
               <a
                 href="https://wa.me/5493517496383"
@@ -148,7 +148,7 @@ function ContactSection() {
                 className="text-gray-300 hover:text-green-500 transition-colors duration-200 flex items-center"
               >
                 <MessageCircleMore size={20} className="mr-2" />
-                +54 9 351 749-6383
+                Whatsapp
               </a>
             </p>
             <p>
@@ -159,7 +159,7 @@ function ContactSection() {
                 className="text-gray-300 hover:text-pink-500 transition-colors duration-200 flex items-center"
               >
                 <Instagram size={20} className="mr-2" />
-                @alqantar_condominio
+                Instagram
               </a>
             </p>
             <p>
@@ -170,7 +170,7 @@ function ContactSection() {
                 className="text-gray-300 hover:text-blue-500 transition-colors duration-200 flex items-center"
               >
                 <Facebook size={20} className="mr-2" />
-                @alqantar.condominio
+                Facebook
               </a>
             </p>
             <p>
@@ -179,7 +179,7 @@ function ContactSection() {
                 className="text-gray-300 hover:text-gray-400 transition-colors duration-200 flex items-center"
               >
                 <Mail size={20} className="mr-2" />
-                info@alqantar.com
+                Email
               </a>
             </p>
           </div>

@@ -12,14 +12,14 @@ function GalleryPage() {
     { src: "/images/02.png", alt: "Imagen 2", title: "Imagen 2", type: "image" },
     { src: "/images/03.png", alt: "Imagen 3", title: "Imagen 3", type: "image" },
     { src: "/images/04.png", alt: "Imagen 4", title: "Imagen 4", type: "image" },
-    { src: "/images/05.png", alt: "Imagen 4", title: "Imagen 4", type: "image" },
-    { src: "/images/06.png", alt: "Imagen 4", title: "Imagen 4", type: "image" },
-    { src: "/images/07.png", alt: "Imagen 4", title: "Imagen 4", type: "image" },
-    { src: "/images/08.png", alt: "Imagen 4", title: "Imagen 4", type: "image" },
-    { src: "/images/09.png", alt: "Imagen 4", title: "Imagen 4", type: "image" },
-    { src: "/images/10.png", alt: "Imagen 4", title: "Imagen 4", type: "image" },
-    { src: "/images/11.png", alt: "Imagen 4", title: "Imagen 4", type: "image" },
-    { src: "/images/12.png", alt: "Imagen 4", title: "Imagen 4", type: "image" },
+    { src: "/images/05.png", alt: "Imagen 5", title: "Imagen 5", type: "image" },
+    { src: "/images/06.png", alt: "Imagen 6", title: "Imagen 6", type: "image" },
+    { src: "/images/07.png", alt: "Imagen 7", title: "Imagen 7", type: "image" },
+    { src: "/images/08.png", alt: "Imagen 8", title: "Imagen 8", type: "image" },
+    { src: "/images/09.png", alt: "Imagen 9", title: "Imagen 9", type: "image" },
+    { src: "/images/10.png", alt: "Imagen 10", title: "Imagen 10", type: "image" },
+    { src: "/images/11.png", alt: "Imagen 11", title: "Imagen 11", type: "image" },
+    { src: "/images/12.png", alt: "Imagen 12", title: "Imagen 12", type: "image" },
   ];
 
   const handleImageClick = (index) => {
@@ -32,9 +32,9 @@ function GalleryPage() {
   };
 
   return (
-    <section className="bg-gray-100">
+    <section className="bg-gray-100 min-h-screen">
       <BackgroundSlider />
-      <div className="max-w-screen-xl mx-auto px-4 mt-12 mb-12">
+      <div className="max-w-screen-xl mx-auto px-4 pt-12 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {mediaItems.map((item, index) => (
             <MediaCard
@@ -47,7 +47,6 @@ function GalleryPage() {
           ))}
         </div>
       </div>
-
       {isModalOpen && (
         <MediaDisplay
           isOpen={isModalOpen}
