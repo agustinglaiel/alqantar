@@ -6,6 +6,8 @@ const IMAGES = [
   '/images/02.png',
   '/images/03.png',
   '/images/05.png',
+  '/images/06.png',
+  '/images/07.png',
 ];
 
 
