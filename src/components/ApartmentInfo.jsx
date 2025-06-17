@@ -19,12 +19,32 @@ function ApartmentInfo({ tower, typology }) {
         size: 'N/A',
         features: ['Wifi', '1 Baño', '1 Cama'],
       },
+      'Terraza/Quincho': {
+        description: 'Terraza y quincho en la azotea de Torre 1.',
+        size: 'Común',
+        features: ['Wifi', '1 Baño'], 
+      },
+      'Subsuelo': {
+        description: 'Sala de usos múltiples en el subsuelo de Torre 1.',
+        size: 'Común',
+        features: ['Wifi'], 
+      },
     },
     'torre2': {
       'Departamento A/B': {
         description: 'No disponible en Torre 2.',
         size: 'N/A',
         features: ['Wifi', '1 Baño', '1 Cama'],
+      },
+      'Terraza/Quincho': {
+        description: 'Terraza y quincho en la azotea de Torre 2.',
+        size: 'Común',
+        features: ['Wifi', '1 Baño'], 
+      },
+      'Subsuelo': {
+        description: 'Sala de usos múltiples en el subsuelo de Torre 2.',
+        size: 'Común',
+        features: ['Wifi'], 
       },
     },
     'torre3': {
@@ -42,6 +62,16 @@ function ApartmentInfo({ tower, typology }) {
         description: 'Lujoso en Torre 3, para familias grandes.',
         size: '150 m²',
         features: ['Wifi', '1 Baño', '1 Cama'],
+      },
+      'Terraza/Quincho': {
+        description: 'Terraza y quincho en la azotea de Torre 3.',
+        size: 'Común',
+        features: ['Wifi', '1 Baño'], 
+      },
+      'Subsuelo': {
+        description: 'Sala de usos múltiples en el subsuelo de Torre 3.',
+        size: 'Común',
+        features: ['Wifi'], 
       },
     },
     'amenities': {
@@ -76,7 +106,7 @@ function ApartmentInfo({ tower, typology }) {
   const displayTower = tower ? tower.charAt(0).toUpperCase() + tower.slice(1) : 'Desconocido';
 
   return (
-    <div className="w-full md:w-1/2 p-6 bg-gray-50 rounded-r-lg shadow-lg flex flex-col justify-between h-96">
+    <div className="w-full md:w-1/2 p-6 bg-gray-50 rounded-r-lg shadow-lg flex flex-col justify-between h-96 text-left">
       <div>
         <h3 className="text-xl font-semibold text-gray-800 mb-2">{typology || 'Sin tipología'}</h3>
         <p className="text-gray-600 mb-4">{info.description}</p>

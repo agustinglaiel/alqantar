@@ -6,14 +6,20 @@ function ApartmentImage({ tower, typology }) {
       'Departamento A': '/images/01.png',
       'Departamento B/D/E': '/images/02.png',
       'Departamento C/F': '/images/03.png',
+      'Terraza/Quincho': '/images/01.png',
+      'Subsuelo': '/images/01.png',
     },
     'torre2': {
       'Departamento A/B': '/images/04.png',
+      'Terraza/Quincho': '/images/01.png',
+      'Subsuelo': '/images/01.png',
     },
     'torre3': {
       'Departamento A': '/images/05.png',
       'Departamento B': '/images/06.png',
       'Departamento C': '/images/07.png',
+      'Terraza/Quincho': '/images/01.png',
+      'Subsuelo': '/images/01.png',
     },
     'amenities': {
       'Piscina': '/images/08.png',
