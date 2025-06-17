@@ -28,7 +28,7 @@ function TowerNavigation({ onTowerChange }) {
       {/* Contenedor principal con glassmorphism */}
       <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-11/12 max-w-2xl">
         {/* Fondo con efecto glass */}
-        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-2">
+        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-lg p-2">
           {/* Navegación tipo segmented control */}
           <div className="relative flex rounded-xl overflow-hidden">
             {/* Indicador de selección animado */}

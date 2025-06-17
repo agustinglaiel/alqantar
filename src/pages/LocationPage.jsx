@@ -1,84 +1,74 @@
 import React, { useState, useEffect } from "react";
 import BackgroundSlider from "../components/BackgroundSlider";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+// import NearAttractions from "../components/NearAttractions";
 
 // Determinar cómo acceder a la variable de entorno según el entorno de compilación
 const GOOGLE_MAPS_API_KEY =
-  import.meta.env?.VITE_GOOGLE_MAPS_API_KEY || // Para Vite
-  process.env.REACT_APP_GOOGLE_MAPS_API_KEY || // Para CRA
-  "TU_CLAVE_AQUI"; // Fallback para depuración (reemplaza con tu clave)
+  import.meta.env?.VITE_GOOGLE_MAPS_API_KEY ||
+  process.env.REACT_APP_GOOGLE_MAPS_API_KEY ||
+  "TU_CLAVE_AQUI";
 
 function LocationPage() {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [scriptError, setScriptError] = useState(null);
   const [retryCount, setRetryCount] = useState(0);
-  const MAX_RETRIES = 3; // Número máximo de intentos antes de mostrar un error
+  const [mapLocations, setMapLocations] = useState([]);
+  const MAX_RETRIES = 3;
 
-  // Log para depuración
-  console.log("Google Maps API Key:", GOOGLE_MAPS_API_KEY);
-
-  // Coordenadas de la ubicación (José María Eguía Zanón 9932, Villa Warcalde, Córdoba)
-  const mapCenter = {
-    lat: -31.33593,
-    lng: -64.30234,
-  };
-
-  // URL para abrir Google Maps con las coordenadas
-  const googleMapsLink = `https://www.google.com/maps?q=${mapCenter.lat},${mapCenter.lng}`;
-
-  // Estilo del contenedor del mapa
+  const mapCenter = { lat: -31.33593, lng: -64.30234 };
   const mapContainerStyle = {
     width: "100%",
     height: "500px",
     borderRadius: "12px",
     overflow: "hidden",
   };
-
-  // Opciones del mapa
   const mapOptions = {
     zoomControl: true,
     mapTypeControl: false,
     streetViewControl: false,
     fullscreenControl: false,
   };
+  const googleMapsLink = `https://www.google.com/maps?q=${mapCenter.lat},${mapCenter.lng}`;
 
-  const handleScriptLoad = () => {
-    console.log("Script de Google Maps cargado correctamente");
-    setIsScriptLoaded(true);
-  };
-
-  const handleScriptError = () => {
-    console.log("Error al cargar el script de Google Maps");
+  const handleScriptLoad = () => setIsScriptLoaded(true);
+  const handleScriptError = () =>
     setScriptError(
-      "No se pudo cargar el mapa. Por favor, verifica tu conexión o la clave de API."
+      "No se pudo cargar el mapa. Verifica tu conexión o la clave de API."
     );
-  };
 
-  // Temporizador para detectar si el script no se carga después de 5 segundos
   useEffect(() => {
-    if (isScriptLoaded || scriptError || retryCount >= MAX_RETRIES) return;
-
-    const timer = setTimeout(() => {
-      if (!isScriptLoaded) {
-        console.log(
-          `El script no se cargó después de 5 segundos. Intentando de nuevo... (Intento ${retryCount + 1}/${MAX_RETRIES})`
-        );
+    if (!isScriptLoaded && !scriptError && retryCount < MAX_RETRIES) {
+      const timer = setTimeout(() => {
         setRetryCount((prev) => prev + 1);
-        setIsScriptLoaded(false); // Forzar un reintento
-      }
-    }, 5000);
-
-    return () => clearTimeout(timer);
+        setIsScriptLoaded(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
   }, [isScriptLoaded, scriptError, retryCount]);
 
-  // Mostrar error si se agotan los intentos
   useEffect(() => {
     if (retryCount >= MAX_RETRIES && !isScriptLoaded && !scriptError) {
       setScriptError(
-        "No se pudo cargar el mapa después de varios intentos. Por favor, recarga la página o verifica tu conexión."
+        "No se pudo cargar el mapa después de varios intentos. Recarga la página."
       );
     }
   }, [retryCount, isScriptLoaded, scriptError]);
+
+  // ---- corrección aquí ----
+  const customMarker = (number) => {
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" fill="white" stroke="black" stroke-width="2"/>
+        <text x="12" y="15" text-anchor="middle" fill="black" font-size="12" font-weight="bold">${number}</text>
+      </svg>
+    `;
+    return {
+      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,
+      scaledSize: new window.google.maps.Size(24, 24),
+    };
+  };
+  // --------------------------
 
   return (
     <div>
@@ -98,6 +88,7 @@ function LocationPage() {
               José María Eguía Zanón 9932, Villa Warcalde, Córdoba
             </a>
           </div>
+
           <div style={mapContainerStyle} className="relative">
             {scriptError ? (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
@@ -111,6 +102,13 @@ function LocationPage() {
                 options={mapOptions}
               >
                 <Marker position={mapCenter} />
+                {mapLocations.map((loc, i) => (
+                  <Marker
+                    key={i}
+                    position={{ lat: loc.lat, lng: loc.lng }}
+                    icon={customMarker(i + 1)}
+                  />
+                ))}
               </GoogleMap>
             ) : (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
@@ -118,11 +116,13 @@ function LocationPage() {
               </div>
             )}
           </div>
+
+          {/* <NearAttractions onOpen={(locations) => setMapLocations(locations)} /> */}
         </div>
       </section>
-      {/* Asegurar que LoadScript se monte siempre, con un key para forzar recarga */}
+
       <LoadScript
-        key={`load-script-${retryCount}`} // Cambia el key para forzar remount
+        key={`load-script-${retryCount}`}
         googleMapsApiKey={GOOGLE_MAPS_API_KEY}
         onLoad={handleScriptLoad}
         onError={handleScriptError}
