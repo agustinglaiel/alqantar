@@ -4,7 +4,7 @@ import ApartmentInfo from './ApartmentInfo';
 
 function ApartmentLayout({ tower, typology }) {
   return (
-    <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden flex flex-col md:flex-row mt-8">
+    <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
       <ApartmentImage tower={tower} typology={typology} />
       <ApartmentInfo tower={tower} typology={typology} />
     </div>

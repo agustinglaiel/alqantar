@@ -3,46 +3,28 @@ import BackgroundSlider from "../components/BackgroundSlider";
 import TowerNavigation from "../components/TowerNavigation";
 import ApartmentLayout from "../components/ApartmentLayout";
 
-// Mapeo de departamentos por torre
-const DEPARTMENTS_BY_TOWER = {
-  torre1: ["Departamento A", "Departamento B/D/E", "Departamento C/F"],
-  torre2: ["Departamento A/B"],
-  torre3: ["Departamento A", "Departamento B", "Departamento C"],
+// Mapeo de todas las tipologías (departamentos y lugares comunes) por torre
+const TYPOLOGIES_BY_TOWER = {
+  torre1: ["Departamento A", "Departamento B/D/E", "Departamento C/F", "Terraza/Quincho", "Subsuelo"],
+  torre2: ["Departamento A/B", "Terraza/Quincho", "Subsuelo"],
+  torre3: ["Departamento A", "Departamento B", "Departamento C", "Terraza/Quincho", "Subsuelo"],
   amenities: ["Piscina", "Gimnasio", "Sauna", "SPA"],
 };
 
-// Todos los Lugares Comunes aplican a cada torre
-const COMMON_AREAS = ["Terraza/Quincho", "Subsuelo"];
-
 function ApartmentsPage() {
   const [selectedTower, setSelectedTower] = useState("torre1");
-  const departments = DEPARTMENTS_BY_TOWER[selectedTower] || [];
+  const typologies = TYPOLOGIES_BY_TOWER[selectedTower] || [];
 
   return (
     <div className="relative min-h-screen">
       <BackgroundSlider />
       <TowerNavigation onTowerChange={setSelectedTower} />
 
-      <div className="container mx-auto px-4 py-20 space-y-8 mt-16 text-center">
-        {/* ——— Sección Departamentos ——— */}
+      <div className="container mx-auto px-4 py-20 mt-16 text-center">
         <section>
-          <h2 className="text-2xl font-bold mb-6">Departamentos</h2>
-          <div className="space-y-8">
-            {departments.map((typology) => (
-              <ApartmentLayout
-                key={typology}
-                tower={selectedTower}
-                typology={typology}
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* ——— Sección Lugares Comunes ——— */}
-        <section>
-          <h2 className="text-2xl font-bold mb-6">Lugares Comunes</h2>
-          <div className="space-y-8">
-            {COMMON_AREAS.map((typology) => (
+          <h2 className="text-2xl font-bold mb-6">Departamentos y Áreas Comunes</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {typologies.map((typology) => (
               <ApartmentLayout
                 key={typology}
                 tower={selectedTower}
