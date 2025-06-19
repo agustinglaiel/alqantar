@@ -8,7 +8,7 @@ const TYPOLOGIES_BY_TOWER = {
   torre1: ["Departamento A", "Departamento B/D/E", "Departamento C/F", "Terraza/Quincho", "Subsuelo"],
   torre2: ["Departamento A/B", "Terraza/Quincho", "Subsuelo"],
   torre3: ["Departamento A", "Departamento B", "Departamento C", "Terraza/Quincho", "Subsuelo"],
-  amenities: ["Piscina", "Gimnasio", "Sauna", "SPA"],
+  // amenities: ["Piscina", "Gimnasio", "Sauna", "SPA"],
 };
 
 function ApartmentsPage() {

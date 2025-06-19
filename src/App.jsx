@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import GalleryPage from "./pages/GalleryPage";
 import LocationPage from "./pages/LocationPage";
 import ApartmentsPage from "./pages/ApartmentsPage";
+import AmenitiesPage from "./pages/AmenitiesPage";
 
 function App() {
   return (
@@ -16,10 +17,10 @@ function App() {
           <Route path="/galeria" element={<GalleryPage />} />
           <Route path="/departamentos" element={<ApartmentsPage />} />
           <Route path="/ubicacion" element={<LocationPage />} />
+          <Route path="/amenities" element={<AmenitiesPage />} />
           {/* <Route path="/avances" element={<AvancesPage />} /> */}
           <Route path="/contacto" element={<HomePage />} />
           {/* <Route path="/masterplan" element={<MasterplanPage />} /> */}
-          <Route path="/amenities" element={<GalleryPage />} />
           {/* <Route path="/360" element={<ThreeSixtyPage />} /> */}
         </Routes>
       </Layout>

@@ -74,28 +74,28 @@ function ApartmentInfo({ tower, typology }) {
         features: ['Wifi'], 
       },
     },
-    'amenities': {
-      'Piscina': {
-        description: 'Pileta',
-        size: 'N/A',
-        features: ['Piscina', 'Gimnasio', 'Jardín'],
-      },
-      'Gimnasio': {
-        description: 'Gimnasio',
-        size: 'N/A',
-        features: ['Piscina', 'Gimnasio', 'Jardín'],
-      },
-      'Sauna': {
-        description: 'Sauna',
-        size: 'N/A',
-        features: ['Piscina', 'Gimnasio', 'Jardín'],
-      },
-      'SPA': {
-        description: 'SPA',
-        size: 'N/A',
-        features: ['Piscina', 'Gimnasio', 'Jardín'],
-      },
-    },
+    // 'amenities': {
+    //   'Piscina': {
+    //     description: 'Pileta',
+    //     size: 'N/A',
+    //     features: ['Piscina', 'Gimnasio', 'Jardín'],
+    //   },
+    //   'Gimnasio': {
+    //     description: 'Gimnasio',
+    //     size: 'N/A',
+    //     features: ['Piscina', 'Gimnasio', 'Jardín'],
+    //   },
+    //   'Sauna': {
+    //     description: 'Sauna',
+    //     size: 'N/A',
+    //     features: ['Piscina', 'Gimnasio', 'Jardín'],
+    //   },
+    //   'SPA': {
+    //     description: 'SPA',
+    //     size: 'N/A',
+    //     features: ['Piscina', 'Gimnasio', 'Jardín'],
+    //   },
+    // },
   }[tower]?.[typology] || {
     description: 'Información no disponible.',
     size: 'N/A',
@@ -115,9 +115,9 @@ function ApartmentInfo({ tower, typology }) {
           {info.features.includes('1 Cama') && <Bed className="text-purple-500" size={18} />}
           {info.features.includes('2 Camas') && <Bed className="text-purple-500" size={18} />}
           {info.features.includes('3 Camas') && <Bed className="text-purple-500" size={18} />}
-          {info.features.includes('Piscina') && <span className="text-blue-500 text-lg">🏊</span>}
+          {/* {info.features.includes('Piscina') && <span className="text-blue-500 text-lg">🏊</span>}
           {info.features.includes('Gimnasio') && <span className="text-red-500 text-lg">💪</span>}
-          {info.features.includes('Jardín') && <span className="text-green-500 text-lg">🌳</span>}
+          {info.features.includes('Jardín') && <span className="text-green-500 text-lg">🌳</span>} */}
         </div>
       </div>
       <button className="w-full px-4 py-2 bg-gray-600 text-white rounded-full hover:bg-gray-800 transition-colors duration-200 text-sm">

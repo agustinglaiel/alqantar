@@ -4,7 +4,7 @@ const TOWERS = [
   { id: 'torre1', name: 'Torre 1' },
   { id: 'torre2', name: 'Torre 2' },
   { id: 'torre3', name: 'Torre 3' },
-  { id: 'amenities', name: 'Amenities' },
+  // { id: 'amenities', name: 'Amenities' },
 ];
 
 function TowerNavigation({ onTowerChange }) {

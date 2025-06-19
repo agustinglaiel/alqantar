@@ -21,12 +21,12 @@ function ApartmentImage({ tower, typology }) {
       'Terraza/Quincho': '/images/01.png',
       'Subsuelo': '/images/01.png',
     },
-    'amenities': {
-      'Piscina': '/images/08.png',
-      'Gimnasio': '/images/09.png',
-      'Sauna': '/images/10.png',
-      'SPA': '/images/10.png',
-    },
+    // 'amenities': {
+    //   'Piscina': '/images/08.png',
+    //   'Gimnasio': '/images/09.png',
+    //   'Sauna': '/images/10.png',
+    //   'SPA': '/images/10.png',
+    // },
   }[tower]?.[typology] || '/images/default.jpg';
 
   return (
