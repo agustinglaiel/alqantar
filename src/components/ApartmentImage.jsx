@@ -30,8 +30,12 @@ function ApartmentImage({ tower, typology }) {
   }[tower]?.[typology] || '/images/default.jpg';
 
   return (
-    <div className="w-full h-64 rounded-t-lg overflow-hidden shadow-lg perspective-1000">
-      <div className="w-full h-full bg-cover bg-center transition-transform duration-300 hover:scale-105" style={{ backgroundImage: `url(${imageSrc})` }} />
+    <div className="w-full h-48 rounded-t-lg overflow-hidden shadow-lg">
+      <img 
+        src={imageSrc} 
+        alt={typology}
+        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+      />
     </div>
   );
 }
