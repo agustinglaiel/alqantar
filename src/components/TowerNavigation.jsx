@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 const TOWERS = [
   { id: 'torre1', name: 'Torre 1' },
   { id: 'torre2', name: 'Torre 2' },
-  { id: 'torre3', name: 'Torre 3' },
+  // { id: 'torre3', name: 'Torre 3' },
   // { id: 'amenities', name: 'Amenities' },
 ];
 

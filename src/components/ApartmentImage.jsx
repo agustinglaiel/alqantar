@@ -14,13 +14,13 @@ function ApartmentImage({ tower, typology }) {
       'Terraza/Quincho': '/images/01.png',
       'Subsuelo': '/images/01.png',
     },
-    'torre3': {
-      'Departamento A': '/images/05.png',
-      'Departamento B': '/images/06.png',
-      'Departamento C': '/images/07.png',
-      'Terraza/Quincho': '/images/01.png',
-      'Subsuelo': '/images/01.png',
-    },
+    // 'torre3': {
+    //   'Departamento A': '/images/05.png',
+    //   'Departamento B': '/images/06.png',
+    //   'Departamento C': '/images/07.png',
+    //   'Terraza/Quincho': '/images/01.png',
+    //   'Subsuelo': '/images/01.png',
+    // },
     // 'amenities': {
     //   'Piscina': '/images/08.png',
     //   'Gimnasio': '/images/09.png',

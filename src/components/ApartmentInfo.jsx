@@ -47,33 +47,33 @@ function ApartmentInfo({ tower, typology }) {
         features: ['Wifi'], 
       },
     },
-    'torre3': {
-      'Departamento A': {
-        description: 'No disponible en Torre 3.',
-        size: 'N/A',
-        features: ['Wifi', '1 Baño', '1 Cama'],
-      },
-      'Departamento B': {
-        description: 'No disponible en Torre 3.',
-        size: 'N/A',
-        features: ['Wifi', '1 Baño', '1 Cama'],
-      },
-      'Departamento C': {
-        description: 'Lujoso en Torre 3, para familias grandes.',
-        size: '150 m²',
-        features: ['Wifi', '1 Baño', '1 Cama'],
-      },
-      'Terraza/Quincho': {
-        description: 'Terraza y quincho en la azotea de Torre 3.',
-        size: 'Común',
-        features: ['Wifi', '1 Baño'], 
-      },
-      'Subsuelo': {
-        description: 'Sala de usos múltiples en el subsuelo de Torre 3.',
-        size: 'Común',
-        features: ['Wifi'], 
-      },
-    },
+    // 'torre3': {
+    //   'Departamento A': {
+    //     description: 'No disponible en Torre 3.',
+    //     size: 'N/A',
+    //     features: ['Wifi', '1 Baño', '1 Cama'],
+    //   },
+    //   'Departamento B': {
+    //     description: 'No disponible en Torre 3.',
+    //     size: 'N/A',
+    //     features: ['Wifi', '1 Baño', '1 Cama'],
+    //   },
+    //   'Departamento C': {
+    //     description: 'Lujoso en Torre 3, para familias grandes.',
+    //     size: '150 m²',
+    //     features: ['Wifi', '1 Baño', '1 Cama'],
+    //   },
+    //   'Terraza/Quincho': {
+    //     description: 'Terraza y quincho en la azotea de Torre 3.',
+    //     size: 'Común',
+    //     features: ['Wifi', '1 Baño'], 
+    //   },
+    //   'Subsuelo': {
+    //     description: 'Sala de usos múltiples en el subsuelo de Torre 3.',
+    //     size: 'Común',
+    //     features: ['Wifi'], 
+    //   },
+    // },
     // 'amenities': {
     //   'Piscina': {
     //     description: 'Pileta',

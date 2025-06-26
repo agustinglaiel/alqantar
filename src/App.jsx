@@ -6,6 +6,8 @@ import GalleryPage from "./pages/GalleryPage";
 import LocationPage from "./pages/LocationPage";
 import ApartmentsPage from "./pages/ApartmentsPage";
 import AmenitiesPage from "./pages/AmenitiesPage";
+import MasterplanPage from "./pages/MasterplanPage";
+import AvancesPage from "./pages/AvancesPage";
 
 function App() {
   return (
@@ -18,9 +20,9 @@ function App() {
           <Route path="/departamentos" element={<ApartmentsPage />} />
           <Route path="/ubicacion" element={<LocationPage />} />
           <Route path="/amenities" element={<AmenitiesPage />} />
-          {/* <Route path="/avances" element={<AvancesPage />} /> */}
+          <Route path="/avances" element={<AvancesPage />} />
           <Route path="/contacto" element={<HomePage />} />
-          {/* <Route path="/masterplan" element={<MasterplanPage />} /> */}
+          <Route path="/masterplan" element={<MasterplanPage />} />
           {/* <Route path="/360" element={<ThreeSixtyPage />} /> */}
         </Routes>
       </Layout>
