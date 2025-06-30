@@ -4,19 +4,19 @@ import { Wifi, Bath, Bed } from 'lucide-react';
 function ApartmentInfo({ tower, typology }) {
   const info = {
     'torre1': {
-      'Departamento A': {
-        description: 'Apartamento compacto en Torre 1, ideal para singles.',
-        size: '50 m²',
+      'Tipología A': {
+        description: 'Apartamento en Torre 1 de 2 dormitorios con 2 baños.',
+        size: '273,78 m²',
         features: ['Wifi', '1 Baño', '1 Cama'],
       },
-      'Departamento B/D/E': {
-        description: 'Espacioso en Torre 1, perfecto para parejas.',
-        size: '80 m²',
+      'Tipología B/D/E': {
+        description: 'Apartamento en Torre 1 de 3 dormitorios con 3 baños.',
+        size: '319,80 m²',
         features: ['Wifi', '1 Baño', '1 Cama'],
       },
-      'Departamento C/F': {
-        description: 'No disponible en Torre 1.',
-        size: 'N/A',
+      'Tipología C/F': {
+        description: 'Apartamento en Torre 1 de 2 dormitorios con 2 baños.',
+        size: '259,58 m²',
         features: ['Wifi', '1 Baño', '1 Cama'],
       },
       'Terraza/Quincho': {
@@ -31,7 +31,7 @@ function ApartmentInfo({ tower, typology }) {
       },
     },
     'torre2': {
-      'Departamento A/B': {
+      'Tipología A/B': {
         description: 'No disponible en Torre 2.',
         size: 'N/A',
         features: ['Wifi', '1 Baño', '1 Cama'],
@@ -48,17 +48,17 @@ function ApartmentInfo({ tower, typology }) {
       },
     },
     // 'torre3': {
-    //   'Departamento A': {
+    //   'Tipología A': {
     //     description: 'No disponible en Torre 3.',
     //     size: 'N/A',
     //     features: ['Wifi', '1 Baño', '1 Cama'],
     //   },
-    //   'Departamento B': {
+    //   'Tipología B': {
     //     description: 'No disponible en Torre 3.',
     //     size: 'N/A',
     //     features: ['Wifi', '1 Baño', '1 Cama'],
     //   },
-    //   'Departamento C': {
+    //   'Tipología C': {
     //     description: 'Lujoso en Torre 3, para familias grandes.',
     //     size: '150 m²',
     //     features: ['Wifi', '1 Baño', '1 Cama'],

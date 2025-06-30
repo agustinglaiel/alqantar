@@ -5,9 +5,9 @@ import ApartmentLayout from "../components/ApartmentLayout";
 
 // Mapeo de todas las tipologías (departamentos y lugares comunes) por torre
 const TYPOLOGIES_BY_TOWER = {
-  torre1: ["Departamento A", "Departamento B/D/E", "Departamento C/F", "Terraza/Quincho", "Subsuelo"],
-  torre2: ["Departamento A/B", "Terraza/Quincho", "Subsuelo"],
-  torre3: ["Departamento A", "Departamento B", "Departamento C", "Terraza/Quincho", "Subsuelo"],
+  torre1: ["Tipología A", "Tipología B/D/E", "Tipología C/F", "Terraza/Quincho", "Subsuelo"],
+  torre2: ["Tipología A/B", "Terraza/Quincho", "Subsuelo"],
+  // torre3: ["Tipología A", "Tipología B", "Tipología C", "Terraza/Quincho", "Subsuelo"],
   // amenities: ["Piscina", "Gimnasio", "Sauna", "SPA"],
 };
 

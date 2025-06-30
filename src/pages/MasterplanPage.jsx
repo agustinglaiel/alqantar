@@ -47,7 +47,7 @@ function MasterplanPage() {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className={`mb-3 p-3 bg-opacity-70 bg-white text-black rounded-lg text-sm md:text-base transition-all duration-700 transform ${
+                  className={`mb-3 p-3 bg-opacity-70 bg-white text-black rounded-lg text-sm md:text-base transition-all duration-300 transform ${
                     scrollY > 200 + (index * 50) 
                       ? 'opacity-100 translate-x-0' 
                       : 'opacity-0 translate-x-10'
