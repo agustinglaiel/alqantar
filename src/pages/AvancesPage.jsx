@@ -19,12 +19,9 @@ export default function AvancesPage() {
           Avances del Proyecto
         </h2>
         
-        {/* Modal más alto con grid 2x2 con líneas divisorias */}
         <div className="bg-white rounded-xl shadow-lg p-8 md:p-12 relative">
-          {/* Línea vertical divisoria */}
-          <div className="absolute left-1/2 top-8 bottom-8 w-px bg-gray-800 transform -translate-x-1/2"></div>
-          {/* Línea horizontal divisoria */}
-          <div className="absolute top-1/2 left-8 right-8 h-px bg-gray-800 transform -translate-y-1/2"></div>
+          <div className="absolute left-1/2 top-8 bottom-8 w-px bg-gray-100 transform -translate-x-1/2"></div>
+          <div className="absolute top-1/2 left-8 right-8 h-px bg-gray-100 transform -translate-y-1/2"></div>
           
           <div className="grid grid-cols-2 gap-8 min-h-[500px]">
             {metrics.map((metric, index) => (
