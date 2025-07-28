@@ -1,26 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import BackgroundSlider from "../components/BackgroundSlider";
-import TowerNavigation from "../components/TowerNavigation";
 import ApartmentLayout from "../components/ApartmentLayout";
+import TowerNavigation from "../components/TowerNavigation";
 
-// Mapeo de todas las tipologías (departamentos y lugares comunes) por torre
 const TYPOLOGIES_BY_TOWER = {
-  torre1: ["Tipología A", "Tipología B/D/E", "Tipología C/F", "Terraza/Quincho", "Subsuelo"],
-  torre2: ["Tipología A/B", "Terraza/Quincho", "Subsuelo"],
+  torre1: ["Tipología A", "Tipología B/D/E", "Tipología C/F"],
+  torre2: ["Tipología A/B"],
 };
 
-function ApartmentsPage() {
+function ThreeSixtyPage() {
+  const location = useLocation();
   const [selectedTower, setSelectedTower] = useState("torre1");
   const typologies = TYPOLOGIES_BY_TOWER[selectedTower] || [];
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   return (
     <div className="relative min-h-screen">
       <BackgroundSlider />
       <TowerNavigation onTowerChange={setSelectedTower} />
-
+      
       <div className="container mx-auto px-4 py-20 mt-16 text-center">
         <section>
-          <h2 className="text-2xl font-bold mb-6">Departamentos y Áreas Comunes</h2>
+          <h2 className="text-2xl font-bold mb-6">Explora las tipologías en 360°</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
             {typologies.map((typology) => (
               <ApartmentLayout
@@ -36,4 +46,4 @@ function ApartmentsPage() {
   );
 }
 
-export default ApartmentsPage;
+export default ThreeSixtyPage;

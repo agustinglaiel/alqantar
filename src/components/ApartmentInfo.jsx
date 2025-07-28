@@ -1,23 +1,23 @@
 import React from 'react';
 import { Wifi, Bath, Bed } from 'lucide-react';
 
-function ApartmentInfo({ tower, typology }) {
+function ApartmentInfo({ tower, typology, onDetailsClick }) {
   const info = {
     'torre1': {
       'Tipología A': {
         description: 'Apartamento en Torre 1 de 2 dormitorios con 2 baños.',
         size: '273,78 m²',
-        features: ['Wifi', '1 Baño', '1 Cama'],
+        features: ['Wifi', '2 Baños', '2 Camas'],
       },
       'Tipología B/D/E': {
         description: 'Apartamento en Torre 1 de 3 dormitorios con 3 baños.',
         size: '319,80 m²',
-        features: ['Wifi', '1 Baño', '1 Cama'],
+        features: ['Wifi', '3 Baños', '3 Camas'],
       },
       'Tipología C/F': {
         description: 'Apartamento en Torre 1 de 2 dormitorios con 2 baños.',
         size: '259,58 m²',
-        features: ['Wifi', '1 Baño', '1 Cama'],
+        features: ['Wifi', '2 Baños', '2 Camas'],
       },
       'Terraza/Quincho': {
         description: 'Terraza y quincho en la azotea de Torre 1.',
@@ -47,55 +47,6 @@ function ApartmentInfo({ tower, typology }) {
         features: ['Wifi'], 
       },
     },
-    // 'torre3': {
-    //   'Tipología A': {
-    //     description: 'No disponible en Torre 3.',
-    //     size: 'N/A',
-    //     features: ['Wifi', '1 Baño', '1 Cama'],
-    //   },
-    //   'Tipología B': {
-    //     description: 'No disponible en Torre 3.',
-    //     size: 'N/A',
-    //     features: ['Wifi', '1 Baño', '1 Cama'],
-    //   },
-    //   'Tipología C': {
-    //     description: 'Lujoso en Torre 3, para familias grandes.',
-    //     size: '150 m²',
-    //     features: ['Wifi', '1 Baño', '1 Cama'],
-    //   },
-    //   'Terraza/Quincho': {
-    //     description: 'Terraza y quincho en la azotea de Torre 3.',
-    //     size: 'Común',
-    //     features: ['Wifi', '1 Baño'], 
-    //   },
-    //   'Subsuelo': {
-    //     description: 'Sala de usos múltiples en el subsuelo de Torre 3.',
-    //     size: 'Común',
-    //     features: ['Wifi'], 
-    //   },
-    // },
-    // 'amenities': {
-    //   'Piscina': {
-    //     description: 'Pileta',
-    //     size: 'N/A',
-    //     features: ['Piscina', 'Gimnasio', 'Jardín'],
-    //   },
-    //   'Gimnasio': {
-    //     description: 'Gimnasio',
-    //     size: 'N/A',
-    //     features: ['Piscina', 'Gimnasio', 'Jardín'],
-    //   },
-    //   'Sauna': {
-    //     description: 'Sauna',
-    //     size: 'N/A',
-    //     features: ['Piscina', 'Gimnasio', 'Jardín'],
-    //   },
-    //   'SPA': {
-    //     description: 'SPA',
-    //     size: 'N/A',
-    //     features: ['Piscina', 'Gimnasio', 'Jardín'],
-    //   },
-    // },
   }[tower]?.[typology] || {
     description: 'Información no disponible.',
     size: 'N/A',
@@ -112,15 +63,16 @@ function ApartmentInfo({ tower, typology }) {
           {info.features.includes('Wifi') && <Wifi className="text-blue-500" size={18} />}
           {info.features.includes('1 Baño') && <Bath className="text-green-500" size={18} />}
           {info.features.includes('2 Baños') && <Bath className="text-green-500" size={18} />}
+          {info.features.includes('3 Baños') && <Bath className="text-green-500" size={18} />}
           {info.features.includes('1 Cama') && <Bed className="text-purple-500" size={18} />}
           {info.features.includes('2 Camas') && <Bed className="text-purple-500" size={18} />}
           {info.features.includes('3 Camas') && <Bed className="text-purple-500" size={18} />}
-          {/* {info.features.includes('Piscina') && <span className="text-blue-500 text-lg">🏊</span>}
-          {info.features.includes('Gimnasio') && <span className="text-red-500 text-lg">💪</span>}
-          {info.features.includes('Jardín') && <span className="text-green-500 text-lg">🌳</span>} */}
         </div>
       </div>
-      <button className="w-full px-4 py-2 bg-gray-600 text-white rounded-full hover:bg-gray-800 transition-colors duration-200 text-sm">
+      <button
+        className="w-full px-4 py-2 bg-gray-600 text-white rounded-full hover:bg-gray-800 transition-colors duration-200 text-sm"
+        onClick={onDetailsClick}
+      >
         Ver Detalles
       </button>
     </div>

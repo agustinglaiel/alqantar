@@ -1,21 +1,21 @@
 import React from "react";
 
-function MediaCard({ src, type = "image", alt, onClick }) {
+function MediaCard({ src, type = "image", alt, onClick, className, imageFit = "cover" }) {
   const isVideo = type.toLowerCase() === "video";
 
   return (
     <div
       onClick={onClick}
-      className="group relative rounded-lg overflow-hidden shadow-lg w-full h-52 perspective-1000 cursor-pointer"
+      className={`group relative rounded-lg overflow-hidden shadow-lg w-full h-52 perspective-1000 cursor-pointer ${className}`}
     >
       <div className="absolute w-full h-full">
         <div
           className={`w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105 ${
-            isVideo ? "bg-transparent" : ""
+            isVideo ? "bg-transparent" : `bg-gray-100 ${imageFit === "contain" ? "bg-center" : ""}`
           }`}
           style={isVideo ? {} : { backgroundImage: `url(${src})` }}
         >
-          {isVideo && (
+          {isVideo ? (
             <div className="w-full h-full bg-gray-800 flex items-center justify-center">
               <svg
                 className="w-16 h-16 text-white opacity-70"
@@ -25,6 +25,12 @@ function MediaCard({ src, type = "image", alt, onClick }) {
                 <path d="M8 5v14l11-7z"/>
               </svg>
             </div>
+          ) : (
+            <img
+              src={src}
+              alt={alt}
+              className={`w-full h-full object-${imageFit} ${imageFit === "contain" ? "p-1" : ""}`}
+            />
           )}
         </div>
       </div>
