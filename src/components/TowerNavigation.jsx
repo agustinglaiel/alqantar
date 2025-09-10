@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 const TOWERS = [
-  { id: 'torre1', name: 'Torre 1' },
-  { id: 'torre2', name: 'Torre 2' },
-  // { id: 'torre3', name: 'Torre 3' },
-  // { id: 'amenities', name: 'Amenities' },
+  { id: 'torre1', name: 'Torres 1 y 2' },
+  { id: 'torre2', name: 'Torres VIP' },
 ];
 
 function TowerNavigation({ onTowerChange }) {
@@ -25,13 +23,9 @@ function TowerNavigation({ onTowerChange }) {
 
   return (
     <div className="relative z-20 w-full">
-      {/* Contenedor principal con glassmorphism */}
       <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-11/12 max-w-2xl">
-        {/* Fondo con efecto glass */}
         <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-lg p-2">
-          {/* Navegación tipo segmented control */}
           <div className="relative flex rounded-xl overflow-hidden">
-            {/* Indicador de selección animado */}
             <div 
               className="absolute top-0 left-0 h-full bg-gradient-to-r from-gray-800 to-gray-600 rounded-xl shadow-lg transition-transform duration-500 ease-out border border-white/30"
               style={{
@@ -40,7 +34,6 @@ function TowerNavigation({ onTowerChange }) {
               }}
             />
             
-            {/* Botones de torres */}
             {TOWERS.map((tower) => (
               <button
                 key={tower.id}

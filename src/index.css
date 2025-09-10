@@ -30,3 +30,12 @@ code {
 a {
   @apply no-underline;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Para Chrome, Safari y Opera */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* Para IE y Edge */
+  scrollbar-width: none;  /* Para Firefox */
+}

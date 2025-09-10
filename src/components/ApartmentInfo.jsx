@@ -1,51 +1,99 @@
-import React from 'react';
-import { Wifi, Bath, Bed } from 'lucide-react';
+import React, { useState } from 'react';
+import { BedDouble, ShowerHead, ChefHat, DoorOpen, SquareIcon, ChevronLeft, ChevronRight, Car } from 'lucide-react';
 
 function ApartmentInfo({ tower, typology, onDetailsClick }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+
   const info = {
     'torre1': {
-      'Tipología A': {
-        description: 'Apartamento en Torre 1 de 2 dormitorios con 2 baños.',
-        size: '273,78 m²',
-        features: ['Wifi', '2 Baños', '2 Camas'],
+      'Tipología 1': {
+        description: 'Apartamento en Torre 1 y 2 de 2 dormitorios con 2 baños.',
+        size: '275 m²',
+        features: [
+          { icon: BedDouble, value: '2', color: 'bg-gray-600', label: 'Dormitorios' },
+          { icon: ShowerHead, value: '3', color: 'bg-gray-600', label: 'Baños' },
+          { icon: Car, value: '2', color: 'bg-gray-600', label: 'Cocheras' },
+          { icon: ChefHat, value: '1', color: 'bg-gray-600', label: 'Asador' },
+          { icon: DoorOpen, value: '3', color: 'bg-gray-600', label: 'Balcones' },
+          { icon: SquareIcon, value: '275 m²', color: 'bg-gray-600', label: 'Superficie' },
+        ],
       },
-      'Tipología B/D/E': {
-        description: 'Apartamento en Torre 1 de 3 dormitorios con 3 baños.',
-        size: '319,80 m²',
-        features: ['Wifi', '3 Baños', '3 Camas'],
+      'Tipología 2': {
+        description: 'Apartamento en Torre 1 y 2 de 3 dormitorios con 3 baños.',
+        size: '320 m²',
+        features: [
+          { icon: BedDouble, value: '3', color: 'bg-gray-600', label: 'Dormitorios' },
+          { icon: ShowerHead, value: '3', color: 'bg-gray-600', label: 'Baños' },
+          { icon: Car, value: '2', color: 'bg-gray-600', label: 'Cocheras' },
+          { icon: ChefHat, value: '1', color: 'bg-gray-600', label: 'Asador' },
+          { icon: DoorOpen, value: '4', color: 'bg-gray-600', label: 'Balcones' },
+          { icon: SquareIcon, value: '320 m²', color: 'bg-gray-600', label: 'Superficie' },
+        ],
       },
-      'Tipología C/F': {
-        description: 'Apartamento en Torre 1 de 2 dormitorios con 2 baños.',
-        size: '259,58 m²',
-        features: ['Wifi', '2 Baños', '2 Camas'],
+      'Tipología 3': {
+        description: 'Apartamento en Torre 1 y 2 de 2 dormitorios con 2 baños.',
+        size: '265 m²',
+        features: [
+          { icon: BedDouble, value: '2', color: 'bg-gray-600', label: 'Dormitorios' },
+          { icon: ShowerHead, value: '3', color: 'bg-gray-600', label: 'Baños' },
+          { icon: Car, value: '2', color: 'bg-gray-600', label: 'Cocheras' },
+          { icon: ChefHat, value: '1', color: 'bg-gray-600', label: 'Asador' },
+          { icon: DoorOpen, value: '2', color: 'bg-gray-600', label: 'Balcones' },
+          { icon: SquareIcon, value: '265 m²', color: 'bg-gray-600', label: 'Superficie' },
+        ],
       },
-      'Terraza/Quincho': {
-        description: 'Terraza y quincho en la azotea de Torre 1.',
-        size: 'Común',
-        features: ['Wifi', '1 Baño'], 
-      },
-      'Subsuelo': {
-        description: 'Sala de usos múltiples en el subsuelo de Torre 1.',
-        size: 'Común',
-        features: ['Wifi'], 
-      },
+      // 'Terraza/Quincho': {
+      //   description: 'Terraza y quincho en la azotea de Torre 1 y 2.',
+      //   size: 'Común',
+      //   features: [
+      //     { icon: BedDouble, value: '0', color: 'bg-gray-600', label: 'Dormitorios' },
+      //     { icon: ShowerHead, value: '1', color: 'bg-gray-600', label: 'Baños' },
+      //     { icon: ChefHat, value: '1', color: 'bg-gray-600', label: 'Quincho' },
+      //     { icon: DoorOpen, value: 'Balcones', color: 'bg-gray-600', label: '' },
+      //     { icon: SquareIcon, value: 'Espacio Común', color: 'bg-gray-600', label: '' },
+      //   ],
+      // },
+      // 'Subsuelo': {
+      //   description: 'Sala de usos múltiples en el subsuelo de Torre 1 y 2.',
+      //   size: 'Común',
+      //   features: [
+      //     { icon: BedDouble, value: '0', color: 'bg-gray-600' },
+      //     { icon: ShowerHead, value: '0', color: 'bg-gray-600' },
+      //     { icon: ChefHat, value: '0', color: 'bg-gray-600' },
+      //     { icon: DoorOpen, value: '0', color: 'bg-gray-600' },
+      //     { icon: SquareIcon, value: 'Común', color: 'bg-gray-600' },
+      //   ],
+      // },
     },
     'torre2': {
-      'Tipología A/B': {
-        description: 'No disponible en Torre 2.',
+      'Tipología 1': {
+        description: 'Apartamento en Torres VIP de diseño moderno.',
         size: 'N/A',
-        features: ['Wifi', '1 Baño', '1 Cama'],
+        features: [
+          { icon: BedDouble, value: '1', color: 'bg-gray-600', label: 'Dormitorios' },
+          { icon: ShowerHead, value: '1', color: 'bg-gray-600', label: 'Baños' },
+          { icon: ChefHat, value: '1', color: 'bg-gray-600', label: 'Asador' },
+          { icon: DoorOpen, value: '1', color: 'bg-gray-600', label: 'Balcones' },
+          { icon: SquareIcon, value: 'N/A', color: 'bg-gray-600', label: 'Superficie' },
+        ],
       },
-      'Terraza/Quincho': {
-        description: 'Terraza y quincho en la azotea de Torre 2.',
-        size: 'Común',
-        features: ['Wifi', '1 Baño'], 
-      },
-      'Subsuelo': {
-        description: 'Sala de usos múltiples en el subsuelo de Torre 2.',
-        size: 'Común',
-        features: ['Wifi'], 
-      },
+      // 'Terraza/Quincho': {
+      //   description: 'Terraza y quincho en la azotea de Torres VIP.',
+      //   size: 'Común',
+      //   features: [
+      //     { icon: BedDouble, value: '0', color: 'bg-gray-600', label: 'Dormitorios' },
+      //     { icon: ShowerHead, value: '1', color: 'bg-gray-600', label: 'Baños' },
+      //     { icon: ChefHat, value: '1', color: 'bg-gray-600', label: 'Quincho' },
+      //     { icon: DoorOpen, value: '0', color: 'bg-gray-600', label: 'Balcones' },
+      //     { icon: SquareIcon, value: 'Espacio Común', color: 'bg-gray-600', label: '' },
+      //   ],
+      // },
+      // 'Subsuelo': {
+      //   description: 'Sala de usos múltiples en el subsuelo de Torres VIP.',
+      //   size: 'Común',
+      //   features: [],
+      // },
     },
   }[tower]?.[typology] || {
     description: 'Información no disponible.',
@@ -53,28 +101,77 @@ function ApartmentInfo({ tower, typology, onDetailsClick }) {
     features: [],
   };
 
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentIndex < info.features.length - 3) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
   return (
-    <div className="flex-1 p-4 bg-gray-50 rounded-b-lg text-left flex flex-col justify-between">
-      <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-2 line-clamp-1">{typology || 'Sin tipología'}</h3>
-        <p className="text-sm text-gray-600 mb-3 line-clamp-2">{info.description}</p>
-        <p className="text-sm text-gray-700 mb-3"><strong>Tamaño:</strong> {info.size}</p>
-        <div className="flex space-x-3 mb-4">
-          {info.features.includes('Wifi') && <Wifi className="text-blue-500" size={18} />}
-          {info.features.includes('1 Baño') && <Bath className="text-green-500" size={18} />}
-          {info.features.includes('2 Baños') && <Bath className="text-green-500" size={18} />}
-          {info.features.includes('3 Baños') && <Bath className="text-green-500" size={18} />}
-          {info.features.includes('1 Cama') && <Bed className="text-purple-500" size={18} />}
-          {info.features.includes('2 Camas') && <Bed className="text-purple-500" size={18} />}
-          {info.features.includes('3 Camas') && <Bed className="text-purple-500" size={18} />}
-        </div>
-      </div>
-      <button
-        className="w-full px-4 py-2 bg-gray-600 text-white rounded-full hover:bg-gray-800 transition-colors duration-200 text-sm"
-        onClick={onDetailsClick}
+    <div className="flex-1 flex flex-col">
+      {/* Sección de características con navegación por flechas */}
+      <div
+        className="p-4 bg-white relative"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
       >
-        Ver Detalles
-      </button>
+        <div className="relative overflow-hidden w-[300px] mx-auto">
+          <div
+            className="flex transition-transform duration-300 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 100}px)` }}
+          >
+            {info.features.map((feature, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center justify-center w-[100px] flex-shrink-0 text-center"
+              >
+                <div className={`w-8 h-8 ${feature.color} rounded-full flex items-center justify-center mb-1`}>
+                  <feature.icon className="w-4 h-4 text-white" />
+                </div>
+                <span className="font-semibold text-gray-800 text-sm">{feature.value}</span>
+                <span className="text-xs text-gray-500">{feature.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Botones de navegación, visibles solo en hover y cuando es posible moverse */}
+        {isHovering && info.features.length > 3 && (
+          <>
+            {currentIndex > 0 && (
+              <button
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-opacity"
+                onClick={handlePrev}
+              >
+                <ChevronLeft className="w-5 h-5 text-gray-800" />
+              </button>
+            )}
+            {currentIndex < info.features.length - 3 && (
+              <button
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-opacity"
+                onClick={handleNext}
+              >
+                <ChevronRight className="w-5 h-5 text-gray-800" />
+              </button>
+            )}
+          </>
+        )}
+      </div>
+
+      {/* Botón Más información */}
+      <div className="p-4 pt-2">
+        <button
+          className="w-full px-6 py-3 bg-gradient-to-r from-gray-800 to-gray-600 text-white rounded-full hover:from-gray-900 hover:to-gray-700 transition-all duration-300 text-sm font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+          onClick={onDetailsClick}
+        >
+          Más información
+        </button>
+      </div>
     </div>
   );
 }

@@ -17,19 +17,19 @@ const options = [
     title: "Amenities",
     imageSrc: "/images/09.png",
     linkTo: "/amenities",
-    description: "Conoce los departamentos diseñados para ti.",
+    description: "Disfruta de nuestras amenidades exclusivas.",
   },
   {
     title: "Ubicación",
     imageSrc: "/images/12.png",
     linkTo: "/ubicacion",
-    description: "Disfruta de nuestras amenidades exclusivas.",
+    description: "En el corazón de Villa Warcalde, Córdoba.",
   },
   {
     title: "Avances",
     imageSrc: "/images/06.png",
     linkTo: "/avances",
-    description: "En el corazón de Villa Warcalde, Córdoba.",
+    description: "Vive el progreso de Alqantar en tiempo real.",
   },
   {
     title: "360°",
