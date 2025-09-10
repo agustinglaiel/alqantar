@@ -3,7 +3,7 @@ import { Facebook, Instagram, MessageCircleMore, Mail } from "lucide-react";
 
 function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-8">
+    <footer className="bg-gray-800 text-white py-8 mt-8">
       <div className="max-w-screen-xl mx-auto px-4">
         <div className="grid grid-cols-3 items-center gap-8">
           {/* Izquierda: Dirección */}

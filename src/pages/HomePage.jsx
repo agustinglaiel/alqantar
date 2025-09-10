@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import BackgroundSlider from "../components/BackgroundSlider";
 import OptionCardWithHover from "../components/OptionCardWithHover";
 import ContactSection from "../components/ContactSection";
+import Perks from "../components/Perks";
 
 function HomePage() {
   const location = useLocation();
@@ -19,7 +20,7 @@ function HomePage() {
   return (
     <div>
       <BackgroundSlider />
-      <section className="py-12 bg-gray-100">
+      <section className="py-8 bg-gray-100">
         <div className="max-w-screen-xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-8">
             Explora Alqantar
@@ -27,7 +28,12 @@ function HomePage() {
           <OptionCardWithHover />
         </div>
       </section>
-      <section id="contacto" className="py-12 bg-gray-100">
+      <section id="perks" className="py-6 bg-gray-100">
+        <div className="max-w-screen-xl mx-auto px-4">
+          <Perks />
+        </div>
+      </section>
+      <section id="contacto" className="py-8 bg-gray-100">
         <div className="max-w-screen-xl mx-auto px-4">
           <ContactSection />
         </div>

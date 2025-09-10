@@ -65,7 +65,7 @@ function LocationPage() {
             >
               {/* Marcador central */}
               <Marker longitude={mapCenter.lng} latitude={mapCenter.lat} anchor="bottom">
-                <div className="w-6 h-6 bg-red-500 rounded-full border-2 border-white shadow" />
+                <div className="w-5 h-5 bg-red-500 rounded-full border-2 border-white shadow" />
               </Marker>
 
               {/* Otros marcadores, numerados */}
