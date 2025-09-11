@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import ApartmentImage from './ApartmentImage';
 import ApartmentInfo from './ApartmentInfo';
-import ApartmentDetailModal from './ApartmentDetailModal';
 
 function ApartmentLayout({ tower, typology }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleOpenDetails = () => {
+    navigate(`/ficha/${tower}/${encodeURIComponent(typology)}`);
   };
 
   return (
@@ -33,14 +29,12 @@ function ApartmentLayout({ tower, typology }) {
         </div>
 
         {/* Sección intermedia: Cubos con datos */}
-        <ApartmentInfo tower={tower} typology={typology} onDetailsClick={handleOpenModal} />
+        <ApartmentInfo
+          tower={tower}
+          typology={typology}
+          onDetailsClick={handleOpenDetails}  // 👈 ahora navega
+        />
       </div>
-      <ApartmentDetailModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        tower={tower}
-        typology={typology}
-      />
     </>
   );
 }

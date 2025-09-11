@@ -9,6 +9,9 @@ function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // 👉 Detecta si es la página de ficha
+  const isDetailPage = location.pathname.startsWith("/ficha/");
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -23,22 +26,19 @@ function Header() {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
   const handleContactClick = (e) => {
-    // Si ya estamos en la HomePage, evitar la navegación completa y solo desplazar
     if (location.pathname === "/" || location.pathname === "/contacto") {
       e.preventDefault();
       const element = document.getElementById("contacto");
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
-        // Actualizar la URL sin recargar la página
         navigate("/contacto#contacto", { replace: true });
       }
     }
-    // Si estamos en otra página, el Link manejará la navegación normalmente
   };
 
   const navLinksLeft = [
@@ -50,22 +50,21 @@ function Header() {
   const navLinksRight = [
     { path: "/ubicacion", label: "Ubicación" },
     { path: "/avances", label: "Avances" },
-    {
-      path: "/contacto#contacto",
-      label: "Contacto",
-      onClick: handleContactClick,
-    },
+    { path: "/contacto#contacto", label: "Contacto", onClick: handleContactClick },
   ];
+
+  // 👇 Si es ficha, forzamos SIEMPRE opaco; si no, mantenemos el comportamiento actual
+  const bgClass = isDetailPage
+    ? "bg-gray-800 bg-opacity-95"
+    : (isScrolled || !isVisible
+        ? "bg-gray-800 bg-opacity-95"
+        : "bg-gray-800 bg-opacity-0");
 
   return (
     <header
       className={`fixed top-0 left-0 w-full z-30 transition-all duration-300 h-32 ${
         isVisible ? "translate-y-0" : "-translate-y-full"
-      } ${
-        isScrolled || !isVisible
-          ? "bg-gray-800 bg-opacity-95"
-          : "bg-gray-800 bg-opacity-0"
-      }`}
+      } ${bgClass}`}
     >
       <div className="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center h-full">
         <nav>
@@ -75,9 +74,7 @@ function Header() {
                 <Link
                   to={link.path}
                   className={`text-white hover:text-blue-300 text-lg ${
-                    location.pathname === link.path
-                      ? "border-b-2 border-white"
-                      : ""
+                    location.pathname === link.path ? "border-b-2 border-white" : ""
                   }`}
                 >
                   {link.label}
@@ -101,9 +98,7 @@ function Header() {
                   to={link.path}
                   onClick={link.onClick || (() => {})}
                   className={`text-white hover:text-blue-300 text-lg ${
-                    location.pathname === link.path
-                      ? "border-b-2 border-white"
-                      : ""
+                    location.pathname === link.path ? "border-b-2 border-white" : ""
                   }`}
                 >
                   {link.label}
