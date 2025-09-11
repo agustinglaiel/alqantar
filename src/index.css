@@ -39,3 +39,25 @@ a {
   -ms-overflow-style: none;  /* Para IE y Edge */
   scrollbar-width: none;  /* Para Firefox */
 }
+
+.scroll-on-hover::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-on-hover::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-on-hover::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.scroll-on-hover:hover::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5);
+}
+
+.scroll-on-hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.8);
+}
