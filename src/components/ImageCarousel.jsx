@@ -1,16 +1,44 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import MediaCard from './MediaCard';
 
 function ImageCarousel({ images, aspect = '16/9' }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
+  const thumbnailsRef = useRef(null);
 
   const validImages = Array.isArray(images) && images.length > 0
     ? images
     : [{ src: '/images/default.jpg', alt: 'Imagen por defecto' }];
 
   const aspectStyle = useMemo(() => ({ aspectRatio: aspect }), [aspect]);
+
+  // Función para desplazar las miniaturas
+  const scrollToThumbnail = (index) => {
+    if (thumbnailsRef.current) {
+      const container = thumbnailsRef.current;
+      const thumbnails = container.children;
+      if (thumbnails[index]) {
+        const thumbnail = thumbnails[index];
+        const containerWidth = container.offsetWidth;
+        const thumbnailLeft = thumbnail.offsetLeft;
+        const thumbnailWidth = thumbnail.offsetWidth;
+        
+        // Calcular la posición para centrar la miniatura
+        const scrollLeft = thumbnailLeft - (containerWidth / 2) + (thumbnailWidth / 2);
+        
+        container.scrollTo({
+          left: scrollLeft,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
+
+  // Efecto para desplazar automáticamente cuando cambia la imagen seleccionada
+  useEffect(() => {
+    scrollToThumbnail(selectedImageIndex);
+  }, [selectedImageIndex]);
 
   const handleImageClick = (index) => setSelectedImageIndex(index);
   const handlePrevious = () =>
@@ -80,7 +108,7 @@ function ImageCarousel({ images, aspect = '16/9' }) {
           )}
 
           {/* Indicador */}
-          {validImages.length > 1 && (
+          {validImages.length > 1 && (showLeftArrow || showRightArrow) && (
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 rounded-full px-3 py-1">
               <span className="text-white text-sm">
                 {selectedImageIndex + 1} / {validImages.length}
@@ -92,11 +120,16 @@ function ImageCarousel({ images, aspect = '16/9' }) {
 
       {/* Miniaturas */}
       {validImages.length > 1 && (
-        <div className="flex overflow-x-auto overflow-y-hidden space-x-2 lg:space-x-4 pb-2 flex-nowrap">
+        <div 
+          ref={thumbnailsRef}
+          className="flex overflow-x-auto overflow-y-hidden space-x-2 lg:space-x-4 pb-2 pt-2 flex-nowrap"
+        >
           {validImages.map((image, index) => (
             <div
               key={index}
-              className={`flex-shrink-0 w-16 h-16 lg:w-24 lg:h-24 ${index === selectedImageIndex ? 'ring-2 ring-blue-500' : ''}`}
+              className={`flex-shrink-0 w-16 h-16 lg:w-24 lg:h-24 transition-transform duration-200 ${
+                index === selectedImageIndex ? 'transform scale-125' : 'hover:scale-110'
+              }`}
             >
               <MediaCard
                 src={image.src}
