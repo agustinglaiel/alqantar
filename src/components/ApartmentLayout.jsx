@@ -16,7 +16,7 @@ function ApartmentLayout({ tower, typology }) {
 
   return (
     <>
-      <div className="w-full max-w-sm mx-auto bg-white rounded-lg shadow-lg overflow-hidden h-96 flex flex-col">
+      <div className="w-full max-w-sm mx-auto bg-white rounded-lg shadow-lg overflow-hidden min-h-96 flex flex-col pb-2">
         {/* Sección superior: 60% imagen, 40% tipología */}
         <div className="flex flex-col sm:flex-row h-3/5">
           <div className="w-full sm:w-3/5 flex-shrink-0">
