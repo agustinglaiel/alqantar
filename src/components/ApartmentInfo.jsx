@@ -3,7 +3,6 @@ import { BedDouble, ShowerHead, ChefHat, DoorOpen, SquareIcon, ChevronLeft, Chev
 
 function ApartmentInfo({ tower, typology, onDetailsClick }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
 
   const info = {
     'torre1': {
@@ -116,11 +115,7 @@ function ApartmentInfo({ tower, typology, onDetailsClick }) {
   return (
     <div className="flex-1 flex flex-col">
       {/* Sección de características con navegación por flechas */}
-      <div
-        className="p-4 bg-white relative"
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
+      <div className="p-4 bg-white relative">
         <div className="relative overflow-hidden w-[300px] mx-auto">
           <div
             className="flex transition-transform duration-300 ease-in-out"
@@ -140,23 +135,23 @@ function ApartmentInfo({ tower, typology, onDetailsClick }) {
             ))}
           </div>
         </div>
-        {/* Botones de navegación, visibles solo en hover y cuando es posible moverse */}
-        {isHovering && info.features.length > 3 && (
+        {/* Botones de navegación, siempre visibles con tono suave */}
+        {info.features.length > 3 && (
           <>
             {currentIndex > 0 && (
               <button
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-300 bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-opacity"
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 bg-opacity-30 p-1.5 rounded-full hover:bg-opacity-50 transition-all duration-200"
                 onClick={handlePrev}
               >
-                <ChevronLeft className="w-5 h-5 text-gray-800" />
+                <ChevronLeft className="w-4 h-4 text-gray-400" />
               </button>
             )}
             {currentIndex < info.features.length - 3 && (
               <button
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-300 bg-opacity-50 p-2 rounded-full hover:bg-opacity-75 transition-opacity"
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 bg-opacity-30 p-1.5 rounded-full hover:bg-opacity-50 transition-all duration-200"
                 onClick={handleNext}
               >
-                <ChevronRight className="w-5 h-5 text-gray-800" />
+                <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
             )}
           </>
