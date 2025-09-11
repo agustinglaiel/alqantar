@@ -15,7 +15,7 @@ function ApartmentDetailModal({ isOpen, onClose, tower, typology }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 cursor-pointer" onClick={onClose} />
-      <div className="relative w-full max-w-5xl h-full max-h-[90vh] bg-white rounded-lg overflow-hidden flex flex-col lg:flex-row">
+      <div className="relative w-full max-w-6xl h-full max-h-[90vh] bg-white rounded-lg overflow-hidden flex flex-col lg:flex-row">
         {/* Sección del carrusel - arriba en móvil, izquierda en desktop */}
         <div className="w-full lg:w-3/5 h-1/2 lg:h-full p-4 lg:p-6">
           <ImageCarousel images={data.images} />
@@ -27,7 +27,7 @@ function ApartmentDetailModal({ isOpen, onClose, tower, typology }) {
             {/* Sección de tipología y descripción */}
             <div className="mb-6">
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-4">{typology}</h2>
-              <p className="text-gray-900 text-base lg:text-lg text-justify leading-relaxed">{data.description}</p>
+              <p className="text-gray-900 text-base md:text-md text-justify leading-relaxed">{data.description}</p>
             </div>
 
             {/* Sección de características */}
