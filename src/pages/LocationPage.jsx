@@ -31,8 +31,8 @@ function LocationPage() {
   );
 
   return (
-    <div className="bg-white min-h-full">
-      <section className="py-12 bg-white pt-40">
+    <div className="min-h-full">
+      <section className="py-12 pt-40">
         <div className="max-w-screen-xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">
             UBICACIÓN

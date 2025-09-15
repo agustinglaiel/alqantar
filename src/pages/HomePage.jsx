@@ -20,7 +20,7 @@ function HomePage() {
   return (
     <div>
       <BackgroundSlider />
-      <section className="py-8 bg-gray-100">
+      <section className="py-8">
         <div className="max-w-screen-xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-8">
             Explora Alqantar

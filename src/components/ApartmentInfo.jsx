@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import apartmentData from '../utils/apartmentData';
 
-function ApartmentInfo({ tower, typology, onDetailsClick }) {
+function ApartmentInfo({ tower, typology, buttonText = "Más información", onDetailsClick }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const info = apartmentData[tower]?.[typology] || {
@@ -73,7 +73,7 @@ function ApartmentInfo({ tower, typology, onDetailsClick }) {
           className="w-full px-6 py-3 bg-gradient-to-r from-gray-800 to-gray-600 text-white rounded-full hover:from-gray-900 hover:to-gray-700 transition-all duration-300 text-sm font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           onClick={onDetailsClick}
         >
-          Más información
+          {buttonText}
         </button>
       </div>
     </div>

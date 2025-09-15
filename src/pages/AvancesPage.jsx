@@ -10,7 +10,7 @@ export default function AvancesPage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-white pt-32">
+    <div className="relative min-h-screen pt-32">
       <div className="relative z-10 max-w-screen-xl mx-auto px-4 py-20">
         <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
           Avances del Proyecto

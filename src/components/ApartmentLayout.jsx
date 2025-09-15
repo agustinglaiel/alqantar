@@ -3,11 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import ApartmentImage from './ApartmentImage';
 import ApartmentInfo from './ApartmentInfo';
 
-function ApartmentLayout({ tower, typology }) {
+function ApartmentLayout({ tower, typology, buttonText = "Más información", onCustomClick }) {
   const navigate = useNavigate();
 
   const handleOpenDetails = () => {
-    navigate(`/ficha/${tower}/${encodeURIComponent(typology)}`);
+    if (onCustomClick) {
+      onCustomClick(typology);
+    } else {
+      navigate(`/ficha/${tower}/${encodeURIComponent(typology)}`);
+    }
   };
 
   return (
@@ -32,6 +36,7 @@ function ApartmentLayout({ tower, typology }) {
         <ApartmentInfo
           tower={tower}
           typology={typology}
+          buttonText={buttonText}
           onDetailsClick={handleOpenDetails}  // 👈 ahora navega
         />
       </div>

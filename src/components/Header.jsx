@@ -11,7 +11,7 @@ function Header() {
 
   // 👉 Detecta si es la página de ficha
   // Listado de pathnames donde se debe forzar el fondo opaco
-  const opaquePages = ["/galeria", "/departamentos", "/ubicacion", "/avances", "/masterplan", "/amenities"];
+  const opaquePages = ["/galeria", "/departamentos", "/ubicacion", "/avances", "/masterplan", "/amenities", "/360"];
   const isOpaquePage = opaquePages.includes(location.pathname) || location.pathname.startsWith("/ficha/");
 
   useEffect(() => {

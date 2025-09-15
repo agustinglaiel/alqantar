@@ -28,6 +28,7 @@ function ApartmentsPage() {
                   key={typology}
                   tower={selectedTower}
                   typology={typology}
+                  buttonText="Más información"
                 />
               ))}
             </div>
