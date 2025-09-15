@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 const options = [
   {
-    title: "Masterplan",
+    title: "Galería",
     imageSrc: "/images/01.png",
-    linkTo: "/masterplan",
-    description: "Descubre el diseño integral de Alqantar.",
+    linkTo: "/galeria",
+    description: "Descubre la belleza de Alqantar en imágenes.",
   },
   {
     title: "Departamentos",
@@ -17,7 +17,7 @@ const options = [
     title: "Amenities",
     imageSrc: "/images/09.png",
     linkTo: "/amenities",
-    description: "Disfruta de nuestras amenidades exclusivas.",
+    description: "Disfruta de nuestras amenities exclusivas.",
   },
   {
     title: "Ubicación",

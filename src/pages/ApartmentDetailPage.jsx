@@ -11,6 +11,7 @@ import {
 
 import apartmentData from "../utils/apartmentData";
 import ImageCarousel from "../components/ImageCarousel";
+import MediaDisplay from "../components/MediaDisplay";
 import FutureUpgrade from "../components/FutureUpgrade";
 
 const featureByLabel = (features, labelStartsWith) =>
@@ -38,6 +39,10 @@ export default function ApartmentDetailPage() {
   const [isScrollingUp, setIsScrollingUp] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  
+  // Estados para el modal de imagen
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const data = apartmentData[tower]?.[typology];
 
@@ -98,6 +103,16 @@ export default function ApartmentDetailPage() {
     return `https://wa.me/5493517496383?text=${encodeURIComponent(msg)}`;
   }, [tower, typology]);
 
+  // Funciones para el modal de imagen
+  const handleImageClick = (index) => {
+    setSelectedImageIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="max-w-screen-xl mx-auto px-4 pt-40 pb-16">
@@ -106,7 +121,10 @@ export default function ApartmentDetailPage() {
           <div className="lg:col-span-8 space-y-8">
             {/* ImageCarousel */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4">
-              <ImageCarousel images={data.images} />
+              <ImageCarousel 
+                images={data.images} 
+                onImageClick={handleImageClick}
+              />
             </div>
 
             {/* Descripción */}
@@ -133,7 +151,7 @@ export default function ApartmentDetailPage() {
                     <ul className="space-y-2">
                       {data.details.map((item, i) => (
                         <li key={i} className="flex items-start text-gray-700">
-                          <span className="w-2 h-2 rounded-full bg-blue-500 mt-2 mr-3" />
+                          <span className="w-2 h-2 rounded-full bg-blue-500 mt-2.5 mr-3 flex-shrink-0" />
                           <span className="leading-relaxed">{item}</span>
                         </li>
                       ))}
@@ -153,9 +171,6 @@ export default function ApartmentDetailPage() {
                 <h1 className="text-xl md:text-2xl font-bold text-gray-900 leading-snug">
                   {typology}
                 </h1>
-                <p className="text-gray-500 text-sm mt-1 capitalize">
-                  Torre: {tower}
-                </p>
 
                 <div className="grid grid-cols-2 gap-3 mt-5">
                   <div className="text-sm">
@@ -211,6 +226,16 @@ export default function ApartmentDetailPage() {
           </aside>
         </div>
       </div>
+      
+      {/* Modal para mostrar imagen completa */}
+      {isModalOpen && (
+        <MediaDisplay
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          mediaItems={data.images}
+          initialIndex={selectedImageIndex}
+        />
+      )}
     </div>
   );
 }

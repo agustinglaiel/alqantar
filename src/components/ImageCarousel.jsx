@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import MediaCard from './MediaCard';
 
-function ImageCarousel({ images, aspect = '16/9' }) {
+function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
@@ -80,7 +80,8 @@ function ImageCarousel({ images, aspect = '16/9' }) {
           <img
             src={validImages[selectedImageIndex].src}
             alt={validImages[selectedImageIndex].alt || 'Imagen'}
-            className="absolute inset-0 w-full h-full object-contain"
+            className="absolute inset-0 w-full h-full object-contain cursor-pointer"
+            onClick={() => onImageClick && onImageClick(selectedImageIndex)}
           />
 
           {/* Flecha izquierda */}
