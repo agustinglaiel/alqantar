@@ -5,16 +5,22 @@ const TOWERS = [
   { id: 'torre2', name: 'Torres VIP' },
 ];
 
-function TowerNavigation({ onTowerChange }) {
+function TowerNavigation({ onTowerChange, showAmenities = false }) {
   const [activeTower, setActiveTower] = useState('torre1');
+
+  // Crear array de opciones dinámicamente
+  const navigationOptions = [
+    ...TOWERS,
+    ...(showAmenities ? [{ id: 'amenities', name: 'Amenities' }] : [])
+  ];
 
   const handleTowerSelect = (towerId) => {
     setActiveTower(towerId);
     onTowerChange?.(towerId);
   };
 
-  // Calcular el índice de la torre activa
-  const activeIndex = TOWERS.findIndex(tower => tower.id === activeTower);
+  // Calcular el índice de la opción activa
+  const activeIndex = navigationOptions.findIndex(option => option.id === activeTower);
 
   // Forzar actualización del estilo para asegurar la transición
   useEffect(() => {
@@ -29,27 +35,27 @@ function TowerNavigation({ onTowerChange }) {
             <div 
               className="absolute top-0 left-0 h-full bg-gradient-to-r from-gray-800 to-gray-600 rounded-xl shadow-lg transition-transform duration-500 ease-out border border-white/30"
               style={{
-                width:     `${100 / TOWERS.length}%`,
+                width:     `${100 / navigationOptions.length}%`,
                 transform: `translateX(${activeIndex * 100}%)`
               }}
             />
             
-            {TOWERS.map((tower) => (
+            {navigationOptions.map((option) => (
               <button
-                key={tower.id}
-                onClick={() => handleTowerSelect(tower.id)}
+                key={option.id}
+                onClick={() => handleTowerSelect(option.id)}
                 className={`
                   relative flex-1 px-6 py-4 transition-all duration-300 ease-out
-                  ${activeTower === tower.id 
+                  ${activeTower === option.id 
                     ? 'text-white font-semibold' 
                     : 'text-gray-500 hover:text-gray-800 hover:bg-white/5'
                   }
                 `}
               >
                 <div className="flex flex-col items-center space-y-1">
-                  <span className="text-2xl">{tower.icon}</span>
-                  <span className="text-lg font-medium">{tower.name}</span>
-                  <span className="text-xs opacity-80">{tower.description}</span>
+                  <span className="text-2xl">{option.icon}</span>
+                  <span className="text-lg font-medium">{option.name}</span>
+                  <span className="text-xs opacity-80">{option.description}</span>
                 </div>
               </button>
             ))}
