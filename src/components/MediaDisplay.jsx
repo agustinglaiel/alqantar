@@ -51,48 +51,50 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
         onClick={onClose}
       />
       
-      {/* Contenedor principal */}
-      <div className="relative w-11/12 h-5/6 max-w-6xl max-h-4xl">
+      {/* Contenedor principal: ajustado para mobile */}
+      <div className="relative w-[90vw] h-[80vh] sm:w-[85vw] sm:h-[85vh] max-w-5xl max-h-[90vh]">
         {/* Imagen/Video principal */}
-        <div className="relative w-full h-full bg-black rounded-lg overflow-hidden">
+        <div className="relative w-full h-full bg-black rounded-lg overflow-hidden flex items-center justify-center">
           {isVideo ? (
-            <iframe
-              className="w-full h-full"
-              src={currentItem.src}
-              title={currentItem.alt}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+            <div className="relative w-full h-full">
+              <iframe
+                className="w-full h-full object-contain" // Usar object-contain para videos también
+                src={currentItem.src}
+                title={currentItem.alt}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
           ) : (
             <img
               src={currentItem.src}
               alt={currentItem.alt}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain" // Cambiado a object-contain para mostrar la imagen completa
             />
           )}
 
-          {/* Overlay izquierdo */}
+          {/* Overlay izquierdo: reducido en mobile */}
           <div
-            className="absolute left-0 top-0 w-1/2 h-full cursor-pointer"
+            className="absolute left-0 top-0 w-1/3 sm:w-1/2 h-full cursor-pointer"
             onMouseEnter={() => setLeftHover(true)}
             onMouseLeave={() => setLeftHover(false)}
             onClick={goToPrevious}
           >
             {/* Gradiente oscuro izquierdo */}
-            <div className={`absolute left-0 top-0 w-1/2 h-full transition-opacity duration-200 ${
+            <div className={`absolute left-0 top-0 w-full h-full transition-opacity duration-200 ${
               leftHover ? 'opacity-100' : 'opacity-0'
             }`}
             style={{
               background: 'linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%)'
             }}
             />
-            {/* Flecha izquierda */}
-            <div className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-opacity duration-200 ${
+            {/* Flecha izquierda: más pequeña en mobile */}
+            <div className={`absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 transition-opacity duration-200 ${
               leftHover ? 'opacity-100' : 'opacity-0'
             }`}>
               <svg
-                className="w-12 h-12 text-white drop-shadow-lg"
+                className="w-8 h-8 sm:w-12 sm:h-12 text-white drop-shadow-lg"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -107,27 +109,27 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
             </div>
           </div>
 
-          {/* Overlay derecho */}
+          {/* Overlay derecho: reducido en mobile */}
           <div
-            className="absolute right-0 top-0 w-1/2 h-full cursor-pointer"
+            className="absolute right-0 top-0 w-1/3 sm:w-1/2 h-full cursor-pointer"
             onMouseEnter={() => setRightHover(true)}
             onMouseLeave={() => setRightHover(false)}
             onClick={goToNext}
           >
             {/* Gradiente oscuro derecho */}
-            <div className={`absolute right-0 top-0 w-1/2 h-full transition-opacity duration-200 ${
+            <div className={`absolute right-0 top-0 w-full h-full transition-opacity duration-200 ${
               rightHover ? 'opacity-100' : 'opacity-0'
             }`}
             style={{
               background: 'linear-gradient(to left, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%)'
             }}
             />
-            {/* Flecha derecha */}
-            <div className={`absolute right-4 top-1/2 transform -translate-y-1/2 transition-opacity duration-200 ${
+            {/* Flecha derecha: más pequeña en mobile */}
+            <div className={`absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 transition-opacity duration-200 ${
               rightHover ? 'opacity-100' : 'opacity-0'
             }`}>
               <svg
-                className="w-12 h-12 text-white drop-shadow-lg"
+                className="w-8 h-8 sm:w-12 sm:h-12 text-white drop-shadow-lg"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -143,13 +145,13 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
           </div>
         </div>
 
-        {/* Botón cerrar */}
+        {/* Botón cerrar: ajustado para mejor touch en mobile */}
         <button
-          className="absolute -top-4 -right-4 bg-white rounded-full w-10 h-10 flex items-center justify-center text-black hover:bg-gray-200 transition-colors duration-200 shadow-lg"
+          className="absolute -top-6 -right-2 sm:-top-4 sm:-right-4 bg-white rounded-full w-12 h-12 sm:w-10 sm:h-10 flex items-center justify-center text-black hover:bg-gray-200 transition-colors duration-200 shadow-lg"
           onClick={onClose}
         >
           <svg
-            className="w-6 h-6"
+            className="w-6 h-6 sm:w-6 sm:h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -163,8 +165,8 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
           </svg>
         </button>
 
-        {/* Contador de imágenes */}
-        <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-3 py-1 rounded-full">
+        {/* Contador de imágenes: ajustado para mobile */}
+        <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-3 py-1 rounded-full">
           {currentIndex + 1} / {mediaItems.length}
         </div>
       </div>
