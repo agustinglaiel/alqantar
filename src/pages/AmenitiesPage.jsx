@@ -1,12 +1,61 @@
 // src/pages/AmenitiesPage.jsx
 import React, { useState, useEffect } from "react";
+import { 
+  Waves, 
+  Car, 
+  Shield, 
+  Wifi, 
+  Users, 
+  TreePine, 
+  Dumbbell, 
+  Baby, 
+  Gamepad2, 
+  Coffee, 
+  Utensils, 
+  ShoppingBag,
+  Heart,
+  Sparkles,
+  MapPin,
+  Clock,
+  Star,
+  CheckCircle
+} from "lucide-react";
 import amenitiesData, { amenityCarouselImages } from "../utils/amenitiesData";
 import Header from "../components/Header";
+
+// Mapeo de iconos para diferentes tipos de amenities
+const getAmenityIcon = (title) => {
+  const iconMap = {
+    'piscina': Waves,
+    'estacionamiento': Car,
+    'seguridad': Shield,
+    'wifi': Wifi,
+    'salon': Users,
+    'jardin': TreePine,
+    'gimnasio': Dumbbell,
+    'niños': Baby,
+    'juegos': Gamepad2,
+    'cafe': Coffee,
+    'restaurante': Utensils,
+    'comercio': ShoppingBag,
+    'spa': Heart,
+    'limpieza': Sparkles,
+    'ubicacion': MapPin,
+    'horario': Clock
+  };
+  
+  const titleLower = title.toLowerCase();
+  for (const [key, IconComponent] of Object.entries(iconMap)) {
+    if (titleLower.includes(key)) {
+      return IconComponent;
+    }
+  }
+  return Star; // Icono por defecto
+};
 
 function AmenitiesPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-
   const carousel = amenityCarouselImages;
 
   const handleImageClick = (index) => {
@@ -62,9 +111,7 @@ function AmenitiesPage() {
           {/* Carrusel 3D */}
           {carousel.length > 0 && (
             <div className="mb-4">
-              {/* Más altura para alojar el centro escalado */}
               <div className="relative h-[34rem] overflow-hidden">
-                {/* Contenedor del carrusel */}
                 <div
                   className="flex items-center justify-center h-full"
                   style={{ perspective: "1000px" }}
@@ -80,11 +127,9 @@ function AmenitiesPage() {
                       (offset === -(carousel.length - 1) &&
                         currentIndex === carousel.length - 1);
 
-                    // 📏 Parámetros visuales (más grande el centro)
                     const CENTER_SCALE = 1.4;
                     const SIDE_SCALE = 0.85;
                     const FAR_SCALE = 0.7;
-
                     const LEFT_OFFSET = 380;
                     const RIGHT_OFFSET = 380;
                     const FAR_OFFSET = 560;
@@ -135,7 +180,6 @@ function AmenitiesPage() {
                             alt={item.title}
                             className="w-full h-full object-cover"
                           />
-                          {/* Overlay con información (solo en el centro) */}
                           {isCenter && (
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent">
                               <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
@@ -156,7 +200,6 @@ function AmenitiesPage() {
                   })}
                 </div>
 
-                {/* Controles de navegación */}
                 <button
                   onClick={prevImage}
                   disabled={isTransitioning}
@@ -199,37 +242,111 @@ function AmenitiesPage() {
             </div>
           )}
 
-          {/* Lista completa de amenities */}
-          <div>
-            {/* <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-              Todos Nuestros Servicios
-            </h2> */}
+          {/* Lista completa de amenities - VERSIÓN MEJORADA */}
+          <div className="mt-16">
+            {/* Título de sección */}
+            {/* <div className="text-center mb-12">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+                <Sparkles className="w-8 h-8 text-blue-600" />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                Todos Nuestros Servicios
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+            </div> */}
+
+            {/* Grid de amenities con nuevo diseño */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {amenitiesData.map((amenity, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
-                >
-                  <h3 className="text-xl font-semibold mb-3 text-gray-800">
-                    {amenity.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {amenity.description}
-                  </p>
-                  {amenity.features && (
-                    <ul className="mt-4 space-y-1">
-                      {amenity.features.map((feature, idx) => (
-                        <li key={idx} className="text-sm text-gray-500">
-                          • {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+              {amenitiesData.map((amenity, index) => {
+                const IconComponent = getAmenityIcon(amenity.title);
+                
+                return (
+                  <div
+                    key={index}
+                    className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-300 hover:-translate-y-1"
+                  >
+                    {/* Header con icono */}
+                    <div className="bg-gray-50 p-6 border-b border-gray-200">
+                      <div className="flex items-center space-x-4">
+                        <div className="flex-shrink-0">
+                          <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <IconComponent className="w-6 h-6 text-white" />
+                          </div>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-gray-800 group-hover:text-gray-600 transition-colors duration-300">
+                            {amenity.title}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Contenido */}
+                    <div className="p-6">
+                      <p className="text-gray-600 leading-relaxed mb-4">
+                        {amenity.description}
+                      </p>
+                      
+                      {amenity.features && amenity.features.length > 0 && (
+                        <div className="space-y-2">
+                          <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center">
+                            <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                            Características
+                          </h4>
+                          <ul className="space-y-2">
+                            {amenity.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-start space-x-2 text-sm text-gray-600">
+                                <div className="w-1.5 h-1.5 bg-gray-800 rounded-full mt-2 flex-shrink-0"></div>
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Sección adicional de beneficios */}
+            <div className="mt-16 bg-gray-50 rounded-3xl p-8 border border-gray-200">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                  ¿Por qué elegirnos?
+                </h3>
+                <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                  Cada servicio ha sido cuidadosamente seleccionado para brindarte la mejor experiencia de vida
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="flex flex-col items-center text-center p-4">
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <CheckCircle className="w-8 h-8 text-gray-800" />
+                    </div>
+                    <h4 className="font-semibold text-gray-800 mb-2">Calidad Premium</h4>
+                    <p className="text-sm text-gray-600">Servicios de la más alta calidad</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center text-center p-4">
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <Clock className="w-8 h-8 text-gray-800" />
+                    </div>
+                    <h4 className="font-semibold text-gray-800 mb-2">Disponibilidad 24/7</h4>
+                    <p className="text-sm text-gray-600">Acceso cuando lo necesites</p>
+                  </div>
+                  
+                  <div className="flex flex-col items-center text-center p-4">
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <Heart className="w-8 h-8 text-gray-800" />
+                    </div>
+                    <h4 className="font-semibold text-gray-800 mb-2">Bienestar Total</h4>
+                    <p className="text-sm text-gray-600">Pensado para tu comodidad</p>
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
