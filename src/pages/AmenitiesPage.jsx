@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import amenitiesData, { amenityCarouselImages } from "../utils/amenitiesData";
 import Header from "../components/Header";
+import MediaDisplay from "../components/MediaDisplay";
 
 // Mapeo de iconos para diferentes tipos de amenities
 const getAmenityIcon = (title) => {
@@ -50,15 +51,31 @@ const getAmenityIcon = (title) => {
 function AmenitiesPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const [isMediaDisplayOpen, setIsMediaDisplayOpen] = useState(false);
+  const [mediaDisplayIndex, setMediaDisplayIndex] = useState(0);
   const carousel = amenityCarouselImages;
 
+  // Distancia mínima requerida para considerar un swipe
+  const minSwipeDistance = 50;
+
   const handleImageClick = (index) => {
-    if (index !== currentIndex && !isTransitioning) {
-      setIsTransitioning(true);
-      setCurrentIndex(index);
-      setTimeout(() => setIsTransitioning(false), 500);
-    }
+    // Abrir MediaDisplay con la imagen seleccionada
+    setMediaDisplayIndex(index);
+    setIsMediaDisplayOpen(true);
   };
+
+  const closeMediaDisplay = () => {
+    setIsMediaDisplayOpen(false);
+  };
+
+  // Convertir datos del carrusel al formato que espera MediaDisplay
+  const mediaItems = carousel.map(item => ({
+    src: item.src,
+    alt: item.title,
+    type: "image"
+  }));
 
   const nextImage = () => {
     if (!isTransitioning && carousel.length > 1) {
@@ -73,6 +90,30 @@ function AmenitiesPage() {
       setIsTransitioning(true);
       setCurrentIndex((prev) => (prev - 1 + carousel.length) % carousel.length);
       setTimeout(() => setIsTransitioning(false), 500);
+    }
+  };
+
+  // Funciones para manejar swipe en móvil
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextImage();
+    } else if (isRightSwipe) {
+      prevImage();
     }
   };
 
@@ -105,7 +146,12 @@ function AmenitiesPage() {
           {/* Carrusel 3D */}
           {carousel.length > 0 && (
             <div className="mb-4">
-              <div className="relative h-[34rem] overflow-hidden">
+              <div 
+                className="relative h-[34rem] overflow-hidden"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+              >
                 <div
                   className="flex items-center justify-center h-full"
                   style={{ perspective: "1000px" }}
@@ -197,7 +243,7 @@ function AmenitiesPage() {
                 <button
                   onClick={prevImage}
                   disabled={isTransitioning}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-200 disabled:opacity-50 z-20"
+                  className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-200 disabled:opacity-50 z-20"
                 >
                   <svg
                     className="w-6 h-6"
@@ -216,7 +262,7 @@ function AmenitiesPage() {
                 <button
                   onClick={nextImage}
                   disabled={isTransitioning}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-200 disabled:opacity-50 z-20"
+                  className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-200 disabled:opacity-50 z-20"
                 >
                   <svg
                     className="w-6 h-6"
@@ -232,9 +278,32 @@ function AmenitiesPage() {
                     />
                   </svg>
                 </button>
+
+                {/* Indicadores de posición */}
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
+                  {carousel.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleImageClick(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        index === currentIndex 
+                          ? 'bg-white scale-125' 
+                          : 'bg-white/50 hover:bg-white/75'
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           )}
+
+          {/* MediaDisplay para visualizar imágenes en pantalla completa */}
+          <MediaDisplay
+            isOpen={isMediaDisplayOpen}
+            onClose={closeMediaDisplay}
+            mediaItems={mediaItems}
+            initialIndex={mediaDisplayIndex}
+          />
 
           {/* Lista completa de amenities - VERSIÓN MEJORADA */}
           <div className="mt-16">
@@ -257,18 +326,18 @@ function AmenitiesPage() {
                 return (
                   <div
                     key={index}
-                    className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-300 hover:-translate-y-1"
+                    className="group bg-white rounded-2xl shadow-lg transition-all duration-300 overflow-hidden border border-gray-100"
                   >
                     {/* Header con icono */}
                     <div className="bg-gray-50 p-6 border-b border-gray-200">
                       <div className="flex items-center space-x-4">
                         <div className="flex-shrink-0">
-                          <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                          <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center transition-transform duration-300">
                             <IconComponent className="w-6 h-6 text-white" />
                           </div>
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-xl font-bold text-gray-800 group-hover:text-gray-600 transition-colors duration-300">
+                          <h3 className="text-xl font-bold text-gray-800 transition-colors duration-300">
                             {amenity.title}
                           </h3>
                         </div>
