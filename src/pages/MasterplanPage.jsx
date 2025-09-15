@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BackgroundSlider from "../components/BackgroundSlider";
+import Header from "../components/Header";
 
 function MasterplanPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -31,8 +32,7 @@ function MasterplanPage() {
 
   return(
     <div>
-      <BackgroundSlider />
-      <div className="w-full text-center py-10 px-4">
+      <div className="w-full text-center py-10 pt-32 px-4">
         {/* Contenedor con posición relativa para el overlay */}
         <div className="relative">
           <img 
@@ -48,12 +48,12 @@ function MasterplanPage() {
                 <div
                   key={index}
                   className={`mb-3 p-3 bg-opacity-70 bg-white text-black rounded-lg text-sm md:text-base transition-all duration-300 transform ${
-                    scrollY > 200 + (index * 50) 
+                    scrollY > 50 + (index * 20) 
                       ? 'opacity-100 translate-x-0' 
                       : 'opacity-0 translate-x-10'
                   }`}
                   style={{
-                    transitionDelay: `${index * 100}ms`
+                    transitionDelay: `${index * 80}ms`
                   }}
                 >
                   {feature}

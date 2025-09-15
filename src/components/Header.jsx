@@ -10,7 +10,9 @@ function Header() {
   const navigate = useNavigate();
 
   // 👉 Detecta si es la página de ficha
-  const isDetailPage = location.pathname.startsWith("/ficha/");
+  // Listado de pathnames donde se debe forzar el fondo opaco
+  const opaquePages = ["/galeria", "/departamentos", "/ubicacion", "/avances", "/masterplan", "/amenities"];
+  const isOpaquePage = opaquePages.includes(location.pathname) || location.pathname.startsWith("/ficha/");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,7 +56,7 @@ function Header() {
   ];
 
   // 👇 Si es ficha, forzamos SIEMPRE opaco; si no, mantenemos el comportamiento actual
-  const bgClass = isDetailPage
+  const bgClass = isOpaquePage
     ? "bg-gray-800 bg-opacity-95"
     : (isScrolled || !isVisible
         ? "bg-gray-800 bg-opacity-95"

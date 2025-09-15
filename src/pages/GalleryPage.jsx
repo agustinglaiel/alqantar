@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import BackgroundSlider from "../components/BackgroundSlider";
 import MediaCard from "../components/MediaCard";
 import MediaDisplay from "../components/MediaDisplay";
 
@@ -32,8 +31,7 @@ function GalleryPage() {
   };
 
   return (
-    <section className="bg-gray-100 min-h-screen">
-      <BackgroundSlider />
+    <section className="bg-gray-100 min-h-screen pt-32">
       <div className="max-w-screen-xl mx-auto px-4 pt-12 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {mediaItems.map((item, index) => (

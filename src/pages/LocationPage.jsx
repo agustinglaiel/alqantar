@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Map, { Marker } from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
-import BackgroundSlider from "../components/BackgroundSlider";
 
 const MAPBOX_TOKEN =
   import.meta.env?.VITE_MAPBOX_ACCESS_TOKEN ||
@@ -32,10 +31,8 @@ function LocationPage() {
   );
 
   return (
-    <div>
-      <BackgroundSlider />
-
-      <section className="py-12 bg-gray-100">
+    <div className="bg-white min-h-full">
+      <section className="py-12 bg-white pt-40">
         <div className="max-w-screen-xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">
             UBICACIÓN

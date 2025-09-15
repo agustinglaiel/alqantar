@@ -1,7 +1,7 @@
 // src/pages/AmenitiesPage.jsx
 import React, { useState, useEffect } from "react";
-import BackgroundSlider from "../components/BackgroundSlider";
 import amenitiesData, { amenityCarouselImages } from "../utils/amenitiesData";
+import Header from "../components/Header";
 
 function AmenitiesPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -44,9 +44,8 @@ function AmenitiesPage() {
 
   return (
     <div className="relative">
-      <BackgroundSlider />
-
-      <div className="relative z-10 bg-white bg-opacity-95">
+      <Header />
+      <div className="relative z-10 pt-32 bg-white bg-opacity-95">
         <div className="max-w-screen-xl mx-auto px-4 pt-20 pb-12">
           {/* Header */}
           <div className="text-center mb-4">

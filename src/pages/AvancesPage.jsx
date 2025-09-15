@@ -1,5 +1,4 @@
 import React from 'react';
-import BackgroundSlider from '../components/BackgroundSlider';  
 import AvancesDisplay from '../components/AvancesDisplay';
 
 export default function AvancesPage() {
@@ -11,17 +10,15 @@ export default function AvancesPage() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-gray-100">
-      <BackgroundSlider />
-
+    <div className="relative min-h-screen bg-white pt-32">
       <div className="relative z-10 max-w-screen-xl mx-auto px-4 py-20">
         <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">
           Avances del Proyecto
         </h2>
         
         <div className="bg-white rounded-xl shadow-lg p-8 md:p-12 relative">
-          <div className="absolute left-1/2 top-8 bottom-8 w-px bg-gray-100 transform -translate-x-1/2"></div>
-          <div className="absolute top-1/2 left-8 right-8 h-px bg-gray-100 transform -translate-y-1/2"></div>
+          <div className="absolute left-1/2 top-8 bottom-8 w-px bg-gray-200 transform -translate-x-1/2"></div>
+          <div className="absolute top-1/2 left-8 right-8 h-px bg-gray-200 transform -translate-y-1/2"></div>
           
           <div className="grid grid-cols-2 gap-8 min-h-[500px]">
             {metrics.map((metric, index) => (

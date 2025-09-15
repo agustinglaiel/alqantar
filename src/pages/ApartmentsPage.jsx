@@ -15,11 +15,11 @@ function ApartmentsPage() {
   const typologies = TYPOLOGIES_BY_TOWER[selectedTower] || [];
 
   return (
-    <div className="relative min-h-screen">
-      <BackgroundSlider />
-      <TowerNavigation onTowerChange={setSelectedTower} />
+    <div className="relative min-h-screen pt-32">
+      <TowerNavigation onTowerChange={setSelectedTower} 
+    />
 
-      <div className="container mx-auto px-4 py-20 mt-32 text-center">
+      <div className="container mx-auto pt-40 px-4 pb-20 text-center">
         <section>
           {typologies.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
