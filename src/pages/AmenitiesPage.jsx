@@ -18,7 +18,8 @@ import {
   MapPin,
   Clock,
   Star,
-  CheckCircle
+  CheckCircle,
+  Bubbles
 } from "lucide-react";
 import amenitiesData, { amenityCarouselImages } from "../utils/amenitiesData";
 import Header from "../components/Header";
@@ -27,21 +28,14 @@ import Header from "../components/Header";
 const getAmenityIcon = (title) => {
   const iconMap = {
     'piscina': Waves,
-    'estacionamiento': Car,
-    'seguridad': Shield,
-    'wifi': Wifi,
-    'salon': Users,
-    'jardin': TreePine,
     'gimnasio': Dumbbell,
-    'niños': Baby,
-    'juegos': Gamepad2,
-    'cafe': Coffee,
-    'restaurante': Utensils,
-    'comercio': ShoppingBag,
-    'spa': Heart,
-    'limpieza': Sparkles,
-    'ubicacion': MapPin,
-    'horario': Clock
+    'sauna': Bubbles,
+    'sala de relax': Heart,
+    'espacio de coworking': Users,
+    'sum privado': Coffee,
+    'espacios verdes': TreePine,
+    'cocheras': Car,
+    'seguridad': Shield,
   };
   
   const titleLower = title.toLowerCase();
