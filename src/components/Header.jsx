@@ -71,7 +71,7 @@ function Header() {
   
   const navLinksRight = [
     { path: "/ubicacion", label: "Ubicación" },
-    { path: "/avances", label: "Avances" },
+    { path: "/amenities", label: "Amenities" },
     { path: "/contacto#contacto", label: "Contacto", onClick: handleContactClick },
   ];
   

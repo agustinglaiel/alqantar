@@ -129,7 +129,7 @@ function AmenitiesPage() {
   return (
     <div className="relative">
       <Header />
-      <div className="relative z-10 pt-32 bg-opacity-95">
+      <div className="relative z-60 pt-32 bg-opacity-95">
         <div className="max-w-screen-xl mx-auto px-4 pt-20 pb-12">
           {/* Header */}
           <div className="text-center mb-4">

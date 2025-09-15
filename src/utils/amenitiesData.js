@@ -48,17 +48,27 @@ const amenitiesData = [
 
 
 const amenityCarouselImages = [
-  { src: "/images/01.png"},
-  { src: "/images/02.png"},
-  { src: "/images/03.png"},
-  { src: "/images/01.png"},
-  { src: "/images/02.png"},
-  { src: "/images/03.png"},
-  { src: "/images/04.png"},
-  { src: "/images/05.png"},
-  { src: "/images/06.png"},
-  { src: "/images/07.png"},
-  { src: "/images/08.png"},
+  { src: "/images/amenities/01.jpg"},
+  { src: "/images/amenities/02.png"},
+  { src: "/images/amenities/03.png"},
+  { src: "/images/amenities/04.png"},
+  { src: "/images/amenities/05.png"},
+  { src: "/images/amenities/06.png"},
+  { src: "/images/amenities/07.png"},
+  { src: "/images/amenities/08.png"},
+  { src: "/images/amenities/09.png"},
+  { src: "/images/amenities/10.png"},
+  { src: "/images/amenities/11.png"},
+  { src: "/images/amenities/12.jpg"},
+  { src: "/images/amenities/13.jpg"},
+  { src: "/images/amenities/14.png"},
+  { src: "/images/amenities/15.png"},
+  { src: "/images/amenities/16.png"},
+  { src: "/images/amenities/17.png"},
+  { src: "/images/amenities/18.png"},
+  { src: "/images/amenities/19.png"},
+  { src: "/images/amenities/20.png"},
+  { src: "/images/amenities/21.png"},
 ];
 
 export default amenitiesData;
