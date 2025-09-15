@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import BackgroundSlider from "../components/BackgroundSlider";
 import TowerNavigation from "../components/TowerNavigation";
 import ApartmentLayout from "../components/ApartmentLayout";
 import FutureUpgrade from "../components/FutureUpgrade"; // 👈 nuevo

@@ -20,11 +20,8 @@ function HomePage() {
   return (
     <div>
       <BackgroundSlider />
-      <section className="py-8">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-8">
-            Explora Alqantar
-          </h2>
+      <section className="py-6">
+        <div className="max-w-screen-xl pt-8 mx-auto px-4">
           <OptionCardWithHover />
         </div>
       </section>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import BackgroundSlider from "../components/BackgroundSlider";
 import Header from "../components/Header";
 
 function MasterplanPage() {

@@ -152,12 +152,12 @@ function Footer() {
               </a>
             </div>
           </div>
-        </div>        {/* Línea divisoria y copyright */}
-        {/* <div className="border-t border-gray-700 mt-6 pt-4 text-center">
+        </div>        
+        <div className="border-t border-gray-700 mt-6 pt-4 text-center">
           <p className="text-xs text-gray-400">
             © 2025 Alqantar. Todos los derechos reservados.
           </p>
-        </div> */}
+        </div>
       </div>
     </footer>
   );

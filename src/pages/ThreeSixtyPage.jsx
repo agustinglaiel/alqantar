@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import BackgroundSlider from "../components/BackgroundSlider";
 import ApartmentLayout from "../components/ApartmentLayout";
 import TowerNavigation from "../components/TowerNavigation";
 import FutureUpgrade from "../components/FutureUpgrade";

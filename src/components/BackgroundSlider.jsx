@@ -52,6 +52,9 @@ function BackgroundSlider() {
             transition-opacity duration-1000 ease-in-out
             ${idx === currentIndex ? 'opacity-100' : 'opacity-0'}
           `}
+          style={{
+            objectPosition: 'center center'
+          }}
         />
       ))}
 

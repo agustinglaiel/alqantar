@@ -138,7 +138,7 @@ function Header() {
           {/* Logo */}
           <div className="absolute left-1/2 transform -translate-x-1/2">
             <Link to="/" onClick={closeMobileMenu}>
-              <img src={logo} alt="Alqantar Logo" className="h-16" />
+              <img src={logo} alt="Alqantar Logo" className="h-16 w-auto object-contain" />
             </Link>
           </div>
           
