@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -7,6 +8,7 @@ function Layout({ children }) {
       <Header />
       <main className="flex-grow">{children}</main>
       <Footer />
+      <Analytics />
     </div>
   );
 }
