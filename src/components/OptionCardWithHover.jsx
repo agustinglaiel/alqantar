@@ -15,19 +15,19 @@ const options = [
   },
   {
     title: "Amenities",
-    imageSrc: "/images/09.png",
+    imageSrc: "/images/09.jpg",
     linkTo: "/amenities",
     description: "Disfruta de nuestras amenities exclusivas.",
   },
   {
     title: "Ubicación",
-    imageSrc: "/images/12.png",
+    imageSrc: "/images/12.jpg",
     linkTo: "/ubicacion",
     description: "En el corazón de Villa Warcalde, Córdoba.",
   },
   {
     title: "Avances",
-    imageSrc: "/images/06.png",
+    imageSrc: "/images/06.jpg",
     linkTo: "/avances",
     description: "Vive el progreso de Alqantar en tiempo real.",
   },
