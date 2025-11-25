@@ -78,6 +78,20 @@ export default function ApartmentDetailPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  // Extraer valores típicos para las "píldoras"
+  const bedrooms = featureByLabel(data?.features, "dormitorio")?.value;
+  const bathrooms = featureByLabel(data?.features, "baño")?.value;
+  const area =
+    featureByLabel(data?.features, "superficie")?.value ||
+    featureByLabel(data?.features, "m²")?.value;
+
+  // CTA de WhatsApp con mensaje prellenado
+  const waLink = useMemo(() => {
+    if (!data) return "";
+    const msg = `Hola, me interesa la ${typology} de ${tower.toUpperCase()} en Alqantar. ¿Podrían enviarme más información?`;
+    return `https://wa.me/5493517496383?text=${encodeURIComponent(msg)}`;
+  }, [data, tower, typology]);
+
   // Si no hay data, mostramos el componente "Próximamente"
   if (!data) {
     return (
@@ -111,19 +125,6 @@ export default function ApartmentDetailPage() {
       </div>
     );
   }
-
-  // Extraer valores típicos para las “píldoras”
-  const bedrooms = featureByLabel(data.features, "dormitorio")?.value;
-  const bathrooms = featureByLabel(data.features, "baño")?.value;
-  const area =
-    featureByLabel(data.features, "superficie")?.value ||
-    featureByLabel(data.features, "m²")?.value;
-
-  // CTA de WhatsApp con mensaje prellenado
-  const waLink = useMemo(() => {
-    const msg = `Hola, me interesa la ${typology} de ${tower.toUpperCase()} en Alqantar. ¿Podrían enviarme más información?`;
-    return `https://wa.me/5493517496383?text=${encodeURIComponent(msg)}`;
-  }, [tower, typology]);
 
   // Funciones para el modal de imagen
   const handleImageClick = (index) => {
