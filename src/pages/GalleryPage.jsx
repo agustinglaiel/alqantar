@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MediaCard from "../components/MediaCard";
+import LazyMediaCard from "../components/LazyMediaCard";
 import MediaDisplay from "../components/MediaDisplay";
 
 function GalleryPage() {
@@ -35,7 +35,7 @@ function GalleryPage() {
       <div className="max-w-screen-xl mx-auto px-4 pt-12 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {mediaItems.map((item, index) => (
-            <MediaCard
+            <LazyMediaCard
               key={index}
               src={item.src}
               type={item.type}

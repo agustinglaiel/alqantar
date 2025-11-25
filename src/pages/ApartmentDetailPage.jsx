@@ -13,6 +13,7 @@ import apartmentData from "../utils/apartmentData";
 import ImageCarousel from "../components/ImageCarousel";
 import MediaDisplay from "../components/MediaDisplay";
 import FutureUpgrade from "../components/FutureUpgrade";
+import useImagePreloader from "../utils/useImagePreloader";
 
 const featureByLabel = (features, labelStartsWith) =>
   features?.find((f) => f.label?.toLowerCase().startsWith(labelStartsWith));
@@ -45,6 +46,15 @@ export default function ApartmentDetailPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const data = apartmentData[tower]?.[typology];
+
+  // Extraer URLs de imágenes para precarga
+  const imageSrcs = useMemo(() => {
+    if (!data?.images) return [];
+    return data.images.map(img => img.src);
+  }, [data]);
+
+  // Precargar todas las imágenes de la tipología
+  const { loaded: imagesLoaded, errors: imageErrors } = useImagePreloader(imageSrcs);
 
   // Detectar dirección del scroll y visibilidad del header
   useEffect(() => {
@@ -85,6 +95,18 @@ export default function ApartmentDetailPage() {
           >
             Volver a Departamentos
           </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // Mostrar loading mientras se precargan las imágenes
+  if (!imagesLoaded) {
+    return (
+      <div className="max-w-screen-xl mx-auto px-4 py-24">
+        <div className="flex flex-col items-center justify-center min-h-[400px]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+          <p className="text-gray-600">Cargando imágenes...</p>
         </div>
       </div>
     );

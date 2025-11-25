@@ -12,6 +12,7 @@ function ApartmentImage({ tower, typology }) {
         src={imageSrc}
         alt={typology}
         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        loading="lazy"
       />
     </div>
   );
