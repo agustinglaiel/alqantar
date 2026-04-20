@@ -14,7 +14,7 @@ function ApartmentsPage() {
   const typologies = TYPOLOGIES_BY_TOWER[selectedTower] || [];
 
   return (
-    <div className="relative min-h-screen pt-32">
+    <div className="relative min-h-svh pt-32">
       <TowerNavigation onTowerChange={setSelectedTower} 
     />
 

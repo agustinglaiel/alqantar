@@ -7,7 +7,7 @@ function ApartmentImage({ tower, typology }) {
   const imageSrc = data.mainImage || '/images/default.webp';
 
   return (
-    <div className="w-full h-full rounded-t-lg overflow-hidden shadow-lg">
+    <div className="w-full h-48 sm:h-full rounded-t-lg overflow-hidden shadow-lg">
       <img
         src={imageSrc}
         alt={typology}

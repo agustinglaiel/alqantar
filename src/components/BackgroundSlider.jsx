@@ -36,7 +36,7 @@ function BackgroundSlider() {
   }, [currentIndex]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-svh overflow-hidden">
       {IMAGES.slice(0, renderedCount).map((src, idx) => (
         <img
           key={idx}

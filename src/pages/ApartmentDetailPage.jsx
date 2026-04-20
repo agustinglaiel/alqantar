@@ -108,7 +108,7 @@ export default function ApartmentDetailPage() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-svh">
       <div className="max-w-screen-xl mx-auto px-4 pt-40 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Columna principal del contenido */}
