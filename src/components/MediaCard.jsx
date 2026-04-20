@@ -29,6 +29,7 @@ function MediaCard({ src, type = "image", alt, onClick, className, imageFit = "c
             <img
               src={src}
               alt={alt}
+              loading="lazy"
               className={`w-full h-full object-${imageFit} ${imageFit === "contain" ? "p-1" : ""}`}
             />
           )}

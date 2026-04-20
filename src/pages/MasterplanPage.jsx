@@ -35,7 +35,7 @@ function MasterplanPage() {
         {/* Contenedor con posición relativa para el overlay */}
         <div className="relative">
           <img 
-            src="/images/planimetria.png" 
+            src="/images/planimetria.webp"
             alt="Planimetría" 
             className="w-full h-auto object-cover"
           />
@@ -63,7 +63,7 @@ function MasterplanPage() {
         </div>
         
         <img 
-          src="/images/corte.png" 
+          src="/images/corte.webp" 
           alt="Corte" 
           className="w-full h-96 object-cover mt-4"
         />

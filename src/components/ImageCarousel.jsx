@@ -9,7 +9,7 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
 
   const validImages = Array.isArray(images) && images.length > 0
     ? images
-    : [{ src: '/images/default.jpg', alt: 'Imagen por defecto' }];
+    : [{ src: '/images/default.webp', alt: 'Imagen por defecto' }];
 
   const aspectStyle = useMemo(() => ({ aspectRatio: aspect }), [aspect]);
 

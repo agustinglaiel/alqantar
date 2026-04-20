@@ -6,12 +6,12 @@ function AmenitieLayout({ amenityType, onCustomClick }) {
     'sum': {
       title: 'SUM Privado',
       description: 'Salones amplios y equipados',
-      image: '/images/amenities/15.png'
+      image: '/images/amenities/15.webp'
     },
     'spa': {
       title: 'Gimnasio & Spa & Relax',
       description: 'Gimnasio, Sauna y Sala de relax',
-      image: '/images/amenities/03.png'
+      image: '/images/amenities/03.webp'
     }
   };
 

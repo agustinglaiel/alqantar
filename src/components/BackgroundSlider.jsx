@@ -2,16 +2,15 @@
 import React, { useState, useEffect } from 'react';
 
 const IMAGES = [
-  '/images/01.png',
-  '/images/02.png',
-  '/images/03.png',
-  '/images/05.png',
-  '/images/06.jpg',
-  '/images/07.jpg',
+  '/images/01.webp',
+  '/images/02.webp',
+  '/images/03.webp',
+  '/images/05.webp',
+  '/images/06.webp',
+  '/images/07.webp',
 ];
 
-
-const INTERVAL_DURATION = 5000; 
+const INTERVAL_DURATION = 5000;
 const OVERLAY_FADE_DURATION = 700;
 
 function BackgroundSlider() {
@@ -19,18 +18,9 @@ function BackgroundSlider() {
   const [showOverlay, setShowOverlay] = useState(true);
 
   useEffect(() => {
-    IMAGES.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, []);
-
-  useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % IMAGES.length);
-
       setShowOverlay(false);
-
       setTimeout(() => {
         setShowOverlay(true);
       }, OVERLAY_FADE_DURATION);
@@ -46,23 +36,23 @@ function BackgroundSlider() {
           key={idx}
           src={src}
           alt={`fondo-${idx}`}
+          fetchpriority={idx === 0 ? 'high' : 'low'}
           className={`
             absolute inset-0
             w-full h-full object-cover
             transition-opacity duration-1000 ease-in-out
             ${idx === currentIndex ? 'opacity-100' : 'opacity-0'}
           `}
-          style={{
-            objectPosition: 'center center'
-          }}
+          style={{ objectPosition: 'center center' }}
         />
       ))}
 
       <div className="absolute inset-0 bg-black bg-opacity-20" />
 
       <img
-        src="/images/incomparable.png"
+        src="/images/incomparable.webp"
         alt="Incomparable"
+        fetchpriority="high"
         className={`
           absolute top-1/2 left-8 md:left-16 lg:left-20
           transform -translate-y-1/2

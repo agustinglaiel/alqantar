@@ -1,4 +1,4 @@
-import logo from "../../public/images/logo.png";
+import logo from "../../public/images/logo.webp";
 import { Facebook, Instagram, MessageCircleMore, Mail } from "lucide-react";
 
 function Footer() {

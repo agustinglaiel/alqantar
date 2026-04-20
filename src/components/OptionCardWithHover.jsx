@@ -3,37 +3,37 @@ import { Link } from "react-router-dom";
 const options = [
   {
     title: "Galería",
-    imageSrc: "/images/01.png",
+    imageSrc: "/images/01.webp",
     linkTo: "/galeria",
     description: "Descubre la belleza de Alqantar en imágenes.",
   },
   {
     title: "Departamentos",
-    imageSrc: "/images/02.png",
+    imageSrc: "/images/02.webp",
     linkTo: "/departamentos",
     description: "Explora nuestras modernas torres residenciales.",
   },
   {
     title: "Amenities",
-    imageSrc: "/images/09.jpg",
+    imageSrc: "/images/09.webp",
     linkTo: "/amenities",
     description: "Disfruta de nuestras amenities exclusivas.",
   },
   {
     title: "Ubicación",
-    imageSrc: "/images/12.jpg",
+    imageSrc: "/images/12.webp",
     linkTo: "/ubicacion",
     description: "En el corazón de Villa Warcalde, Córdoba.",
   },
   {
     title: "Avances",
-    imageSrc: "/images/06.jpg",
+    imageSrc: "/images/06.webp",
     linkTo: "/avances",
     description: "Vive el progreso de Alqantar en tiempo real.",
   },
   {
     title: "360°",
-    imageSrc: "/images/03.png",
+    imageSrc: "/images/03.webp",
     linkTo: "/360",
     description: "Vive una experiencia inmersiva en 360°.",
   },

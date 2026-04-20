@@ -4,7 +4,7 @@ import apartmentData from '../utils/apartmentData';
 
 function ApartmentImage({ tower, typology }) {
   const data = apartmentData[tower]?.[typology] || {};
-  const imageSrc = data.mainImage || '/images/default.jpg';
+  const imageSrc = data.mainImage || '/images/default.webp';
 
   return (
     <div className="w-full h-full rounded-t-lg overflow-hidden shadow-lg">
