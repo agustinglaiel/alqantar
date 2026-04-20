@@ -9,34 +9,27 @@ function MediaCard({ src, type = "image", alt, onClick, className, imageFit = "c
       className={`group relative rounded-lg overflow-hidden shadow-lg w-full h-52 perspective-1000 cursor-pointer ${className}`}
     >
       <div className="absolute w-full h-full">
-        <div
-          className={`w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105 ${
-            isVideo ? "bg-transparent" : `bg-gray-100 ${imageFit === "contain" ? "bg-center" : ""}`
-          }`}
-          style={isVideo ? {} : { backgroundImage: `url(${src})` }}
-        >
-          {isVideo ? (
-            <div className="w-full h-full bg-gray-800 flex items-center justify-center">
-              <svg
-                className="w-16 h-16 text-white opacity-70"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-          ) : (
-            <img
-              src={src}
-              alt={alt}
-              loading="lazy"
-              className={`w-full h-full object-${imageFit} ${imageFit === "contain" ? "p-1" : ""}`}
-            />
-          )}
-        </div>
+        {isVideo ? (
+          <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+            <svg
+              className="w-16 h-16 text-white opacity-70"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+        ) : (
+          <img
+            src={src}
+            alt={alt}
+            loading="lazy"
+            className={`w-full h-full object-${imageFit} transition-transform duration-300 group-hover:scale-105 ${imageFit === "contain" ? "p-1" : ""}`}
+          />
+        )}
       </div>
       <div className="absolute inset-0 group-hover:translate-z-10 transition-transform duration-300" />
-      
+
       {/* Overlay con ícono de zoom */}
       <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
         <svg

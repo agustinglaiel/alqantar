@@ -1,32 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../public/images/logo.webp";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const lastScrollYRef = useRef(0);
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const opaquePages = ["/galeria", "/departamentos", "/ubicacion", "/avances", "/masterplan", "/amenities", "/360"];
   const isOpaquePage = opaquePages.includes(location.pathname) || location.pathname.startsWith("/ficha/");
-  
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY) {
+      if (currentScrollY > lastScrollYRef.current) {
         setIsVisible(false);
-      } else if (currentScrollY < lastScrollY) {
+      } else if (currentScrollY < lastScrollYRef.current) {
         setIsVisible(true);
       }
       setIsScrolled(currentScrollY > 10);
-      setLastScrollY(currentScrollY);
+      lastScrollYRef.current = currentScrollY;
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, []);
   
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -232,14 +232,11 @@ function Header() {
       
       {/* Overlay mejorado */}
       {isMobileMenuOpen && (
-        <div 
+        <div
           className={`md:hidden fixed inset-0 bg-black transition-opacity duration-300 z-30 ${
             isMobileMenuOpen ? 'bg-opacity-60' : 'bg-opacity-0'
           }`}
           onClick={closeMobileMenu}
-          style={{
-            backdropFilter: 'blur(4px)'
-          }}
         ></div>
       )}
     </>

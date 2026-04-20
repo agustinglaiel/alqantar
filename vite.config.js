@@ -9,4 +9,16 @@ export default defineConfig({
     include: ['mapbox-gl', 'react-map-gl/mapbox'],
     exclude: ['react-map-gl'], // opcional, por si otro plugin lo mete
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Mapbox is huge (~700kb) — isolate it so it only loads on /ubicacion
+          mapbox: ['mapbox-gl', 'react-map-gl/mapbox'],
+          // React core
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+        },
+      },
+    },
+  },
 })

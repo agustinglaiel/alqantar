@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   BedDouble,
@@ -36,10 +36,9 @@ export default function ApartmentDetailPage() {
   const typology = decodeURIComponent(typParam || "");
   
   // Estado para controlar la posición del aside
-  const [isScrollingUp, setIsScrollingUp] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  
+  const lastScrollYRef = useRef(0);
+
   // Estados para el modal de imagen
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -50,23 +49,17 @@ export default function ApartmentDetailPage() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
-      // Lógica del header (copiada del Header.jsx)
-      if (currentScrollY > lastScrollY) {
+      if (currentScrollY > lastScrollYRef.current) {
         setIsHeaderVisible(false);
-        setIsScrollingUp(false);
-      } else if (currentScrollY < lastScrollY) {
+      } else if (currentScrollY < lastScrollYRef.current) {
         setIsHeaderVisible(true);
-        setIsScrollingUp(true);
       }
-      
-      setLastScrollY(currentScrollY);
+      lastScrollYRef.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   // Extraer valores típicos para las "píldoras"
   const bedrooms = featureByLabel(data?.features, "dormitorio")?.value;

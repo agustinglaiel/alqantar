@@ -16,26 +16,33 @@ const OVERLAY_FADE_DURATION = 700;
 function BackgroundSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showOverlay, setShowOverlay] = useState(true);
+  // Start with only first image in DOM; add more progressively as needed
+  const [renderedCount, setRenderedCount] = useState(1);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % IMAGES.length);
+      const nextIdx = (currentIndex + 1) % IMAGES.length;
+      // Ensure current + next + one-ahead are in the DOM before transitioning
+      setRenderedCount((prev) => Math.max(prev, Math.min(nextIdx + 2, IMAGES.length)));
+
       setShowOverlay(false);
       setTimeout(() => {
+        setCurrentIndex(nextIdx);
         setShowOverlay(true);
       }, OVERLAY_FADE_DURATION);
     }, INTERVAL_DURATION);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [currentIndex]);
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {IMAGES.map((src, idx) => (
+      {IMAGES.slice(0, renderedCount).map((src, idx) => (
         <img
           key={idx}
           src={src}
-          alt={`fondo-${idx}`}
+          alt={idx === 0 ? 'Alqantar condominio' : ''}
+          aria-hidden={idx !== currentIndex}
           fetchpriority={idx === 0 ? 'high' : 'low'}
           className={`
             absolute inset-0

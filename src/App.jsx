@@ -1,21 +1,24 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
-import GalleryPage from "./pages/GalleryPage";
-import LocationPage from "./pages/LocationPage";
-import ApartmentsPage from "./pages/ApartmentsPage";
-import AmenitiesPage from "./pages/AmenitiesPage";
-import MasterplanPage from "./pages/MasterplanPage";
-import AvancesPage from "./pages/AvancesPage";
-import ThreeSixtyPage from "./pages/ThreeSixtyPage";
-import ApartmentDetailPage from "./pages/ApartmentDetailPage";
+
+const GalleryPage = lazy(() => import("./pages/GalleryPage"));
+const LocationPage = lazy(() => import("./pages/LocationPage"));
+const ApartmentsPage = lazy(() => import("./pages/ApartmentsPage"));
+const AmenitiesPage = lazy(() => import("./pages/AmenitiesPage"));
+const MasterplanPage = lazy(() => import("./pages/MasterplanPage"));
+const AvancesPage = lazy(() => import("./pages/AvancesPage"));
+const ThreeSixtyPage = lazy(() => import("./pages/ThreeSixtyPage"));
+const ApartmentDetailPage = lazy(() => import("./pages/ApartmentDetailPage"));
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
       <Layout>
+        <Suspense fallback={null}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/galeria" element={<GalleryPage />} />
@@ -28,6 +31,7 @@ function App() {
           <Route path="/masterplan" element={<MasterplanPage />} />
           <Route path="/360" element={<ThreeSixtyPage />} />
         </Routes>
+        </Suspense>
       </Layout>
     </Router>
   );

@@ -50,9 +50,11 @@ function OptionCardWithHover() {
         >
           {/* Imagen de fondo */}
           <div className="absolute w-full h-full">
-            <div
-              className="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-              style={{ backgroundImage: `url(${option.imageSrc})` }}
+            <img
+              src={option.imageSrc}
+              alt={option.title}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
             {/* Overlay oscuro */}
             <div className="absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-300 group-hover:bg-opacity-60" />
