@@ -29,11 +29,11 @@ function TowerNavigation({ onTowerChange, showAmenities = false }) {
 
   return (
     <div className="relative z-20 w-full">
-      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-11/12 max-w-2xl">
-        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl shadow-lg p-2">
-          <div className="relative flex rounded-xl overflow-hidden">
+      <div className="absolute left-1/2 top-8 w-11/12 max-w-2xl -translate-x-1/2">
+        <div className="rounded-2xl border border-white/20 bg-white/10 p-2 shadow-lg backdrop-blur-xl">
+          <div className="relative flex overflow-hidden rounded-xl">
             <div 
-              className="absolute top-0 left-0 h-full bg-gradient-to-r from-gray-800 to-gray-600 rounded-xl shadow-lg transition-transform duration-500 ease-out border border-white/30"
+              className="absolute left-0 top-0 h-full rounded-xl border border-white/30 bg-gradient-to-r from-gray-800 to-gray-600 shadow-lg transition-transform duration-500 ease-out"
               style={{
                 width:     `${100 / navigationOptions.length}%`,
                 transform: `translateX(${activeIndex * 100}%)`
@@ -47,8 +47,8 @@ function TowerNavigation({ onTowerChange, showAmenities = false }) {
                 className={`
                   relative flex-1 px-6 py-4 transition-all duration-300 ease-out
                   ${activeTower === option.id 
-                    ? 'text-white font-semibold' 
-                    : 'text-gray-500 hover:text-gray-800 hover:bg-white/5'
+                    ? 'font-semibold text-white' 
+                    : 'text-gray-500 hover:bg-white/5 hover:text-gray-800'
                   }
                 `}
               >

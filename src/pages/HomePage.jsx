@@ -21,17 +21,17 @@ function HomePage() {
     <div>
       <BackgroundSlider />
       <section className="py-6">
-        <div className="max-w-screen-xl pt-8 mx-auto px-4">
+        <div className="mx-auto max-w-screen-xl px-4 pt-8">
           <OptionCardWithHover />
         </div>
       </section>
-      <section id="perks" className="py-6 bg-gray-100">
-        <div className="max-w-screen-xl mx-auto px-4">
+      <section id="perks" className="bg-gray-100 py-6">
+        <div className="mx-auto max-w-screen-xl px-4">
           <Perks />
         </div>
       </section>
-      <section id="contacto" className="py-8 bg-gray-100">
-        <div className="max-w-screen-xl mx-auto px-4">
+      <section id="contacto" className="bg-gray-100 py-8">
+        <div className="mx-auto max-w-screen-xl px-4">
           <ContactSection />
         </div>
       </section>

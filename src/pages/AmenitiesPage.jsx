@@ -1,21 +1,15 @@
 // src/pages/AmenitiesPage.jsx
 import React, { useState, useEffect } from "react";
-import { 
-  Waves, 
-  Car, 
-  Shield, 
-  Wifi, 
-  Users, 
-  TreePine, 
-  Dumbbell, 
-  Baby, 
-  Gamepad2, 
-  Coffee, 
-  Utensils, 
-  ShoppingBag,
+import ProgressiveImage from "../components/ProgressiveImage";
+import {
+  Waves,
+  Car,
+  Shield,
+  Users,
+  TreePine,
+  Dumbbell,
+  Coffee,
   Heart,
-  Sparkles,
-  MapPin,
   Clock,
   Star,
   CheckCircle,
@@ -129,14 +123,14 @@ function AmenitiesPage() {
   return (
     <div className="relative">
       <Header />
-      <div className="relative z-60 pt-32 bg-opacity-95">
-        <div className="max-w-screen-xl mx-auto px-4 pt-20 pb-12">
+      <div className="z-60 relative bg-opacity-95 pt-32">
+        <div className="mx-auto max-w-screen-xl px-4 pb-12 pt-20">
           {/* Header */}
-          <div className="text-center mb-4">
-            <h1 className="text-4xl lg:text-5xl font-bold mb-6 text-gray-800">
+          <div className="mb-4 text-center">
+            <h1 className="mb-6 text-4xl font-bold text-gray-800 lg:text-5xl">
               Amenities
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="mx-auto max-w-3xl text-xl text-gray-600">
               Descubre todas las comodidades y servicios exclusivos que hemos
               diseñado para enriquecer tu experiencia de vida en nuestro
               complejo residencial.
@@ -153,7 +147,7 @@ function AmenitiesPage() {
                 onTouchEnd={onTouchEnd}
               >
                 <div
-                  className="flex items-center justify-center h-full"
+                  className="flex h-full items-center justify-center"
                   style={{ perspective: "1000px" }}
                 >
                   {carousel.map((item, index) => {
@@ -211,23 +205,24 @@ function AmenitiesPage() {
                         onClick={() => handleImageClick(index)}
                       >
                         <div
-                          className={`relative w-96 h-72 rounded-xl overflow-hidden shadow-2xl bg-white ${
+                          className={`relative h-72 w-96 overflow-hidden rounded-xl bg-white shadow-2xl ${
                             isCenter ? "ring-2 ring-blue-500/30" : ""
                           }`}
                         >
-                          <img
+                          <ProgressiveImage
                             src={item.src}
                             alt={item.title}
-                            className="w-full h-full object-cover"
+                            sizes="384px"
+                            className="size-full"
                           />
                           {isCenter && (
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent">
-                              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                                <h3 className="text-2xl font-bold mb-2">
+                              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                                <h3 className="mb-2 text-2xl font-bold">
                                   {item.title}
                                 </h3>
                                 {item.description && (
-                                  <p className="text-sm opacity-90 line-clamp-3">
+                                  <p className="line-clamp-3 text-sm opacity-90">
                                     {item.description}
                                   </p>
                                 )}
@@ -243,10 +238,10 @@ function AmenitiesPage() {
                 <button
                   onClick={prevImage}
                   disabled={isTransitioning}
-                  className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-200 disabled:opacity-50 z-20"
+                  className="absolute left-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-white/80 p-3 text-gray-800 shadow-lg transition-all duration-200 hover:bg-white disabled:opacity-50 md:block"
                 >
                   <svg
-                    className="w-6 h-6"
+                    className="size-6"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -262,10 +257,10 @@ function AmenitiesPage() {
                 <button
                   onClick={nextImage}
                   disabled={isTransitioning}
-                  className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-gray-800 p-3 rounded-full shadow-lg transition-all duration-200 disabled:opacity-50 z-20"
+                  className="absolute right-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-white/80 p-3 text-gray-800 shadow-lg transition-all duration-200 hover:bg-white disabled:opacity-50 md:block"
                 >
                   <svg
-                    className="w-6 h-6"
+                    className="size-6"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -280,14 +275,14 @@ function AmenitiesPage() {
                 </button>
 
                 {/* Indicadores de posición */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
+                <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 space-x-2">
                   {carousel.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => handleImageClick(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      className={`size-2 rounded-full transition-all duration-300 ${
                         index === currentIndex 
-                          ? 'bg-white scale-125' 
+                          ? 'scale-125 bg-white' 
                           : 'bg-white/50 hover:bg-white/75'
                       }`}
                     />
@@ -319,21 +314,21 @@ function AmenitiesPage() {
             </div> */}
 
             {/* Grid de amenities con nuevo diseño */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {amenitiesData.map((amenity, index) => {
                 const IconComponent = getAmenityIcon(amenity.title);
                 
                 return (
                   <div
                     key={index}
-                    className="group bg-white rounded-2xl shadow-lg transition-all duration-300 overflow-hidden border border-gray-100"
+                    className="group overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg transition-all duration-300"
                   >
                     {/* Header con icono */}
-                    <div className="bg-gray-50 p-6 border-b border-gray-200">
+                    <div className="border-b border-gray-200 bg-gray-50 p-6">
                       <div className="flex items-center space-x-4">
-                        <div className="flex-shrink-0">
-                          <div className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center transition-transform duration-300">
-                            <IconComponent className="w-6 h-6 text-white" />
+                        <div className="shrink-0">
+                          <div className="flex size-12 items-center justify-center rounded-xl bg-gray-800 transition-transform duration-300">
+                            <IconComponent className="size-6 text-white" />
                           </div>
                         </div>
                         <div className="flex-1">
@@ -346,20 +341,20 @@ function AmenitiesPage() {
 
                     {/* Contenido */}
                     <div className="p-6">
-                      <p className="text-gray-600 leading-relaxed mb-4">
+                      <p className="mb-4 leading-relaxed text-gray-600">
                         {amenity.description}
                       </p>
                       
                       {amenity.features && amenity.features.length > 0 && (
                         <div className="space-y-2">
-                          <h4 className="text-sm font-semibold text-gray-800 mb-3 flex items-center">
-                            <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                          <h4 className="mb-3 flex items-center text-sm font-semibold text-gray-800">
+                            <CheckCircle className="mr-2 size-4 text-green-500" />
                             Características
                           </h4>
                           <ul className="space-y-2">
                             {amenity.features.map((feature, idx) => (
                               <li key={idx} className="flex items-start space-x-2 text-sm text-gray-600">
-                                <div className="w-1.5 h-1.5 bg-gray-800 rounded-full mt-2 flex-shrink-0"></div>
+                                <div className="mt-2 size-1.5 shrink-0 rounded-full bg-gray-800"></div>
                                 <span>{feature}</span>
                               </li>
                             ))}
@@ -373,37 +368,37 @@ function AmenitiesPage() {
             </div>
 
             {/* Sección adicional de beneficios */}
-            <div className="mt-16 bg-gray-50 rounded-3xl p-8 border border-gray-200">
+            <div className="mt-16 rounded-3xl border border-gray-200 bg-gray-50 p-8">
               <div className="text-center">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                <h3 className="mb-4 text-2xl font-bold text-gray-800">
                   ¿Por qué elegirnos?
                 </h3>
-                <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                <p className="mx-auto mb-8 max-w-2xl text-gray-600">
                   Cada servicio ha sido cuidadosamente seleccionado para brindarte la mejor experiencia de vida
                 </p>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="flex flex-col items-center text-center p-4">
-                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                      <CheckCircle className="w-8 h-8 text-gray-800" />
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                  <div className="flex flex-col items-center p-4 text-center">
+                    <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-gray-100">
+                      <CheckCircle className="size-8 text-gray-800" />
                     </div>
-                    <h4 className="font-semibold text-gray-800 mb-2">Calidad Premium</h4>
+                    <h4 className="mb-2 font-semibold text-gray-800">Calidad Premium</h4>
                     <p className="text-sm text-gray-600">Servicios de la más alta calidad</p>
                   </div>
                   
-                  <div className="flex flex-col items-center text-center p-4">
-                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                      <Clock className="w-8 h-8 text-gray-800" />
+                  <div className="flex flex-col items-center p-4 text-center">
+                    <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-gray-100">
+                      <Clock className="size-8 text-gray-800" />
                     </div>
-                    <h4 className="font-semibold text-gray-800 mb-2">Disponibilidad 24/7</h4>
+                    <h4 className="mb-2 font-semibold text-gray-800">Disponibilidad 24/7</h4>
                     <p className="text-sm text-gray-600">Acceso cuando lo necesites</p>
                   </div>
                   
-                  <div className="flex flex-col items-center text-center p-4">
-                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                      <Heart className="w-8 h-8 text-gray-800" />
+                  <div className="flex flex-col items-center p-4 text-center">
+                    <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-gray-100">
+                      <Heart className="size-8 text-gray-800" />
                     </div>
-                    <h4 className="font-semibold text-gray-800 mb-2">Bienestar Total</h4>
+                    <h4 className="mb-2 font-semibold text-gray-800">Bienestar Total</h4>
                     <p className="text-sm text-gray-600">Pensado para tu comodidad</p>
                   </div>
                 </div>

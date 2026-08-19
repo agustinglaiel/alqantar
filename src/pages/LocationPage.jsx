@@ -3,12 +3,10 @@ import Map, { Marker } from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 const MAPBOX_TOKEN =
-  import.meta.env?.VITE_MAPBOX_ACCESS_TOKEN ||
-  process.env.REACT_APP_MAPBOX_ACCESS_TOKEN ||
-  "TU_TOKEN_PUBLICO_AQUI";
+  import.meta.env?.VITE_MAPBOX_ACCESS_TOKEN || "TU_TOKEN_PUBLICO_AQUI";
 
 function LocationPage() {
-  const [mapLocations, setMapLocations] = useState([]);
+  const [mapLocations] = useState([]);
   const mapCenter = { lat: -31.33593, lng: -64.30234 };
 
   const mapContainerStyle = {
@@ -23,7 +21,7 @@ function LocationPage() {
   // marcador SVG numerado (equivalente a tu customMarker de Google)
   const NumberMarker = ({ n }) => (
     <div
-      className="w-6 h-6 flex items-center justify-center bg-white border-2 border-black rounded-full text-[10px] font-bold"
+      className="flex size-6 items-center justify-center rounded-full border-2 border-black bg-white text-[10px] font-bold"
       title={`Punto ${n}`}
     >
       {n}
@@ -33,13 +31,13 @@ function LocationPage() {
   return (
     <div className="min-h-full">
       <section className="py-12 pt-40">
-        <div className="max-w-screen-xl mx-auto px-4">
+        <div className="mx-auto max-w-screen-xl px-4">
           <div className="mb-6 text-center">
             <a
               href={googleMapsLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-lg text-gray-600 hover:text-blue-500 hover:underline transition-colors duration-200"
+              className="text-lg text-gray-600 transition-colors duration-200 hover:text-blue-500 hover:underline"
             >
               José María Eguía Zanón 9932, Villa Warcalde, Córdoba
             </a>
@@ -58,7 +56,7 @@ function LocationPage() {
             >
               {/* Marcador central */}
               <Marker longitude={mapCenter.lng} latitude={mapCenter.lat} anchor="bottom">
-                <div className="w-5 h-5 bg-red-500 rounded-full border-2 border-white shadow" />
+                <div className="size-5 rounded-full border-2 border-white bg-red-500 shadow" />
               </Marker>
 
               {/* Otros marcadores, numerados */}

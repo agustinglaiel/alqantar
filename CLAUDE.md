@@ -27,11 +27,15 @@ For multi-step tasks, state a brief plan with verifiable steps before starting. 
 ## Commands
 
 ```bash
-npm run dev       # Start dev server (Vite HMR)
-npm run build     # Production build
-npm run preview   # Preview production build locally
-npm run lint      # Run ESLint
+npm run dev            # Start dev server (Vite HMR)
+npm run build          # Production build
+npm run preview        # Preview production build locally
+npm run lint           # Run ESLint
+npm run optimize:images  # Regenerate resized variants + LQIP manifest
 ```
+
+`dev` and `build` both run `optimize:images` first via npm `pre` hooks. The script is
+incremental, so repeat runs are near-instant.
 
 There are no tests in this project.
 
@@ -59,7 +63,8 @@ React Router v7 with these routes:
 All content is **static data** — no backend or API calls:
 - `apartmentData.js` — typologies keyed by `torre1.['Tipología N']`, each with images, features (lucide-react icons), description, and detail bullets
 - `amenitiesData.js` — amenity list + carousel image paths
-- `useImagePreloader.js` — custom hook that preloads an array of image URLs, returns `{ loaded, errors }`
+- `imageManifest.js` — **generated**, do not edit by hand. Maps each `/images/*.webp` to its
+  intrinsic size, the widths available under `/images/opt/`, and a base64 LQIP placeholder
 
 ### Key Architectural Patterns
 
@@ -67,7 +72,16 @@ All content is **static data** — no backend or API calls:
 
 **Opaque vs. transparent header**: On `HomePage` the header starts transparent and turns opaque on scroll. All other pages are always opaque. The list of opaque pages is hardcoded in `Header.jsx`.
 
-**Image preloading gate**: `ApartmentDetailPage` blocks render with a spinner until all typology images finish loading via `useImagePreloader`.
+**Progressive images**: every content image goes through `ProgressiveImage`, which paints the
+inline LQIP blur immediately, picks a size via `srcset`/`sizes`, starts fetching 400px before
+entering the viewport, and crossfades to the sharp image. It reserves space from the manifest's
+intrinsic dimensions, so there is no layout shift. Callers pass the *original* path
+(`/images/01.webp`) — the variant paths are derived. Images missing from the manifest degrade
+to a plain `<img>`.
+
+Note: `ProgressiveImage` only applies `relative` to its wrapper when the caller does not pass a
+positioning class. Tailwind emits `.relative` after `.absolute`, so hardcoding it would silently
+override callers like `BackgroundSlider` that need the wrapper absolutely positioned.
 
 **Layout wrapper** (`src/components/Layout.jsx`): Wraps every page with `<Header>`, `<Footer>`, Vercel `<Analytics>`, and `<SpeedInsights>`.
 
@@ -79,7 +93,13 @@ All content is **static data** — no backend or API calls:
 
 ### Static Assets
 
-All images and videos live under `public/`. Typology images: `/images/tipologiaNNN/NN.png`. Amenity images: `/images/amenities/NN.png`.
+All images and videos live under `public/`. Typology images: `/images/tipologiaNNN/NN.webp`.
+Amenity images: `/images/amenities/NN.webp`. These full-size `.webp` files are the **sources**
+for the optimizer and are never served to users directly.
+
+`public/images/opt/` holds the generated variants (`<name>-<width>.webp`). It is gitignored and
+rebuilt on every `dev`/`build`. Add a new image by dropping the `.webp` into `public/images/`
+and re-running the build.
 
 ### Styling
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import ProgressiveImage from './ProgressiveImage';
 
 function AmenityDisplay({ 
   title, 
@@ -63,11 +64,12 @@ function AmenityDisplay({
     <div ref={elementRef} className={containerClasses}>
       {/* Imagen */}
       <div className={`flex-1 ${imageClasses}`}>
-        <div className="rounded-2xl overflow-hidden shadow-2xl">
-          <img 
-            src={image} 
+        <div className="overflow-hidden rounded-2xl shadow-2xl">
+          <ProgressiveImage
+            src={image}
             alt={title}
-            className="w-full h-64 lg:h-80 object-cover"
+            sizes="(min-width: 1024px) 600px, 92vw"
+            className="h-64 w-full lg:h-80"
           />
         </div>
       </div>
@@ -75,17 +77,17 @@ function AmenityDisplay({
       {/* Contenido */}
       <div className={`flex-1 ${contentClasses}`}>
         <div className="max-w-lg">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-6">
+          <h2 className="mb-6 text-3xl font-bold text-gray-800 lg:text-4xl">
             {title}
           </h2>
           
-          <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+          <p className="mb-8 text-lg leading-relaxed text-gray-600">
             {description}
           </p>
 
           {features.length > 0 && (
             <div className="space-y-3">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              <h3 className="mb-4 text-xl font-semibold text-gray-800">
                 Características destacadas:
               </h3>
               <ul className="space-y-2">
@@ -99,7 +101,7 @@ function AmenityDisplay({
                       transition: `all 0.6s ease-out ${0.5 + index * 0.1}s`
                     }}
                   >
-                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                    <span className="mr-3 size-2 rounded-full bg-blue-500"></span>
                     {feature}
                   </li>
                 ))}

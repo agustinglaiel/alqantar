@@ -32,14 +32,15 @@ function GalleryPage() {
 
   return (
     <section className="min-h-screen pt-32">
-      <div className="max-w-screen-xl mx-auto px-4 pt-12 pb-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="mx-auto max-w-screen-xl px-4 py-12">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {mediaItems.map((item, index) => (
             <LazyMediaCard
               key={index}
               src={item.src}
               type={item.type}
               alt={item.alt}
+              sizes="(min-width: 1280px) 294px, (min-width: 1024px) 31vw, (min-width: 640px) 47vw, 92vw"
               onClick={() => handleImageClick(index)}
             />
           ))}

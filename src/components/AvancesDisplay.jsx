@@ -24,12 +24,12 @@ export default function AvancesDisplay({ label, completed, total, colorClass = '
 
   return (
     <div className="flex flex-col items-center justify-center p-2 md:p-4">
-      <div className="relative group cursor-pointer transform transition-all duration-300 hover:scale-110 hover:-translate-y-2">
+      <div className="group relative cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:scale-110">
         {/* SVG para móviles */}
         <svg 
           width={sizeMobile} 
           height={sizeMobile} 
-          className="md:hidden transform -rotate-90 drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300"
+          className="-rotate-90 drop-shadow-lg transition-all duration-300 group-hover:drop-shadow-2xl md:hidden"
         >
           {/* Círculo de fondo móvil */}
           <circle
@@ -59,7 +59,7 @@ export default function AvancesDisplay({ label, completed, total, colorClass = '
         <svg 
           width={sizeDesktop} 
           height={sizeDesktop} 
-          className="hidden md:block transform -rotate-90 drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300"
+          className="hidden -rotate-90 drop-shadow-lg transition-all duration-300 group-hover:drop-shadow-2xl md:block"
         >
           {/* Círculo de fondo desktop */}
           <circle
@@ -86,10 +86,10 @@ export default function AvancesDisplay({ label, completed, total, colorClass = '
         </svg>
         {/* Contenido centrado: porcentaje y label */}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-lg md:text-3xl font-bold text-gray-800 mb-1 transition-all duration-300">
+          <span className="mb-1 text-lg font-bold text-gray-800 transition-all duration-300 md:text-3xl">
             {percentage}%
           </span>
-          <span className="text-xs font-medium text-gray-600 text-center leading-tight max-w-[90px] md:max-w-[140px] px-1 md:px-2 transition-all duration-300">
+          <span className="max-w-[90px] px-1 text-center text-xs font-medium leading-tight text-gray-600 transition-all duration-300 md:max-w-[140px] md:px-2">
             {label}
           </span>
         </div>

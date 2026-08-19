@@ -16,17 +16,17 @@ function ApartmentLayout({ tower, typology, buttonText = "Más información", on
 
   return (
     <>
-      <div className="w-full max-w-sm mx-auto bg-white rounded-lg shadow-lg overflow-hidden min-h-96 flex flex-col pb-2">
+      <div className="mx-auto flex min-h-96 w-full max-w-sm flex-col overflow-hidden rounded-lg bg-white pb-2 shadow-lg">
         {/* Sección superior: 60% imagen, 40% tipología */}
-        <div className="flex flex-col sm:flex-row sm:h-3/5">
-          <div className="w-full sm:w-3/5 flex-shrink-0">
+        <div className="flex flex-col sm:h-3/5 sm:flex-row">
+          <div className="w-full shrink-0 sm:w-3/5">
             <ApartmentImage tower={tower} typology={typology} />
           </div>
-          <div className="w-full sm:w-2/5 flex items-center justify-center bg-white p-4 min-h-[80px]">
+          <div className="flex min-h-[80px] w-full items-center justify-center bg-white p-4 sm:w-2/5">
             <div className="text-center">
-              <div className="flex flex-row sm:flex-col items-center justify-center gap-2 sm:gap-0">
-                <h3 className="text-md font-medium text-gray-800 uppercase">Tipología</h3>
-                <h2 className="text-2xl sm:text-7xl font-bold text-gray-800">
+              <div className="flex flex-row items-center justify-center gap-2 sm:flex-col sm:gap-0">
+                <h3 className="text-md font-medium uppercase text-gray-800">Tipología</h3>
+                <h2 className="text-2xl font-bold text-gray-800 sm:text-7xl">
                   {typology.includes('Tipología') ? typology.split(' ')[1] : typology}
                 </h2>
               </div>

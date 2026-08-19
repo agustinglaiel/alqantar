@@ -11,18 +11,18 @@ export default function AvancesPage() {
 
   return (
     <div className="relative min-h-screen pt-32">
-      <div className="relative z-10 max-w-screen-xl mx-auto px-4 py-20">
-        <div className="bg-white rounded-xl shadow-lg p-4 md:p-12 relative">
+      <div className="relative z-10 mx-auto max-w-screen-xl px-4 py-20">
+        <div className="relative rounded-xl bg-white p-4 shadow-lg md:p-12">
           {/* Líneas divisorias - solo visibles en desktop */}
-          <div className="absolute left-1/2 top-8 bottom-8 w-px bg-gray-200 transform -translate-x-1/2 hidden md:block"></div>
-          <div className="absolute top-1/2 left-8 right-8 h-px bg-gray-200 transform -translate-y-1/2 hidden md:block"></div>
+          <div className="absolute inset-y-8 left-1/2 hidden w-px -translate-x-1/2 bg-gray-200 md:block"></div>
+          <div className="absolute inset-x-8 top-1/2 hidden h-px -translate-y-1/2 bg-gray-200 md:block"></div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 min-h-[500px]">
+          <div className="grid min-h-[500px] grid-cols-1 gap-4 md:grid-cols-2 md:gap-8">
             {metrics.map((metric, index) => (
-              <div key={index} className="flex items-center justify-center relative">
+              <div key={index} className="relative flex items-center justify-center">
                 {/* Línea separadora horizontal para móviles (excepto el último elemento) */}
                 {index < metrics.length - 1 && (
-                  <div className="absolute bottom-0 left-4 right-4 h-px bg-gray-200 md:hidden"></div>
+                  <div className="absolute inset-x-4 bottom-0 h-px bg-gray-200 md:hidden"></div>
                 )}
                 <AvancesDisplay
                   label={metric.label}

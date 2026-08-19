@@ -3,13 +3,13 @@ import { Facebook, Instagram, MessageCircleMore, Mail } from "lucide-react";
 
 function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-8 mt-8">
-      <div className="max-w-screen-xl mx-auto px-4">
+    <footer className="mt-8 bg-gray-800 py-8 text-white">
+      <div className="mx-auto max-w-screen-xl px-4">
         {/* Desktop Layout */}
-        <div className="hidden md:flex md:justify-between md:items-start gap-4">
+        <div className="hidden gap-4 md:flex md:items-start md:justify-between">
           {/* Izquierda: Dirección */}
           <div className="flex-1 text-left">
-            <h4 className="font-semibold mb-2 text-gray-300">Dirección</h4>
+            <h4 className="mb-2 font-semibold text-gray-300">Dirección</h4>
             <p className="text-sm leading-relaxed">
               José María Eguía Zanón 9932,
               <br />
@@ -20,16 +20,16 @@ function Footer() {
           </div>
           
           {/* Centro: Logo y Redes Sociales - Alineado arriba */}
-          <div className="flex-1 flex flex-col items-center">
+          <div className="flex flex-1 flex-col items-center">
             {/* Título invisible para alinear con otros títulos */}
-            <h4 className="font-semibold mb-2 text-transparent">Logo</h4>
-            <img src={logo} alt="Alqantar Logo" className="h-12 w-auto mb-2" />
+            <h4 className="mb-2 font-semibold text-transparent">Logo</h4>
+            <img src={logo} alt="Alqantar Logo" className="mb-2 h-12 w-auto" />
             <div className="flex space-x-4">
               <a
                 href="https://www.facebook.com/alqantar.condominio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-500 transition-colors duration-200 hover:scale-110 transform"
+                className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-blue-500"
               >
                 <Facebook size={20} />
               </a>
@@ -37,7 +37,7 @@ function Footer() {
                 href="https://www.instagram.com/alqantar_condominio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-pink-500 transition-colors duration-200 hover:scale-110 transform"
+                className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-pink-500"
               >
                 <Instagram size={20} />
               </a>
@@ -45,13 +45,13 @@ function Footer() {
                 href="https://wa.me/5493517496383"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-green-500 transition-colors duration-200 hover:scale-110 transform"
+                className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-green-500"
               >
                 <MessageCircleMore size={20} />
               </a>
               <a
                 href="mailto:info@alqantar.com"
-                className="text-gray-400 hover:text-gray-300 transition-colors duration-200 hover:scale-110 transform"
+                className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-gray-300"
               >
                 <Mail size={20} />
               </a>
@@ -60,12 +60,12 @@ function Footer() {
           
           {/* Derecha: Enlaces */}
           <div className="flex-1 text-right">
-            <h4 className="font-semibold mb-2 text-gray-300">Navegación</h4>
+            <h4 className="mb-2 font-semibold text-gray-300">Navegación</h4>
             <div className="space-y-1">
               <p>
                 <a
                   href="/"
-                  className="text-sm text-white hover:text-blue-400 transition-colors duration-200"
+                  className="text-sm text-white transition-colors duration-200 hover:text-blue-400"
                 >
                   Inicio
                 </a>
@@ -73,7 +73,7 @@ function Footer() {
               <p>
                 <a
                   href="/galeria"
-                  className="text-sm text-white hover:text-blue-400 transition-colors duration-200"
+                  className="text-sm text-white transition-colors duration-200 hover:text-blue-400"
                 >
                   Galería
                 </a>
@@ -81,7 +81,7 @@ function Footer() {
               <p>
                 <a
                   href="/departamentos"
-                  className="text-sm text-white hover:text-blue-400 transition-colors duration-200"
+                  className="text-sm text-white transition-colors duration-200 hover:text-blue-400"
                 >
                   Departamentos
                 </a>
@@ -89,7 +89,7 @@ function Footer() {
               <p>
                 <a
                   href="/ubicacion"
-                  className="text-sm text-white hover:text-blue-400 transition-colors duration-200"
+                  className="text-sm text-white transition-colors duration-200 hover:text-blue-400"
                 >
                   Ubicación
                 </a>
@@ -97,7 +97,7 @@ function Footer() {
               <p>
                 <a
                   href="/avances"
-                  className="text-sm text-white hover:text-blue-400 transition-colors duration-200"
+                  className="text-sm text-white transition-colors duration-200 hover:text-blue-400"
                 >
                   Avances
                 </a>
@@ -105,7 +105,7 @@ function Footer() {
               <p>
                 <a
                   href="/contacto#contacto"
-                  className="text-sm text-white hover:text-blue-400 transition-colors duration-200"
+                  className="text-sm text-white transition-colors duration-200 hover:text-blue-400"
                 >
                   Contacto
                 </a>
@@ -115,16 +115,16 @@ function Footer() {
         </div>
 
         {/* Mobile Layout */}
-        <div className="md:hidden flex justify-center">
+        <div className="flex justify-center md:hidden">
           {/* Solo Logo y Redes Sociales - Centrado */}
           <div className="flex flex-col items-center">
-            <img src={logo} alt="Alqantar Logo" className="h-12 w-auto object-contain mb-3" />
+            <img src={logo} alt="Alqantar Logo" className="mb-3 h-12 w-auto object-contain" />
             <div className="flex space-x-4">
               <a
                 href="https://www.facebook.com/alqantar.condominio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-blue-500 transition-colors duration-200"
+                className="text-gray-400 transition-colors duration-200 hover:text-blue-500"
               >
                 <Facebook size={20} />
               </a>
@@ -132,7 +132,7 @@ function Footer() {
                 href="https://www.instagram.com/alqantar_condominio"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-pink-500 transition-colors duration-200"
+                className="text-gray-400 transition-colors duration-200 hover:text-pink-500"
               >
                 <Instagram size={20} />
               </a>
@@ -140,20 +140,20 @@ function Footer() {
                 href="https://wa.me/5493517496383"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-green-500 transition-colors duration-200"
+                className="text-gray-400 transition-colors duration-200 hover:text-green-500"
               >
                 <MessageCircleMore size={20} />
               </a>
               <a
                 href="mailto:info@alqantar.com"
-                className="text-gray-400 hover:text-gray-300 transition-colors duration-200"
+                className="text-gray-400 transition-colors duration-200 hover:text-gray-300"
               >
                 <Mail size={20} />
               </a>
             </div>
           </div>
         </div>        
-        <div className="border-t border-gray-700 mt-6 pt-4 text-center">
+        <div className="mt-6 border-t border-gray-700 pt-4 text-center">
           <p className="text-xs text-gray-400">
             © 2025 Alqantar. Todos los derechos reservados.
           </p>

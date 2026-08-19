@@ -1,8 +1,8 @@
 function VideoPlayer({ src, title }) {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="overflow-hidden rounded-lg bg-white shadow-md">
       <iframe
-        className="w-full h-48"
+        className="h-48 w-full"
         src={src}
         title={title}
         frameBorder="0"

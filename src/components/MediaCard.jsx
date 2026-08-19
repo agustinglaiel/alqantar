@@ -1,18 +1,22 @@
 import React from "react";
+import ProgressiveImage from "./ProgressiveImage";
 
-function MediaCard({ src, type = "image", alt, onClick, className, imageFit = "cover" }) {
+// El tamaño va en su propio prop en vez de quedar fijo acá: si el caller lo pisara
+// vía `className`, el resultado dependería del orden en que Tailwind emite las
+// utilidades en conflicto (`.size-full` sale antes que `.h-52`, así que perdería).
+function MediaCard({ src, type = "image", alt, onClick, className = "", sizeClassName = "h-52 w-full", imageFit = "cover", sizes = "100vw" }) {
   const isVideo = type.toLowerCase() === "video";
 
   return (
     <div
       onClick={onClick}
-      className={`group relative rounded-lg overflow-hidden shadow-lg w-full h-52 perspective-1000 cursor-pointer ${className}`}
+      className={`perspective-1000 group relative cursor-pointer overflow-hidden rounded-lg shadow-lg ${sizeClassName} ${className}`}
     >
-      <div className="absolute w-full h-full">
+      <div className="absolute size-full">
         {isVideo ? (
-          <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+          <div className="flex size-full items-center justify-center bg-gray-800">
             <svg
-              className="w-16 h-16 text-white opacity-70"
+              className="size-16 text-white opacity-70"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -20,20 +24,22 @@ function MediaCard({ src, type = "image", alt, onClick, className, imageFit = "c
             </svg>
           </div>
         ) : (
-          <img
+          <ProgressiveImage
             src={src}
             alt={alt}
-            loading="lazy"
-            className={`w-full h-full object-${imageFit} transition-transform duration-300 group-hover:scale-105 ${imageFit === "contain" ? "p-1" : ""}`}
+            fit={imageFit}
+            sizes={sizes}
+            className="size-full"
+            imgClassName={`transition-transform duration-300 group-hover:scale-105 ${imageFit === "contain" ? "p-1" : ""}`}
           />
         )}
       </div>
-      <div className="absolute inset-0 group-hover:translate-z-10 transition-transform duration-300" />
+      <div className="group-hover:translate-z-10 absolute inset-0 transition-transform duration-300" />
 
       {/* Overlay con ícono de zoom */}
-      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-20">
         <svg
-          className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="size-8 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"

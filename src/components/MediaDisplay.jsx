@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ProgressiveImage from "./ProgressiveImage";
 
 function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
@@ -44,7 +45,7 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
   const isVideo = currentItem.type?.toLowerCase() === "video";
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
       {/* Overlay para cerrar */}
       <div 
         className="absolute inset-0 cursor-pointer"
@@ -52,13 +53,13 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
       />
       
       {/* Contenedor principal: ajustado para mobile */}
-      <div className="relative w-[90vw] h-[80vh] sm:w-[85vw] sm:h-[85vh] max-w-5xl max-h-[90vh]">
+      <div className="relative h-[80vh] max-h-[90vh] w-[90vw] max-w-5xl sm:h-[85vh] sm:w-[85vw]">
         {/* Imagen/Video principal */}
-        <div className="relative w-full h-full bg-black rounded-lg overflow-hidden flex items-center justify-center">
+        <div className="relative flex size-full items-center justify-center overflow-hidden rounded-lg bg-black">
           {isVideo ? (
-            <div className="relative w-full h-full">
+            <div className="relative size-full">
               <iframe
-                className="w-full h-full object-contain" // Usar object-contain para videos también
+                className="size-full object-contain" // Usar object-contain para videos también
                 src={currentItem.src}
                 title={currentItem.alt}
                 frameBorder="0"
@@ -67,22 +68,25 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
               />
             </div>
           ) : (
-            <img
+            <ProgressiveImage
               src={currentItem.src}
               alt={currentItem.alt}
-              className="w-full h-full object-contain" // Cambiado a object-contain para mostrar la imagen completa
+              fit="contain"
+              sizes="(min-width: 1024px) 1024px, 90vw"
+              priority
+              className="size-full"
             />
           )}
 
           {/* Overlay izquierdo: reducido en mobile */}
           <div
-            className="absolute left-0 top-0 w-1/3 sm:w-1/2 h-full cursor-pointer"
+            className="absolute left-0 top-0 h-full w-1/3 cursor-pointer sm:w-1/2"
             onMouseEnter={() => setLeftHover(true)}
             onMouseLeave={() => setLeftHover(false)}
             onClick={goToPrevious}
           >
             {/* Gradiente oscuro izquierdo */}
-            <div className={`absolute left-0 top-0 w-full h-full transition-opacity duration-200 ${
+            <div className={`absolute left-0 top-0 size-full transition-opacity duration-200 ${
               leftHover ? 'opacity-100' : 'opacity-0'
             }`}
             style={{
@@ -90,11 +94,11 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
             }}
             />
             {/* Flecha izquierda: más pequeña en mobile */}
-            <div className={`absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 transition-opacity duration-200 ${
+            <div className={`absolute left-2 top-1/2 -translate-y-1/2 transition-opacity duration-200 sm:left-4 ${
               leftHover ? 'opacity-100' : 'opacity-0'
             }`}>
               <svg
-                className="w-8 h-8 sm:w-12 sm:h-12 text-white drop-shadow-lg"
+                className="size-8 text-white drop-shadow-lg sm:size-12"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -111,13 +115,13 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
 
           {/* Overlay derecho: reducido en mobile */}
           <div
-            className="absolute right-0 top-0 w-1/3 sm:w-1/2 h-full cursor-pointer"
+            className="absolute right-0 top-0 h-full w-1/3 cursor-pointer sm:w-1/2"
             onMouseEnter={() => setRightHover(true)}
             onMouseLeave={() => setRightHover(false)}
             onClick={goToNext}
           >
             {/* Gradiente oscuro derecho */}
-            <div className={`absolute right-0 top-0 w-full h-full transition-opacity duration-200 ${
+            <div className={`absolute right-0 top-0 size-full transition-opacity duration-200 ${
               rightHover ? 'opacity-100' : 'opacity-0'
             }`}
             style={{
@@ -125,11 +129,11 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
             }}
             />
             {/* Flecha derecha: más pequeña en mobile */}
-            <div className={`absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 transition-opacity duration-200 ${
+            <div className={`absolute right-2 top-1/2 -translate-y-1/2 transition-opacity duration-200 sm:right-4 ${
               rightHover ? 'opacity-100' : 'opacity-0'
             }`}>
               <svg
-                className="w-8 h-8 sm:w-12 sm:h-12 text-white drop-shadow-lg"
+                className="size-8 text-white drop-shadow-lg sm:size-12"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -147,11 +151,11 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
 
         {/* Botón cerrar: ajustado para mejor touch en mobile */}
         <button
-          className="absolute -top-6 -right-2 sm:-top-4 sm:-right-4 bg-white rounded-full w-12 h-12 sm:w-10 sm:h-10 flex items-center justify-center text-black hover:bg-gray-200 transition-colors duration-200 shadow-lg"
+          className="absolute -right-2 -top-6 flex size-12 items-center justify-center rounded-full bg-white text-black shadow-lg transition-colors duration-200 hover:bg-gray-200 sm:-right-4 sm:-top-4 sm:size-10"
           onClick={onClose}
         >
           <svg
-            className="w-6 h-6 sm:w-6 sm:h-6"
+            className="size-6 sm:size-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -166,7 +170,7 @@ function MediaDisplay({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
         </button>
 
         {/* Contador de imágenes: ajustado para mobile */}
-        <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-3 py-1 rounded-full">
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-black bg-opacity-50 px-3 py-1 text-sm text-white sm:-bottom-8">
           {currentIndex + 1} / {mediaItems.length}
         </div>
       </div>

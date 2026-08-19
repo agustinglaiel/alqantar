@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header";
+import ProgressiveImage from "../components/ProgressiveImage";
 
 function MasterplanPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -31,25 +31,27 @@ function MasterplanPage() {
 
   return(
     <div>
-      <div className="w-full text-center py-10 pt-32 px-4">
+      <div className="w-full px-4 py-10 pt-32 text-center">
         {/* Contenedor con posición relativa para el overlay */}
         <div className="relative">
-          <img 
+          <ProgressiveImage
             src="/images/planimetria.webp"
-            alt="Planimetría" 
-            className="w-full h-auto object-cover"
+            alt="Planimetría"
+            sizes="100vw"
+            priority
+            className="w-full"
           />
           
           {/* Overlay con información */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="h-full w-1/2 ml-auto flex flex-col justify-center items-start p-8">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="ml-auto flex h-full w-1/2 flex-col items-start justify-center p-8">
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className={`mb-3 p-3 bg-opacity-70 bg-white text-black rounded-lg text-sm md:text-base transition-all duration-300 transform ${
+                  className={`mb-3 rounded-lg bg-white bg-opacity-70 p-3 text-sm text-black transition-all duration-300 md:text-base ${
                     scrollY > 50 + (index * 20) 
-                      ? 'opacity-100 translate-x-0' 
-                      : 'opacity-0 translate-x-10'
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-10 opacity-0'
                   }`}
                   style={{
                     transitionDelay: `${index * 80}ms`
@@ -62,10 +64,11 @@ function MasterplanPage() {
           </div>
         </div>
         
-        <img 
-          src="/images/corte.webp" 
-          alt="Corte" 
-          className="w-full h-96 object-cover mt-4"
+        <ProgressiveImage
+          src="/images/corte.webp"
+          alt="Corte"
+          sizes="100vw"
+          className="mt-4 h-96 w-full"
         />
       </div>
     </div>

@@ -26,7 +26,6 @@ const AMENITIES_KUULA_URLS = {
 function ThreeSixtyPage() {
   const location = useLocation();
   const [selectedTower, setSelectedTower] = useState("torre1");
-  const typologies = TYPOLOGIES_BY_TOWER[selectedTower] || [];
 
   const handleOpenThreeSixty = (typology) => {
     const url = KUULA_URLS[typology];
@@ -52,7 +51,7 @@ function ThreeSixtyPage() {
   const renderContent = () => {
     if (selectedTower === 'amenities') {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center max-w-4xl mx-auto">
+        <div className="mx-auto grid max-w-4xl grid-cols-1 justify-center gap-8 md:grid-cols-2">
           <AmenitieLayout
             amenityType="sum"
             onCustomClick={handleOpenAmenityThreeSixty}
@@ -69,7 +68,7 @@ function ThreeSixtyPage() {
     
     if (typologies.length > 0) {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
+        <div className="grid auto-rows-fr grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {typologies.map((typology) => (
             <ApartmentLayout
               key={typology}
@@ -85,7 +84,7 @@ function ThreeSixtyPage() {
     
     return (
       <div className="flex justify-center">
-        <div className="bg-white rounded-xl shadow-lg w-full max-w-2xl">
+        <div className="w-full max-w-2xl rounded-xl bg-white shadow-lg">
           <FutureUpgrade
             title="Próximamente"
             message="Estamos trabajando en las vistas 360° de esta torre. Muy pronto vas a poder verlas acá."
@@ -110,7 +109,7 @@ function ThreeSixtyPage() {
     <div className="relative min-h-screen pt-32">
       <TowerNavigation onTowerChange={handleTowerChange} showAmenities={true} />
       
-      <div className="container mx-auto pt-40 px-4 pb-20 text-center">
+      <div className="container mx-auto px-4 pb-20 pt-40 text-center">
         <section>
           {renderContent()}
         </section>

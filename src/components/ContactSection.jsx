@@ -3,17 +3,17 @@ import { MessageCircleMore, Instagram, Facebook, Mail } from "lucide-react";
 
 function ContactSection() {
   return (
-    <section className="max-w-5xl mx-auto bg-gray-900 rounded-xl overflow-hidden">
-      <div className="min-h-96 bg-gray-800 text-white p-12 flex flex-col items-center justify-center">
+    <section className="mx-auto max-w-5xl overflow-hidden rounded-xl bg-gray-900">
+      <div className="flex min-h-96 flex-col items-center justify-center bg-gray-800 p-12 text-white">
         {/* <h2 className="text-4xl font-bold text-center mb-8 text-white">
           CONTACTO
         </h2> */}
-        <p className="mb-12 text-2xl text-center max-w-2xl">
+        <p className="mb-12 max-w-2xl text-center text-2xl">
           Envíe su consulta a nuestro equipo de asesores a
           través de los siguientes medios:
         </p>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           {/* WhatsApp */}
           <div className="flex flex-col items-center">
             <a
@@ -22,10 +22,10 @@ function ContactSection() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center"
             >
-              <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mb-3 group-hover:bg-green-600 transition-colors duration-200 shadow-lg">
+              <div className="mb-3 flex size-20 items-center justify-center rounded-full bg-green-500 shadow-lg transition-colors duration-200 group-hover:bg-green-600">
                 <MessageCircleMore size={40} className="text-white" />
               </div>
-              <span className="text-gray-300 group-hover:text-green-400 transition-colors duration-200 font-medium">
+              <span className="font-medium text-gray-300 transition-colors duration-200 group-hover:text-green-400">
                 WhatsApp
               </span>
             </a>
@@ -39,10 +39,10 @@ function ContactSection() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center"
             >
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-full flex items-center justify-center mb-3 group-hover:from-purple-600 group-hover:via-pink-600 group-hover:to-orange-600 transition-all duration-200 shadow-lg">
+              <div className="mb-3 flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 shadow-lg transition-all duration-200 group-hover:from-purple-600 group-hover:via-pink-600 group-hover:to-orange-600">
                 <Instagram size={40} className="text-white" />
               </div>
-              <span className="text-gray-300 group-hover:text-pink-400 transition-colors duration-200 font-medium">
+              <span className="font-medium text-gray-300 transition-colors duration-200 group-hover:text-pink-400">
                 Instagram
               </span>
             </a>
@@ -56,10 +56,10 @@ function ContactSection() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center"
             >
-              <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center mb-3 group-hover:bg-blue-700 transition-colors duration-200 shadow-lg">
+              <div className="mb-3 flex size-20 items-center justify-center rounded-full bg-blue-600 shadow-lg transition-colors duration-200 group-hover:bg-blue-700">
                 <Facebook size={40} className="text-white" />
               </div>
-              <span className="text-gray-300 group-hover:text-blue-400 transition-colors duration-200 font-medium">
+              <span className="font-medium text-gray-300 transition-colors duration-200 group-hover:text-blue-400">
                 Facebook
               </span>
             </a>
@@ -71,10 +71,10 @@ function ContactSection() {
               href="mailto:info@alqantar.com"
               className="group flex flex-col items-center"
             >
-              <div className="w-20 h-20 bg-gray-600 rounded-full flex items-center justify-center mb-3 group-hover:bg-gray-500 transition-colors duration-200 shadow-lg">
+              <div className="mb-3 flex size-20 items-center justify-center rounded-full bg-gray-600 shadow-lg transition-colors duration-200 group-hover:bg-gray-500">
                 <Mail size={40} className="text-white" />
               </div>
-              <span className="text-gray-300 group-hover:text-gray-100 transition-colors duration-200 font-medium">
+              <span className="font-medium text-gray-300 transition-colors duration-200 group-hover:text-gray-100">
                 Email
               </span>
             </a>

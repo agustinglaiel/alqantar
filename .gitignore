@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 
 .env
+
+# Variantes de imagen generadas por scripts/optimize-images.mjs
+public/images/opt

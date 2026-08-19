@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 import MediaCard from './MediaCard';
+import ProgressiveImage from './ProgressiveImage';
 
 function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -67,20 +68,23 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full flex-col">
       {/* Área fija con relación de aspecto */}
       <div
-        className="relative w-full rounded-lg overflow-hidden shadow-lg mb-4 bg-white"
+        className="relative mb-4 w-full overflow-hidden rounded-lg bg-white shadow-lg"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
         {/* Contenedor con ratio fijo (16:9 por defecto) */}
         <div className="relative w-full" style={aspectStyle}>
           {/* Imagen entra completa */}
-          <img
+          <ProgressiveImage
             src={validImages[selectedImageIndex].src}
             alt={validImages[selectedImageIndex].alt || 'Imagen'}
-            className="absolute inset-0 w-full h-full object-contain cursor-pointer"
+            fit="contain"
+            sizes="(min-width: 1024px) 830px, 92vw"
+            priority
+            className="absolute inset-0 size-full cursor-pointer"
             onClick={() => onImageClick && onImageClick(selectedImageIndex)}
           />
 
@@ -88,9 +92,9 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
           {showLeftArrow && (
             <button
               onClick={handlePrevious}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all duration-200 z-10"
+              className="absolute left-4 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all duration-200 hover:bg-black/70"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
@@ -100,9 +104,9 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
           {showRightArrow && (
             <button
               onClick={handleNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all duration-200 z-10"
+              className="absolute right-4 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all duration-200 hover:bg-black/70"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -110,8 +114,8 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
 
           {/* Indicador */}
           {validImages.length > 1 && (showLeftArrow || showRightArrow) && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 rounded-full px-3 py-1">
-              <span className="text-white text-sm">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1">
+              <span className="text-sm text-white">
                 {selectedImageIndex + 1} / {validImages.length}
               </span>
             </div>
@@ -123,13 +127,13 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
       {validImages.length > 1 && (
         <div 
           ref={thumbnailsRef}
-          className="flex overflow-x-auto overflow-y-hidden space-x-2 lg:space-x-4 pb-2 pt-2 flex-nowrap"
+          className="flex flex-nowrap space-x-2 overflow-x-auto overflow-y-hidden py-2 lg:space-x-4"
         >
           {validImages.map((image, index) => (
             <div
               key={index}
-              className={`flex-shrink-0 w-16 h-16 lg:w-24 lg:h-24 transition-transform duration-200 ${
-                index === selectedImageIndex ? 'transform scale-125' : 'hover:scale-110'
+              className={`size-16 shrink-0 transition-transform duration-200 lg:size-24 ${
+                index === selectedImageIndex ? 'scale-125' : 'hover:scale-110'
               }`}
             >
               <MediaCard
@@ -137,8 +141,9 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
                 alt={image.alt}
                 type="image"
                 onClick={() => handleImageClick(index)}
-                className="w-full h-full"
+                sizeClassName="size-full"
                 imageFit="contain"
+                sizes="96px"
               />
             </div>
           ))}

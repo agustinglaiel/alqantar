@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ProgressiveImage from "./ProgressiveImage";
 
 const options = [
   {
@@ -41,44 +42,45 @@ const options = [
 
 function OptionCardWithHover() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {options.map((option, index) => (
         <Link
           key={index}
           to={option.linkTo}
-          className="group relative rounded-lg overflow-hidden shadow-lg w-full h-64 perspective-1000"
+          className="perspective-1000 group relative h-64 w-full overflow-hidden rounded-lg shadow-lg"
         >
           {/* Imagen de fondo */}
-          <div className="absolute w-full h-full">
-            <img
+          <div className="absolute size-full">
+            <ProgressiveImage
               src={option.imageSrc}
               alt={option.title}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(min-width: 1024px) 410px, (min-width: 640px) 47vw, 92vw"
+              className="size-full"
+              imgClassName="transition-transform duration-300 group-hover:scale-105"
             />
             {/* Overlay oscuro */}
             <div className="absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-300 group-hover:bg-opacity-60" />
           </div>
           {/* Contenido (título, descripción y botón) */}
-          <div className="relative w-full h-full flex items-center justify-center p-4">
-            <div className="flex flex-col items-center justify-center w-full">
+          <div className="relative flex size-full items-center justify-center p-4">
+            <div className="flex w-full flex-col items-center justify-center">
               {/* Título siempre visible */}
-              <h3 className="text-white text-2xl font-semibold text-center">
+              <h3 className="text-center text-2xl font-semibold text-white">
                 {option.title}
               </h3>
               {/* Contenedor para descripción y botón, oculto sin hover */}
-              <div className="hidden group-hover:flex flex-col items-center justify-center w-full mt-2 transition-all duration-300">
-                <p className="text-white text-sm text-center font-sans mb-2">
+              <div className="mt-2 hidden w-full flex-col items-center justify-center transition-all duration-300 group-hover:flex">
+                <p className="mb-2 text-center font-sans text-sm text-white">
                   {option.description}
                 </p>
-                <span className="inline-block px-4 py-2 text-white text-sm font-semibold border border-white rounded-full hover:bg-white hover:text-black transition-colors duration-200">
+                <span className="inline-block rounded-full border border-white px-4 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white hover:text-black">
                   VER MÁS
                 </span>
               </div>
             </div>
           </div>
           {/* Capa para el efecto 3D */}
-          <div className="absolute inset-0 group-hover:translate-z-10 transition-transform duration-300" />
+          <div className="group-hover:translate-z-10 absolute inset-0 transition-transform duration-300" />
         </Link>
       ))}
     </div>

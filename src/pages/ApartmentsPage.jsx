@@ -18,10 +18,10 @@ function ApartmentsPage() {
       <TowerNavigation onTowerChange={setSelectedTower} 
     />
 
-      <div className="container mx-auto pt-40 px-4 pb-20 text-center">
+      <div className="container mx-auto px-4 pb-20 pt-40 text-center">
         <section>
           {typologies.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-fr">
+            <div className="grid auto-rows-fr grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {typologies.map((typology) => (
                 <ApartmentLayout
                   key={typology}
@@ -33,7 +33,7 @@ function ApartmentsPage() {
             </div>
           ) : (
             <div className="flex justify-center">
-              <div className="bg-white rounded-xl shadow-lg w-full max-w-2xl">
+              <div className="w-full max-w-2xl rounded-xl bg-white shadow-lg">
                 <FutureUpgrade
                   title="Próximamente"
                   message="Estamos trabajando en las tipologías de esta torre. Muy pronto vas a poder verlas acá."

@@ -1,4 +1,5 @@
 import React from 'react';
+import ProgressiveImage from './ProgressiveImage';
 
 function AmenitieLayout({ amenityType, onCustomClick }) {
   // Configuración para cada tipo de amenity
@@ -24,22 +25,23 @@ function AmenitieLayout({ amenityType, onCustomClick }) {
   };
 
   return (
-    <div className="w-full max-w-sm mx-auto bg-white rounded-lg shadow-lg overflow-hidden min-h-96 flex flex-col">
+    <div className="mx-auto flex min-h-96 w-full max-w-sm flex-col overflow-hidden rounded-lg bg-white shadow-lg">
       {/* Sección superior: Imagen (70% del espacio) */}
       <div className="relative h-64 overflow-hidden">
-        <img
+        <ProgressiveImage
           src={config.image}
           alt={config.title}
-          className="w-full h-full object-cover"
+          sizes="384px"
+          className="size-full"
         />
       </div>
 
       {/* Sección media: Título y descripción (20% del espacio) */}
-      <div className="flex-1 flex flex-col justify-center p-6 text-center">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+      <div className="flex flex-1 flex-col justify-center p-6 text-center">
+        <h2 className="mb-2 text-2xl font-bold text-gray-800">
           {config.title}
         </h2>
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="mb-4 text-sm text-gray-600">
           {config.description}
         </p>
       </div>
@@ -48,7 +50,7 @@ function AmenitieLayout({ amenityType, onCustomClick }) {
       <div className="p-4 pt-0">
         <button
           onClick={handleClick}
-          className="w-full px-6 py-3 bg-gradient-to-r from-gray-800 to-gray-600 text-white rounded-full hover:from-gray-900 hover:to-gray-700 transition-all duration-300 text-sm font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+          className="w-full rounded-full bg-gradient-to-r from-gray-800 to-gray-600 px-6 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:from-gray-900 hover:to-gray-700 hover:shadow-xl"
         >
           Vistas 360°
         </button>

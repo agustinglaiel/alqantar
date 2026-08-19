@@ -6,9 +6,9 @@ import Footer from './Footer';
 
 function Layout({ children }) {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
+    <div className="flex min-h-screen flex-col bg-gray-100">
       <Header />
-      <main className="flex-grow">{children}</main>
+      <main className="grow">{children}</main>
       <Footer />
       <Analytics />
       <SpeedInsights />

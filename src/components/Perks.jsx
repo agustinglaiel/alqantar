@@ -78,7 +78,7 @@ function Perks() {
   ];
 
   return (
-    <section className="max-w-7xl mx-auto bg-white rounded-xl overflow-hidden shadow-lg my-12">
+    <section className="mx-auto my-12 max-w-7xl overflow-hidden rounded-xl bg-white shadow-lg">
       <div className="p-4 md:p-8">
         <div className="flex flex-wrap justify-center gap-6">
           {perks.map((perk, index) => {
@@ -86,12 +86,12 @@ function Perks() {
             return (
               <div
                 key={index}
-                className="flex flex-col items-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 text-center w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)]"
+                className="flex w-full flex-col items-center rounded-lg bg-gray-50 p-6 text-center transition-colors duration-200 hover:bg-gray-100 sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)]"
               >
-                <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-white" />
+                <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-blue-500">
+                  <Icon className="size-6 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">{perk.title}</h3>
+                <h3 className="mb-2 text-lg font-semibold text-gray-800">{perk.title}</h3>
                 <p className="text-sm text-gray-600">{perk.description}</p>
               </div>
             );

@@ -2,10 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/public/images/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alqantar - Condominio</title>
-    <link rel="preload" as="image" href="/images/01.webp" fetchpriority="high" />
+    <script>
+      // El hero sólo se renderiza en la home. Como es una SPA con un único index.html,
+      // un <link rel=preload> estático dispararía en todas las rutas y bajaría hasta
+      // 720 KB inútiles al entrar directo a /galeria. Este script corre en el <head>,
+      // antes del bundle, así que conserva la ventaja del preload sin ese costo.
+      if (location.pathname === '/') {
+        var heroPreload = document.createElement('link');
+        heroPreload.rel = 'preload';
+        heroPreload.as = 'image';
+        heroPreload.setAttribute(
+          'imagesrcset',
+          '/images/opt/01-400.webp 400w, /images/opt/01-800.webp 800w, /images/opt/01-1200.webp 1200w, /images/opt/01-1800.webp 1800w, /images/opt/01-2400.webp 2400w'
+        );
+        heroPreload.setAttribute('imagesizes', '100vw');
+        heroPreload.setAttribute('fetchpriority', 'high');
+        document.head.appendChild(heroPreload);
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

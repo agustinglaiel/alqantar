@@ -1,5 +1,6 @@
 // src/components/BackgroundSlider.jsx
 import React, { useState, useEffect } from 'react';
+import ProgressiveImage from './ProgressiveImage';
 
 const IMAGES = [
   '/images/01.webp',
@@ -38,19 +39,17 @@ function BackgroundSlider() {
   return (
     <div className="relative min-h-svh overflow-hidden">
       {IMAGES.slice(0, renderedCount).map((src, idx) => (
-        <img
+        <ProgressiveImage
           key={idx}
           src={src}
           alt={idx === 0 ? 'Alqantar condominio' : ''}
-          aria-hidden={idx !== currentIndex}
-          fetchpriority={idx === 0 ? 'high' : 'low'}
+          sizes="100vw"
+          priority={idx === 0}
           className={`
-            absolute inset-0
-            w-full h-full object-cover
+            absolute inset-0 size-full
             transition-opacity duration-1000 ease-in-out
             ${idx === currentIndex ? 'opacity-100' : 'opacity-0'}
           `}
-          style={{ objectPosition: 'center center' }}
         />
       ))}
 
@@ -59,14 +58,14 @@ function BackgroundSlider() {
       <img
         src="/images/incomparable.webp"
         alt="Incomparable"
-        fetchpriority="high"
+        fetchPriority="high"
         className={`
-          absolute top-1/2 left-8 md:left-16 lg:left-20
-          transform -translate-y-1/2
-          w-1/3 max-w-sm md:max-w-md lg:max-w-lg
-          drop-shadow-2xl z-10
+          absolute left-8 top-1/2 z-10 w-1/3
+          max-w-sm -translate-y-1/2
+          drop-shadow-2xl transition-opacity duration-500 ease-in-out
+          md:left-16 md:max-w-md
 
-          transition-opacity duration-[500ms] ease-in-out
+          lg:left-20 lg:max-w-lg
           ${showOverlay ? 'opacity-100' : 'opacity-0'}
         `}
       />
