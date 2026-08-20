@@ -1,6 +1,8 @@
 // src/components/BackgroundSlider.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import ProgressiveImage from './ProgressiveImage';
+import Button from './ui/Button';
 
 const IMAGES = [
   '/images/01.webp',
@@ -12,29 +14,27 @@ const IMAGES = [
 ];
 
 const INTERVAL_DURATION = 5000;
-const OVERLAY_FADE_DURATION = 700;
 
 function BackgroundSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showOverlay, setShowOverlay] = useState(true);
   // Start with only first image in DOM; add more progressively as needed
   const [renderedCount, setRenderedCount] = useState(1);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      const nextIdx = (currentIndex + 1) % IMAGES.length;
-      // Ensure current + next + one-ahead are in the DOM before transitioning
-      setRenderedCount((prev) => Math.max(prev, Math.min(nextIdx + 2, IMAGES.length)));
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
 
-      setShowOverlay(false);
-      setTimeout(() => {
-        setCurrentIndex(nextIdx);
-        setShowOverlay(true);
-      }, OVERLAY_FADE_DURATION);
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prev) => {
+        const next = (prev + 1) % IMAGES.length;
+        // Ensure current + next + one-ahead are in the DOM before transitioning
+        setRenderedCount((count) => Math.max(count, Math.min(next + 2, IMAGES.length)));
+        return next;
+      });
     }, INTERVAL_DURATION);
 
     return () => clearInterval(intervalId);
-  }, [currentIndex]);
+  }, []);
 
   return (
     <div className="relative min-h-svh overflow-hidden">
@@ -53,21 +53,39 @@ function BackgroundSlider() {
         />
       ))}
 
-      <div className="absolute inset-0 bg-black/20" />
+      {/* Oscurece la foto para que el texto blanco del hero mantenga contraste
+          en cualquiera de las seis fotos del carrusel. */}
+      <div className="absolute inset-0 bg-black/35" />
 
-      <img
-        src="/images/incomparable.webp"
-        alt="Incomparable"
-        fetchPriority="high"
-        className={`
-          absolute left-8 top-1/2 z-10 w-1/3
-          max-w-sm -translate-y-1/2
-          drop-shadow-2xl transition-opacity duration-500 ease-in-out
-          md:left-16 md:max-w-md
+      <div className="relative flex size-full min-h-svh flex-col justify-center gap-6 px-6 pb-28 pt-32 sm:px-10 md:px-16 lg:px-20">
+        <p className="text-overline font-semibold text-white/80 overline">
+          Villa Warcalde · Córdoba
+        </p>
+        <h1 className="max-w-2xl font-display text-display-xl text-white [text-wrap:balance]">
+          Alqantar Condominio
+        </h1>
+        <p className="max-w-prose text-body-l text-white/90">
+          Un condominio entre sierras y bosque nativo, a minutos del centro de
+          Córdoba: espacio, naturaleza y diseño en Villa Warcalde.
+        </p>
+        <div className="flex flex-wrap gap-4 pt-2">
+          <Button to="/departamentos" variant="primary" size="lg">
+            Ver tipologías
+          </Button>
+          <Button
+            to="/360"
+            variant="secondary"
+            size="lg"
+            className="!border-white !text-white hover:!bg-white hover:!text-ink-900"
+          >
+            Recorrido 360°
+          </Button>
+        </div>
+      </div>
 
-          lg:left-20 lg:max-w-lg
-          ${showOverlay ? 'opacity-100' : 'opacity-0'}
-        `}
+      <ChevronDown
+        aria-hidden="true"
+        className="absolute bottom-6 left-1/2 size-8 -translate-x-1/2 text-white/80 motion-safe:animate-bounce"
       />
     </div>
   );

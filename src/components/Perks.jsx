@@ -1,8 +1,6 @@
-import React from "react";
 import {
   Building2,
   Car,
-  BedDouble,
   Users,
   Dumbbell,
   Waves,
@@ -10,97 +8,72 @@ import {
   Thermometer,
   Trees,
   ShieldCheck,
-  MapPin
 } from "lucide-react";
 import project from "../data/project";
+import Overline from "./ui/Overline";
 
+/**
+ * Three thematic columns (Escala · Bienestar · Entorno) replacing the wall
+ * of ~12 identical cards. The headline figures are the sales argument, so
+ * they render in display typography instead of `text-lg` like everything
+ * else. All numbers come from `src/data/project.js`.
+ */
 function Perks() {
   const { metrics } = project;
-  const perks = [
+
+  const columns = [
     {
-      icon: Building2,
-      title: `${metrics.units} Unidades`,
-      description: "Espacios residenciales modernos y funcionales diseñados para tu comodidad."
+      title: "Escala",
+      stat: { value: metrics.units, label: "Unidades" },
+      items: [
+        { icon: Car, text: `${metrics.parkingUnderground} cocheras subterráneas` },
+        { icon: Car, text: `${metrics.parkingCourtesy} cocheras de cortesía` },
+        { icon: Building2, text: `${metrics.typologiesCount} tipologías, de 2 y 3 dormitorios` },
+      ],
     },
     {
-      icon: Car,
-      title: `${metrics.parkingUnderground} Cocheras Subterráneas`,
-      description: "Estacionamiento seguro y amplio para todos los residentes."
+      title: "Bienestar",
+      stat: { value: `${metrics.poolLengthM}`, label: "Metros de pileta" },
+      items: [
+        { icon: Dumbbell, text: "Gimnasio equipado" },
+        { icon: Thermometer, text: "Sauna y sala de relax" },
+        { icon: Building, text: `SUM y quinchos para ${metrics.sumCapacity} personas` },
+        { icon: Users, text: "Coworking y oficina privada" },
+      ],
     },
     {
-      icon: Car,
-      title: `${metrics.parkingCourtesy} Cocheras de Cortesía`,
-      description: "Estacionamiento seguro y amplio para tus invitados."
+      title: "Entorno",
+      stat: { value: metrics.greenSpaceM2.toLocaleString("es-AR"), label: "m² de espacios verdes" },
+      items: [
+        { icon: Trees, text: `Ubicación en ${project.address.neighborhood}, ${project.address.city}` },
+        { icon: Waves, text: "Jardines y bosque nativo integrados al diseño" },
+        { icon: ShieldCheck, text: "Seguridad 24 hs" },
+      ],
     },
-    {
-      icon: BedDouble,
-      title: "Tipologías de 2 y 3 Dormitorios",
-      description: "Opciones variadas para adaptarse a tus necesidades familiares."
-    },
-    {
-      icon: Users,
-      title: "Espacio Co-working",
-      description: "Área de trabajo compartida con oficinas privadas equipadas."
-    },
-    {
-      icon: Dumbbell,
-      title: "Gimnasio",
-      description: "Sala de entrenamiento con equipos de última generación."
-    },
-    {
-      icon: Waves,
-      title: "Piscina",
-      description: "Piscina para relajarte y disfrutar del verano."
-    },
-    {
-      icon: Building,
-      title: "SUM",
-      description: "Sala de usos múltiples para eventos y reuniones sociales."
-    },
-    {
-      icon: Thermometer,
-      title: "Sauna",
-      description: "Zona de relajación con sauna para tu bienestar."
-    },
-    {
-      icon: Trees,
-      title: `${metrics.greenSpaceM2.toLocaleString("es-AR")} m² de Espacios Verdes`,
-      description: "Jardines y áreas naturales para conectar con la naturaleza."
-    },
-    {
-      icon: ShieldCheck,
-      title: "Seguridad 24 hs",
-      description: "Protección constante con sistemas de vigilancia avanzados."
-    },
-    {
-      icon: MapPin,
-      title: "Entorno Incomparable",
-      description: `Ubicación en ${project.address.neighborhood}, ${project.address.city}`
-    }
   ];
 
   return (
-    <section className="mx-auto my-12 max-w-7xl overflow-hidden rounded-xl bg-white shadow-lg">
-      <div className="p-4 md:p-8">
-        <div className="flex flex-wrap justify-center gap-6">
-          {perks.map((perk, index) => {
-            const Icon = perk.icon;
-            return (
-              <div
-                key={index}
-                className="flex w-full flex-col items-center rounded-lg bg-gray-50 p-6 text-center transition-colors duration-200 hover:bg-gray-100 sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)]"
-              >
-                <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-blue-500">
-                  <Icon className="size-6 text-white" />
-                </div>
-                <h3 className="mb-2 text-lg font-semibold text-gray-800">{perk.title}</h3>
-                <p className="text-sm text-gray-600">{perk.description}</p>
-              </div>
-            );
-          })}
+    <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-8">
+      {columns.map((column) => (
+        <div key={column.title}>
+          <Overline>{column.title}</Overline>
+          <p className="mt-2 font-display text-display-l text-ink-900">{column.stat.value}</p>
+          <p className="text-body text-ink-500">{column.stat.label}</p>
+
+          <ul className="mt-6 space-y-3 border-t border-line pt-6">
+            {column.items.map((item) => {
+              const Icon = item.icon;
+              return (
+                <li key={item.text} className="flex items-start gap-3 text-body text-ink-700">
+                  <Icon className="mt-0.5 size-5 shrink-0 text-accent-600" />
+                  <span>{item.text}</span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
   );
 }
 

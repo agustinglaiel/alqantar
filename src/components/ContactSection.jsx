@@ -1,88 +1,59 @@
-import React from "react";
-import { MessageCircleMore, Instagram, Facebook, Mail } from "lucide-react";
+import { Instagram, Facebook, Mail, MessageCircleMore } from "lucide-react";
 import project, { whatsappLink } from "../data/project";
+import Button from "./ui/Button";
+import Overline from "./ui/Overline";
 
+const secondaryChannels = [
+  { icon: Instagram, label: "Instagram", href: project.social.instagram, external: true },
+  { icon: Facebook, label: "Facebook", href: project.social.facebook, external: true },
+  { icon: Mail, label: "Email", href: `mailto:${project.email}` },
+];
+
+/**
+ * Sober contact block: WhatsApp is the one highlighted CTA (the channel
+ * this audience actually uses), everything else is a discreet ink-toned
+ * link — no saturated color circles, no purple→pink→orange gradient.
+ */
 function ContactSection() {
   return (
-    <section className="mx-auto max-w-5xl overflow-hidden rounded-xl bg-gray-900">
-      <div className="flex min-h-96 flex-col items-center justify-center bg-gray-800 p-12 text-white">
-        {/* <h2 className="text-4xl font-bold text-center mb-8 text-white">
-          CONTACTO
-        </h2> */}
-        <p className="mb-12 max-w-2xl text-center text-2xl">
-          Envíe su consulta a nuestro equipo de asesores a
-          través de los siguientes medios:
-        </p>
-        
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {/* WhatsApp */}
-          <div className="flex flex-col items-center">
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center"
-            >
-              <div className="mb-3 flex size-20 items-center justify-center rounded-full bg-green-500 shadow-lg transition-colors duration-200 group-hover:bg-green-600">
-                <MessageCircleMore size={40} className="text-white" />
-              </div>
-              <span className="font-medium text-gray-300 transition-colors duration-200 group-hover:text-green-400">
-                WhatsApp
-              </span>
-            </a>
-          </div>
+    <div className="text-center">
+      <Overline>Contacto</Overline>
+      <h2 className="mt-3 font-display text-h2 text-ink-900">Conversemos sobre Alqantar</h2>
+      <p className="mx-auto mt-4 max-w-prose text-body-l text-ink-700">
+        Escribinos por WhatsApp para recibir información, coordinar una
+        visita o resolver cualquier duda sobre el proyecto.
+      </p>
 
-          {/* Instagram */}
-          <div className="flex flex-col items-center">
-            <a
-              href={project.social.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center"
-            >
-              <div className="mb-3 flex size-20 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 shadow-lg transition-all duration-200 group-hover:from-purple-600 group-hover:via-pink-600 group-hover:to-orange-600">
-                <Instagram size={40} className="text-white" />
-              </div>
-              <span className="font-medium text-gray-300 transition-colors duration-200 group-hover:text-pink-400">
-                Instagram
-              </span>
-            </a>
-          </div>
+      <Button
+        href={whatsappLink()}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="whatsapp"
+        size="lg"
+        className="mt-8"
+      >
+        <MessageCircleMore className="size-5" />
+        Escribir por WhatsApp
+      </Button>
 
-          {/* Facebook */}
-          <div className="flex flex-col items-center">
+      <div className="mt-10 flex flex-wrap items-center justify-center gap-6 border-t border-line pt-8">
+        {secondaryChannels.map((channel) => {
+          const Icon = channel.icon;
+          return (
             <a
-              href={project.social.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col items-center"
+              key={channel.label}
+              href={channel.href}
+              target={channel.external ? "_blank" : undefined}
+              rel={channel.external ? "noopener noreferrer" : undefined}
+              className="flex items-center gap-2 text-body text-ink-500 transition-colors duration-fast hover:text-ink-900"
             >
-              <div className="mb-3 flex size-20 items-center justify-center rounded-full bg-blue-600 shadow-lg transition-colors duration-200 group-hover:bg-blue-700">
-                <Facebook size={40} className="text-white" />
-              </div>
-              <span className="font-medium text-gray-300 transition-colors duration-200 group-hover:text-blue-400">
-                Facebook
-              </span>
+              <Icon className="size-5" />
+              {channel.label}
             </a>
-          </div>
-
-          {/* Email */}
-          <div className="flex flex-col items-center">
-            <a
-              href={`mailto:${project.email}`}
-              className="group flex flex-col items-center"
-            >
-              <div className="mb-3 flex size-20 items-center justify-center rounded-full bg-gray-600 shadow-lg transition-colors duration-200 group-hover:bg-gray-500">
-                <Mail size={40} className="text-white" />
-              </div>
-              <span className="font-medium text-gray-300 transition-colors duration-200 group-hover:text-gray-100">
-                Email
-              </span>
-            </a>
-          </div>
-        </div>
+          );
+        })}
       </div>
-    </section>
+    </div>
   );
 }
 
