@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../public/images/logo.webp";
+import logo from "../assets/logo.webp";
 
 class ErrorBoundary extends React.Component {
   state = { hasError: false, error: null };

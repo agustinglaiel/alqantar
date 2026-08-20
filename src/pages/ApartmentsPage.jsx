@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TowerNavigation from "../components/TowerNavigation";
 import ApartmentLayout from "../components/ApartmentLayout";
 import FutureUpgrade from "../components/FutureUpgrade"; // 👈 nuevo
+import Page from "../components/ui/Page";
+import Container from "../components/ui/Container";
 
 // Mapeo de tipologías por torre
 const TYPOLOGIES_BY_TOWER = {
@@ -14,11 +16,10 @@ function ApartmentsPage() {
   const typologies = TYPOLOGIES_BY_TOWER[selectedTower] || [];
 
   return (
-    <div className="relative min-h-svh pt-32">
-      <TowerNavigation onTowerChange={setSelectedTower} 
-    />
+    <Page className="relative min-h-svh">
+      <TowerNavigation onTowerChange={setSelectedTower} />
 
-      <div className="container mx-auto px-4 pb-20 pt-40 text-center">
+      <Container className="pb-20 text-center">
         <section>
           {typologies.length > 0 ? (
             <div className="grid auto-rows-fr grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -33,19 +34,19 @@ function ApartmentsPage() {
             </div>
           ) : (
             <div className="flex justify-center">
-              <div className="w-full max-w-2xl rounded-xl bg-white shadow-lg">
+              <div className="w-full max-w-2xl rounded-md bg-white shadow-sm">
                 <FutureUpgrade
                   title="Próximamente"
                   message="Estamos trabajando en las tipologías de esta torre. Muy pronto vas a poder verlas acá."
-                  icon="clock"  
+                  icon="clock"
                   size="medium"
                 />
               </div>
             </div>
           )}
         </section>
-      </div>
-    </div>
+      </Container>
+    </Page>
   );
 }
 

@@ -1,41 +1,29 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
 import { MessageCircleMore } from "lucide-react";
 
 import apartmentData from "../utils/apartmentData";
 import ImageCarousel from "../components/ImageCarousel";
-import MediaDisplay from "../components/MediaDisplay";
+import Lightbox from "../components/media/Lightbox";
 import FutureUpgrade from "../components/FutureUpgrade";
+import Page from "../components/ui/Page";
+import Container from "../components/ui/Container";
+import Button from "../components/ui/Button";
+import useScrollDirection from "../hooks/useScrollDirection";
 
 export default function ApartmentDetailPage() {
   const { tower, typology: typParam } = useParams();
   const typology = decodeURIComponent(typParam || "");
-  
-  // Estado para controlar la posición del aside
-  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
-  const lastScrollYRef = useRef(0);
+
+  // Visibilidad del header compartida con Header.jsx (mismo hook, mismo umbral),
+  // para posicionar el aside sticky justo debajo de él.
+  const isHeaderVisible = useScrollDirection({ threshold: 8, minY: 100 });
 
   // Estados para el modal de imagen
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const data = apartmentData[tower]?.[typology];
-
-  // Detectar dirección del scroll y visibilidad del header
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollYRef.current) {
-        setIsHeaderVisible(false);
-      } else if (currentScrollY < lastScrollYRef.current) {
-        setIsHeaderVisible(true);
-      }
-      lastScrollYRef.current = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // CTA de WhatsApp con mensaje prellenado
   const waLink = useMemo(() => {
@@ -47,22 +35,21 @@ export default function ApartmentDetailPage() {
   // Si no hay data, mostramos el componente "Próximamente"
   if (!data) {
     return (
-      <div className="mx-auto max-w-screen-xl px-4 py-24">
-        <FutureUpgrade
-          title="Ficha no disponible"
-          message="Estamos preparando la información detallada de esta tipología."
-          icon="clock"
-          size="large"
-        />
-        <div className="mt-6 text-center">
-          <Link
-            to="/departamentos"
-            className="inline-block rounded-full bg-gray-800 px-5 py-2 text-white transition-colors hover:bg-gray-900"
-          >
-            Volver a Departamentos
-          </Link>
-        </div>
-      </div>
+      <Page>
+        <Container className="py-24">
+          <FutureUpgrade
+            title="Ficha no disponible"
+            message="Estamos preparando la información detallada de esta tipología."
+            icon="clock"
+            size="large"
+          />
+          <div className="mt-6 text-center">
+            <Button to="/departamentos" variant="secondary">
+              Volver a Departamentos
+            </Button>
+          </div>
+        </Container>
+      </Page>
     );
   }
 
@@ -77,26 +64,26 @@ export default function ApartmentDetailPage() {
   };
 
   return (
-    <div className="min-h-svh bg-gray-100">
-      <div className="mx-auto max-w-screen-xl px-4 pb-16 pt-40">
+    <Page className="min-h-svh bg-gray-100">
+      <Container className="pb-16 pt-8">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* Columna principal del contenido */}
           <div className="space-y-8 lg:col-span-8">
             {/* ImageCarousel */}
-            <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-              <ImageCarousel 
-                images={data.images} 
+            <div className="rounded-md border border-gray-200 bg-white p-4 shadow-sm">
+              <ImageCarousel
+                images={data.images}
                 onImageClick={handleImageClick}
               />
             </div>
 
             {/* Descripción */}
             <section>
-              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="rounded-md border border-gray-200 bg-white p-6 shadow-sm">
                 <h2 className="mb-3 text-2xl font-bold text-gray-900">
                   Descripción
                 </h2>
-                <p className="leading-relaxed text-gray-700">
+                <p className="max-w-prose leading-relaxed text-gray-700">
                   {data.description}
                 </p>
               </div>
@@ -104,7 +91,7 @@ export default function ApartmentDetailPage() {
 
             {/* Características */}
             <section>
-              <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="rounded-md border border-gray-200 bg-white p-6 shadow-sm">
                 {/* Detalles (bullets) si existen */}
                 {data.details?.length > 0 && (
                   <div>
@@ -127,10 +114,11 @@ export default function ApartmentDetailPage() {
 
           {/* Aside lateral */}
           <aside className="lg:col-span-4">
-            <div className={`sticky space-y-4 transition-all duration-300 ease-in-out ${
-              isHeaderVisible ? 'top-36' : 'top-4'
-            }`}>
-              <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div
+              className="sticky space-y-4 transition-all duration-base ease-in-out"
+              style={{ top: isHeaderVisible ? "calc(var(--header-h) + 1rem)" : "1rem" }}
+            >
+              <div className="rounded-md border border-gray-200 bg-white p-5 shadow-sm">
                 <h1 className="text-xl font-bold leading-snug text-gray-900 md:text-2xl">
                   {typology}
                 </h1>
@@ -174,31 +162,31 @@ export default function ApartmentDetailPage() {
 
                 {/* CTA */}
                 <div className="mt-6 space-y-3">
-                  <a
+                  <Button
                     href={waLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-green-500 px-4 py-3 text-white transition-colors hover:bg-green-600"
+                    variant="whatsapp"
+                    size="lg"
+                    className="w-full"
                   >
                     Comunicate para más información
                     <MessageCircleMore size={18} className="opacity-90" />
-                  </a>
+                  </Button>
                 </div>
               </div>
             </div>
           </aside>
         </div>
-      </div>
-      
+      </Container>
+
       {/* Modal para mostrar imagen completa */}
-      {isModalOpen && (
-        <MediaDisplay
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          mediaItems={data.images}
-          initialIndex={selectedImageIndex}
-        />
-      )}
-    </div>
+      <Lightbox
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        mediaItems={data.images}
+        initialIndex={selectedImageIndex}
+      />
+    </Page>
   );
 }

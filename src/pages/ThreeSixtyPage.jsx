@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ApartmentLayout from "../components/ApartmentLayout";
 import AmenitieLayout from "../components/AmenitieLayout";
 import TowerNavigation from "../components/TowerNavigation";
 import FutureUpgrade from "../components/FutureUpgrade";
+import Page from "../components/ui/Page";
+import Container from "../components/ui/Container";
 
 const TYPOLOGIES_BY_TOWER = {
   torre1: ["Tipología 1", "Tipología 2", "Tipología 3"],
@@ -65,7 +67,7 @@ function ThreeSixtyPage() {
     }
 
     const typologies = TYPOLOGIES_BY_TOWER[selectedTower] || [];
-    
+
     if (typologies.length > 0) {
       return (
         <div className="grid auto-rows-fr grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -81,14 +83,14 @@ function ThreeSixtyPage() {
         </div>
       );
     }
-    
+
     return (
       <div className="flex justify-center">
-        <div className="w-full max-w-2xl rounded-xl bg-white shadow-lg">
+        <div className="w-full max-w-2xl rounded-md bg-white shadow-sm">
           <FutureUpgrade
             title="Próximamente"
             message="Estamos trabajando en las vistas 360° de esta torre. Muy pronto vas a poder verlas acá."
-            icon="clock"  
+            icon="clock"
             size="medium"
           />
         </div>
@@ -106,15 +108,15 @@ function ThreeSixtyPage() {
   }, [location]);
 
   return (
-    <div className="relative min-h-screen pt-32">
+    <Page className="relative min-h-screen">
       <TowerNavigation onTowerChange={handleTowerChange} showAmenities={true} />
-      
-      <div className="container mx-auto px-4 pb-20 pt-40 text-center">
+
+      <Container className="pb-20 text-center">
         <section>
           {renderContent()}
         </section>
-      </div>
-    </div>
+      </Container>
+    </Page>
   );
 }
 

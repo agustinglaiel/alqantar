@@ -1,5 +1,7 @@
 import React from 'react';
 import AvancesDisplay from '../components/AvancesDisplay';
+import Page from '../components/ui/Page';
+import Container from '../components/ui/Container';
 
 export default function AvancesPage() {
   const metrics = [
@@ -10,9 +12,9 @@ export default function AvancesPage() {
   ];
 
   return (
-    <div className="relative min-h-screen pt-32">
-      <div className="relative z-10 mx-auto max-w-screen-xl px-4 py-20">
-        <div className="relative rounded-xl bg-white p-4 shadow-lg md:p-12">
+    <Page className="relative min-h-screen">
+      <Container className="relative z-10 py-20">
+        <div className="relative rounded-md bg-white p-4 shadow-sm md:p-12">
           {/* Líneas divisorias - solo visibles en desktop */}
           <div className="absolute inset-y-8 left-1/2 hidden w-px -translate-x-1/2 bg-gray-200 md:block"></div>
           <div className="absolute inset-x-8 top-1/2 hidden h-px -translate-y-1/2 bg-gray-200 md:block"></div>
@@ -34,7 +36,7 @@ export default function AvancesPage() {
             ))}
           </div>
         </div>
-      </div>
-    </div>
+      </Container>
+    </Page>
   );
 }

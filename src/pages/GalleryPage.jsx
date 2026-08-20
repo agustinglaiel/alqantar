@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import LazyMediaCard from "../components/LazyMediaCard";
-import MediaDisplay from "../components/MediaDisplay";
+import { useState } from "react";
+import Page from "../components/ui/Page";
+import Container from "../components/ui/Container";
+import MediaTile from "../components/media/MediaTile";
+import Lightbox from "../components/media/Lightbox";
 
 function GalleryPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,11 +33,11 @@ function GalleryPage() {
   };
 
   return (
-    <section className="min-h-screen pt-32">
-      <div className="mx-auto max-w-screen-xl px-4 py-12">
+    <Page className="min-h-screen">
+      <Container className="py-12">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {mediaItems.map((item, index) => (
-            <LazyMediaCard
+            <MediaTile
               key={index}
               src={item.src}
               type={item.type}
@@ -45,16 +47,14 @@ function GalleryPage() {
             />
           ))}
         </div>
-      </div>
-      {isModalOpen && (
-        <MediaDisplay
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          mediaItems={mediaItems}
-          initialIndex={selectedImageIndex}
-        />
-      )}
-    </section>
+      </Container>
+      <Lightbox
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        mediaItems={mediaItems}
+        initialIndex={selectedImageIndex}
+      />
+    </Page>
   );
 }
 

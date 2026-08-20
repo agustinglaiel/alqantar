@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProgressiveImage from "../components/ProgressiveImage";
+import Page from "../components/ui/Page";
 
 function MasterplanPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -30,8 +31,8 @@ function MasterplanPage() {
   ];
 
   return(
-    <div>
-      <div className="w-full px-4 py-10 pt-32 text-center">
+    <Page>
+      <div className="w-full px-4 py-10 text-center">
         {/* Contenedor con posición relativa para el overlay */}
         <div className="relative">
           <ProgressiveImage
@@ -48,7 +49,7 @@ function MasterplanPage() {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className={`mb-3 rounded-lg bg-white bg-opacity-70 p-3 text-sm text-black transition-all duration-300 md:text-base ${
+                  className={`mb-3 rounded-lg bg-white/70 p-3 text-sm text-black transition-all duration-300 md:text-base ${
                     scrollY > 50 + (index * 20) 
                       ? 'translate-x-0 opacity-100' 
                       : 'translate-x-10 opacity-0'
@@ -71,7 +72,7 @@ function MasterplanPage() {
           className="mt-4 h-96 w-full"
         />
       </div>
-    </div>
+    </Page>
   )
 }
 

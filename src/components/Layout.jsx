@@ -3,6 +3,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import Header from './Header';
 import Footer from './Footer';
+import StickyCta from './StickyCta';
 
 function Layout({ children }) {
   return (
@@ -10,6 +11,7 @@ function Layout({ children }) {
       <Header />
       <main className="grow">{children}</main>
       <Footer />
+      <StickyCta />
       <Analytics />
       <SpeedInsights />
     </div>

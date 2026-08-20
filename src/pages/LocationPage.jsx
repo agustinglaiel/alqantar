@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Map, { Marker } from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
+import Page from "../components/ui/Page";
+import Container from "../components/ui/Container";
 
 const MAPBOX_TOKEN =
   import.meta.env?.VITE_MAPBOX_ACCESS_TOKEN || "TU_TOKEN_PUBLICO_AQUI";
@@ -29,9 +31,9 @@ function LocationPage() {
   );
 
   return (
-    <div className="min-h-full">
-      <section className="py-12 pt-40">
-        <div className="mx-auto max-w-screen-xl px-4">
+    <Page className="min-h-full">
+      <section className="py-12">
+        <Container>
           <div className="mb-6 text-center">
             <a
               href={googleMapsLink}
@@ -69,9 +71,9 @@ function LocationPage() {
           </div>
 
           {/* <NearAttractions onOpen={(locations) => setMapLocations(locations)} /> */}
-        </div>
+        </Container>
       </section>
-    </div>
+    </Page>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import MediaCard from './MediaCard';
+import MediaTile from './media/MediaTile';
 import ProgressiveImage from './ProgressiveImage';
 
 function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
@@ -71,7 +71,7 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
     <div className="flex h-full flex-col">
       {/* Área fija con relación de aspecto */}
       <div
-        className="relative mb-4 w-full overflow-hidden rounded-lg bg-white shadow-lg"
+        className="relative mb-4 w-full overflow-hidden rounded-md bg-white shadow-sm"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
@@ -92,7 +92,7 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
           {showLeftArrow && (
             <button
               onClick={handlePrevious}
-              className="absolute left-4 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all duration-200 hover:bg-black/70"
+              className="absolute left-4 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all duration-fast hover:bg-black/70"
             >
               <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -104,7 +104,7 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
           {showRightArrow && (
             <button
               onClick={handleNext}
-              className="absolute right-4 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all duration-200 hover:bg-black/70"
+              className="absolute right-4 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all duration-fast hover:bg-black/70"
             >
               <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -132,11 +132,11 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
           {validImages.map((image, index) => (
             <div
               key={index}
-              className={`size-16 shrink-0 transition-transform duration-200 lg:size-24 ${
+              className={`size-16 shrink-0 transition-transform duration-fast lg:size-24 ${
                 index === selectedImageIndex ? 'scale-125' : 'hover:scale-110'
               }`}
             >
-              <MediaCard
+              <MediaTile
                 src={image.src}
                 alt={image.alt}
                 type="image"
@@ -144,6 +144,7 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
                 sizeClassName="size-full"
                 imageFit="contain"
                 sizes="96px"
+                scaleOnHover
               />
             </div>
           ))}

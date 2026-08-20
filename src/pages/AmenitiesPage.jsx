@@ -16,7 +16,10 @@ import {
   Bubbles
 } from "lucide-react";
 import amenitiesData, { amenityCarouselImages } from "../utils/amenitiesData";
-import MediaDisplay from "../components/MediaDisplay";
+import Lightbox from "../components/media/Lightbox";
+import Page from "../components/ui/Page";
+import Container from "../components/ui/Container";
+import PageHeader from "../components/ui/PageHeader";
 
 // Mapeo de iconos para diferentes tipos de amenities
 const getAmenityIcon = (title) => {
@@ -46,24 +49,24 @@ function AmenitiesPage() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
-  const [isMediaDisplayOpen, setIsMediaDisplayOpen] = useState(false);
-  const [mediaDisplayIndex, setMediaDisplayIndex] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const carousel = amenityCarouselImages;
 
   // Distancia mínima requerida para considerar un swipe
   const minSwipeDistance = 50;
 
   const handleImageClick = (index) => {
-    // Abrir MediaDisplay con la imagen seleccionada
-    setMediaDisplayIndex(index);
-    setIsMediaDisplayOpen(true);
+    // Abrir el lightbox con la imagen seleccionada
+    setLightboxIndex(index);
+    setIsLightboxOpen(true);
   };
 
-  const closeMediaDisplay = () => {
-    setIsMediaDisplayOpen(false);
+  const closeLightbox = () => {
+    setIsLightboxOpen(false);
   };
 
-  // Convertir datos del carrusel al formato que espera MediaDisplay
+  // Convertir datos del carrusel al formato que espera Lightbox
   const mediaItems = carousel.map(item => ({
     src: item.src,
     alt: item.title,
@@ -120,20 +123,14 @@ function AmenitiesPage() {
   }, [isTransitioning, carousel.length]);
 
   return (
-    <div className="relative">
-      <div className="relative bg-opacity-95 pt-32">
-        <div className="mx-auto max-w-screen-xl px-4 pb-12 pt-20">
-          {/* Header */}
-          <div className="mb-4 text-center">
-            <h1 className="mb-6 text-4xl font-bold text-gray-800 lg:text-5xl">
-              Amenities
-            </h1>
-            <p className="mx-auto max-w-3xl text-xl text-gray-600">
-              Descubre todas las comodidades y servicios exclusivos que hemos
-              diseñado para enriquecer tu experiencia de vida en nuestro
-              complejo residencial.
-            </p>
-          </div>
+    <Page className="relative">
+      <div className="relative pb-12">
+        <Container>
+          <PageHeader
+            className="mb-4"
+            title="Amenities"
+            description="Descubre todas las comodidades y servicios exclusivos que hemos diseñado para enriquecer tu experiencia de vida en nuestro complejo residencial."
+          />
 
           {/* Carrusel 3D */}
           {carousel.length > 0 && (
@@ -191,7 +188,7 @@ function AmenitiesPage() {
                     return (
                       <div
                         key={`${item.src}-${index}`}
-                        className={`absolute cursor-pointer transition-all duration-500 ease-in-out ${
+                        className={`absolute cursor-pointer transition-all duration-slow ease-in-out ${
                           isTransitioning ? "" : "hover:scale-105"
                         }`}
                         style={{
@@ -203,7 +200,7 @@ function AmenitiesPage() {
                         onClick={() => handleImageClick(index)}
                       >
                         <div
-                          className={`relative h-72 w-96 overflow-hidden rounded-xl bg-white shadow-2xl ${
+                          className={`relative h-72 w-96 overflow-hidden rounded-md bg-white shadow-md ${
                             isCenter ? "ring-2 ring-blue-500/30" : ""
                           }`}
                         >
@@ -236,7 +233,7 @@ function AmenitiesPage() {
                 <button
                   onClick={prevImage}
                   disabled={isTransitioning}
-                  className="absolute left-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-white/80 p-3 text-gray-800 shadow-lg transition-all duration-200 hover:bg-white disabled:opacity-50 md:block"
+                  className="absolute left-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-white/80 p-3 text-gray-800 shadow-sm transition-all duration-fast hover:bg-white disabled:opacity-50 md:block"
                 >
                   <svg
                     className="size-6"
@@ -255,7 +252,7 @@ function AmenitiesPage() {
                 <button
                   onClick={nextImage}
                   disabled={isTransitioning}
-                  className="absolute right-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-white/80 p-3 text-gray-800 shadow-lg transition-all duration-200 hover:bg-white disabled:opacity-50 md:block"
+                  className="absolute right-4 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-white/80 p-3 text-gray-800 shadow-sm transition-all duration-fast hover:bg-white disabled:opacity-50 md:block"
                 >
                   <svg
                     className="size-6"
@@ -278,7 +275,7 @@ function AmenitiesPage() {
                     <button
                       key={index}
                       onClick={() => handleImageClick(index)}
-                      className={`size-2 rounded-full transition-all duration-300 ${
+                      className={`size-2 rounded-full transition-all duration-base ${
                         index === currentIndex 
                           ? 'scale-125 bg-white' 
                           : 'bg-white/50 hover:bg-white/75'
@@ -290,12 +287,12 @@ function AmenitiesPage() {
             </div>
           )}
 
-          {/* MediaDisplay para visualizar imágenes en pantalla completa */}
-          <MediaDisplay
-            isOpen={isMediaDisplayOpen}
-            onClose={closeMediaDisplay}
+          {/* Lightbox para visualizar imágenes en pantalla completa */}
+          <Lightbox
+            isOpen={isLightboxOpen}
+            onClose={closeLightbox}
             mediaItems={mediaItems}
-            initialIndex={mediaDisplayIndex}
+            initialIndex={lightboxIndex}
           />
 
           {/* Lista completa de amenities - VERSIÓN MEJORADA */}
@@ -319,18 +316,18 @@ function AmenitiesPage() {
                 return (
                   <div
                     key={index}
-                    className="group overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg transition-all duration-300"
+                    className="group overflow-hidden rounded-md border border-gray-100 bg-white shadow-sm transition-all duration-base"
                   >
                     {/* Header con icono */}
                     <div className="border-b border-gray-200 bg-gray-50 p-6">
                       <div className="flex items-center space-x-4">
                         <div className="shrink-0">
-                          <div className="flex size-12 items-center justify-center rounded-xl bg-gray-800 transition-transform duration-300">
+                          <div className="flex size-12 items-center justify-center rounded-md bg-gray-800 transition-transform duration-base">
                             <IconComponent className="size-6 text-white" />
                           </div>
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-xl font-bold text-gray-800 transition-colors duration-300">
+                          <h3 className="text-xl font-bold text-gray-800 transition-colors duration-base">
                             {amenity.title}
                           </h3>
                         </div>
@@ -366,7 +363,7 @@ function AmenitiesPage() {
             </div>
 
             {/* Sección adicional de beneficios */}
-            <div className="mt-16 rounded-3xl border border-gray-200 bg-gray-50 p-8">
+            <div className="mt-16 rounded-md border border-gray-200 bg-gray-50 p-8">
               <div className="text-center">
                 <h3 className="mb-4 text-2xl font-bold text-gray-800">
                   ¿Por qué elegirnos?
@@ -403,9 +400,9 @@ function AmenitiesPage() {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
-    </div>
+    </Page>
   );
 }
 

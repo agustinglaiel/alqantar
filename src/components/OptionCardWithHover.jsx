@@ -47,7 +47,7 @@ function OptionCardWithHover() {
         <Link
           key={index}
           to={option.linkTo}
-          className="group relative h-64 w-full overflow-hidden rounded-lg shadow-lg"
+          className="group relative h-64 w-full overflow-hidden rounded-md shadow-sm"
         >
           {/* Imagen de fondo */}
           <div className="absolute size-full">
@@ -56,10 +56,10 @@ function OptionCardWithHover() {
               alt={option.title}
               sizes="(min-width: 1024px) 410px, (min-width: 640px) 47vw, 92vw"
               className="size-full"
-              imgClassName="transition-transform duration-300 group-hover:scale-105"
+              imgClassName="transition-transform duration-base group-hover:scale-105"
             />
             {/* Overlay oscuro */}
-            <div className="absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-300 group-hover:bg-opacity-60" />
+            <div className="absolute inset-0 bg-black/40 transition-opacity duration-base group-hover:bg-black/60" />
           </div>
           {/* Contenido (título, descripción y botón) */}
           <div className="relative flex size-full items-center justify-center p-4">
@@ -69,11 +69,13 @@ function OptionCardWithHover() {
                 {option.title}
               </h3>
               {/* Contenedor para descripción y botón, oculto sin hover */}
-              <div className="mt-2 hidden w-full flex-col items-center justify-center transition-all duration-300 group-hover:flex">
+              <div className="mt-2 hidden w-full flex-col items-center justify-center transition-all duration-base group-hover:flex">
                 <p className="mb-2 text-center font-sans text-sm text-white">
                   {option.description}
                 </p>
-                <span className="inline-block rounded-full border border-white px-4 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white hover:text-black">
+                {/* Span, no <Button>: ya está dentro del <Link> de la card completa,
+                    y anidar un elemento interactivo dentro de otro es HTML inválido. */}
+                <span className="inline-block rounded-full border border-white px-4 py-2 text-sm font-semibold text-white transition-colors duration-fast hover:bg-white hover:text-black">
                   VER MÁS
                 </span>
               </div>

@@ -1,48 +1,102 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import logo from "../../public/images/logo.webp";
+import { Menu, X } from "lucide-react";
+import logo from "../assets/logo.webp";
+import navigation, { contactCta } from "../data/navigation";
+import useScrollDirection from "../hooks/useScrollDirection";
+import Button from "./ui/Button";
+
+const OPAQUE_PAGES = ["/galeria", "/departamentos", "/ubicacion", "/avances", "/masterplan", "/amenities", "/360"];
+
+/** Desktop dropdown for one nav group ("El Proyecto", "Unidades", "Experiencia"). */
+function NavGroup({ group, isActive }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handleClickOutside = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
+
+  return (
+    <div
+      ref={ref}
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <button
+        type="button"
+        aria-haspopup="true"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+        className={`text-body font-medium transition-colors duration-fast ${
+          isActive ? "text-white" : "text-white/85 hover:text-white"
+        }`}
+      >
+        {group.label}
+      </button>
+      {open && (
+        <div
+          role="menu"
+          className="absolute left-1/2 top-full z-10 mt-2 w-48 -translate-x-1/2 rounded-md border border-line bg-surface p-2 shadow-md"
+        >
+          {group.items.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="block rounded-sm px-3 py-2 text-body text-ink-700 transition-colors duration-fast hover:bg-surface-alt hover:text-ink-900"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const lastScrollYRef = useRef(0);
   const location = useLocation();
   const navigate = useNavigate();
+  const isVisible = useScrollDirection({ threshold: 8, minY: 100 });
 
-  const opaquePages = ["/galeria", "/departamentos", "/ubicacion", "/avances", "/masterplan", "/amenities", "/360"];
-  const isOpaquePage = opaquePages.includes(location.pathname) || location.pathname.startsWith("/ficha/");
+  const isOpaquePage = OPAQUE_PAGES.includes(location.pathname) || location.pathname.startsWith("/ficha/");
+  const isTransparent = !isOpaquePage && !isScrolled && isVisible;
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollYRef.current) {
-        setIsVisible(false);
-      } else if (currentScrollY < lastScrollYRef.current) {
-        setIsVisible(true);
-      }
-      setIsScrolled(currentScrollY > 10);
-      lastScrollYRef.current = currentScrollY;
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  
+
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
-  
+
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [isMobileMenuOpen]);
-  
+
   const handleContactClick = (e) => {
     if (location.pathname === "/" || location.pathname === "/contacto") {
       e.preventDefault();
@@ -54,190 +108,139 @@ function Header() {
     }
     setIsMobileMenuOpen(false);
   };
-  
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-  
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-  
-  const navLinksLeft = [
-    { path: "/", label: "Inicio" },
-    { path: "/galeria", label: "Galería" },
-    { path: "/departamentos", label: "Departamentos" },
-  ];
-  
-  const navLinksRight = [
-    { path: "/ubicacion", label: "Ubicación" },
-    { path: "/amenities", label: "Amenities" },
-    { path: "/contacto#contacto", label: "Contacto", onClick: handleContactClick },
-  ];
-  
-  const allNavLinks = [...navLinksLeft, ...navLinksRight];
-  
-  const bgClass = isOpaquePage
-    ? "bg-gray-800 bg-opacity-95"
-    : (isScrolled || !isVisible
-        ? "bg-gray-800 bg-opacity-95"
-        : "bg-gray-800 bg-opacity-0");
-  
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
+  const bgClass = isTransparent ? "bg-ink-900/0" : "bg-ink-900/95";
+
   return (
     <>
+      {/* Gradiente de protección: garantiza contraste del texto blanco sobre
+          fotos claras mientras el header está transparente (home, sin scroll). */}
+      {!isOpaquePage && (
+        <div
+          aria-hidden="true"
+          className={`from-ink-900/60 pointer-events-none fixed inset-x-0 top-0 z-20 h-40 bg-gradient-to-b to-transparent transition-opacity duration-base ${
+            isTransparent ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      )}
+
       <header
-        className={`fixed left-0 top-0 z-30 h-32 w-full transition-all duration-300 ${
+        className={`fixed left-0 top-0 z-30 h-[var(--header-h)] w-full transition-all duration-base ${
           isVisible ? "translate-y-0" : "-translate-y-full"
         } ${bgClass}`}
       >
-        <div className="mx-auto flex h-full max-w-screen-xl items-center justify-between p-4">
-          
-          {/* Navegación desktop */}
-          <nav className="hidden md:block">
-            <ul className="flex space-x-6">
-              {navLinksLeft.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className={`text-lg text-white transition-colors duration-200 hover:text-blue-300 ${
-                      location.pathname === link.path ? "border-b-2 border-white" : ""
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <div className="mx-auto flex h-full max-w-content items-center justify-between px-[var(--gutter)]">
+          <Link to="/" onClick={closeMobileMenu} className="flex items-center">
+            <img src={logo} alt="Alqantar" className="h-8 w-auto object-contain md:h-10" />
+          </Link>
+
+          <nav className="hidden items-center gap-8 md:flex">
+            {navigation.map((group) =>
+              group.items ? (
+                <NavGroup
+                  key={group.label}
+                  group={group}
+                  isActive={group.items.some((item) => item.path === location.pathname)}
+                />
+              ) : (
+                <Link
+                  key={group.path}
+                  to={group.path}
+                  className={`text-body font-medium transition-colors duration-fast ${
+                    location.pathname === group.path ? "text-white" : "text-white/85 hover:text-white"
+                  }`}
+                >
+                  {group.label}
+                </Link>
+              )
+            )}
+            <Button to={contactCta.path} onClick={handleContactClick} variant="primary" size="sm">
+              {contactCta.label}
+            </Button>
           </nav>
-          
-          {/* Menú hamburguesa mejorado */}
+
           <button
-            onClick={toggleMobileMenu}
-            className="z-50 rounded-lg p-2 text-white transition-colors duration-200 hover:bg-white hover:bg-opacity-10 focus:outline-none md:hidden"
-            aria-label="Toggle mobile menu"
+            onClick={() => setIsMobileMenuOpen((o) => !o)}
+            aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={isMobileMenuOpen}
+            className="z-50 rounded-md p-2 text-white transition-colors duration-fast hover:bg-white/10 md:hidden"
           >
-            <div className="flex size-6 flex-col items-center justify-center">
-              <span
-                className={`block h-0.5 w-6 rounded-sm bg-white transition-all duration-300 ease-out ${
-                  isMobileMenuOpen ? 'translate-y-1 rotate-45' : '-translate-y-0.5'
-                }`}
-              ></span>
-              <span
-                className={`my-0.5 block h-0.5 w-6 rounded-sm bg-white transition-all duration-300 ease-out ${
-                  isMobileMenuOpen ? 'opacity-0' : 'opacity-100'
-                }`}
-              ></span>
-              <span
-                className={`block h-0.5 w-6 rounded-sm bg-white transition-all duration-300 ease-out ${
-                  isMobileMenuOpen ? '-translate-y-1 -rotate-45' : 'translate-y-0.5'
-                }`}
-              ></span>
-            </div>
+            {isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
           </button>
-          
-          {/* Logo */}
-          <div className="absolute left-1/2 -translate-x-1/2">
-            <Link to="/" onClick={closeMobileMenu}>
-              <img src={logo} alt="Alqantar Logo" className="h-16 w-auto object-contain" />
-            </Link>
-          </div>
-          
-          {/* Navegación derecha desktop */}
-          <nav className="hidden md:block">
-            <ul className="flex space-x-6">
-              {navLinksRight.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    onClick={link.onClick || (() => {})}
-                    className={`text-lg text-white transition-colors duration-200 hover:text-blue-300 ${
-                      location.pathname === link.path ? "border-b-2 border-white" : ""
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
         </div>
       </header>
-      
-      {/* Menú móvil mejorado */}
-      <div
-        className={`fixed inset-y-0 left-0 z-40 w-80 bg-opacity-95 bg-gradient-to-br from-gray-900 via-gray-800 to-slate-900 shadow-2xl backdrop-blur-md transition-all duration-500 ease-out md:hidden ${
-          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-        style={{
-          background: 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(30, 41, 59, 0.95) 50%, rgba(51, 65, 85, 0.95) 100%)'
-        }}
-      >
-        {/* Header del menú móvil */}
-        <div className="flex items-center justify-between border-b border-white border-opacity-10 p-6">
-          <div className="flex items-center space-x-3">
 
-            <h2 className="text-lg font-semibold text-white">Menú</h2>
-          </div>
+      {/* Menú móvil: mismos grupos que el desktop, agrupados en secciones. */}
+      <div
+        className={`fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] bg-ink-900 shadow-md transition-transform duration-slow ease-out md:hidden ${
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between border-b border-white/10 p-6">
+          <h2 className="text-h3 font-semibold text-white">Menú</h2>
           <button
             onClick={closeMobileMenu}
-            className="rounded-full p-1 text-white transition-colors duration-200 hover:bg-white hover:bg-opacity-10 hover:text-blue-300"
+            aria-label="Cerrar menú"
+            className="rounded-full p-1 text-white transition-colors duration-fast hover:bg-white/10"
           >
-            <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <X className="size-6" />
           </button>
         </div>
-        
-        {/* Links del menú con animación escalonada */}
-        <div className="flex flex-1 flex-col justify-center px-6">
-          <nav>
-            <ul className="mt-4 flex flex-col space-y-4">
-              {allNavLinks.map((link, index) => (
-                <li 
-                  key={link.path}
-                  className={`transition-all duration-500 ease-out ${
-                    isMobileMenuOpen 
-                      ? 'translate-x-0 opacity-100' 
-                      : 'translate-x-4 opacity-0'
+
+        <nav className="flex flex-col gap-6 overflow-y-auto p-6">
+          {navigation.map((group) => (
+            <div key={group.label}>
+              {group.items ? (
+                <>
+                  <p className="mb-2 text-overline text-white/50 overline">{group.label}</p>
+                  <ul className="flex flex-col gap-1">
+                    {group.items.map((item) => (
+                      <li key={item.path}>
+                        <Link
+                          to={item.path}
+                          onClick={closeMobileMenu}
+                          className={`block rounded-md px-3 py-2 text-body-l text-white/90 transition-colors duration-fast hover:bg-white/5 ${
+                            location.pathname === item.path ? "bg-white/10 text-white" : ""
+                          }`}
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <Link
+                  to={group.path}
+                  onClick={closeMobileMenu}
+                  className={`block rounded-md px-3 py-2 text-body-l text-white/90 transition-colors duration-fast hover:bg-white/5 ${
+                    location.pathname === group.path ? "bg-white/10 text-white" : ""
                   }`}
-                  style={{
-                    transitionDelay: isMobileMenuOpen ? `${index * 100}ms` : '0ms'
-                  }}
                 >
-                  <Link
-                    to={link.path}
-                    onClick={(e) => {
-                      if (link.onClick) {
-                        link.onClick(e);
-                      }
-                      closeMobileMenu();
-                    }}
-                    className={`group flex items-center rounded-xl p-4 text-xl font-light text-white transition-all duration-200 hover:bg-white hover:bg-opacity-5 hover:text-blue-300 ${
-                      location.pathname === link.path ? "bg-white bg-opacity-10 text-blue-300" : ""
-                    }`}
-                  >
-                    <span className="transition-transform duration-200 group-hover:translate-x-1">
-                      {link.label}
-                    </span>
-                    {location.pathname === link.path && (
-                      <div className="ml-auto size-2 rounded-full bg-blue-400"></div>
-                    )}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
+                  {group.label}
+                </Link>
+              )}
+            </div>
+          ))}
+
+          <Button
+            to={contactCta.path}
+            onClick={handleContactClick}
+            variant="primary"
+            className="mt-2 justify-center"
+          >
+            {contactCta.label}
+          </Button>
+        </nav>
       </div>
-      
-      {/* Overlay mejorado */}
+
       {isMobileMenuOpen && (
         <div
-          className={`fixed inset-0 z-30 bg-black transition-opacity duration-300 md:hidden ${
-            isMobileMenuOpen ? 'bg-opacity-60' : 'bg-opacity-0'
-          }`}
+          className="bg-ink-900/60 fixed inset-0 z-30 md:hidden"
           onClick={closeMobileMenu}
-        ></div>
+        />
       )}
     </>
   );

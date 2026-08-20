@@ -1,5 +1,5 @@
-import React from 'react';
 import ProgressiveImage from './ProgressiveImage';
+import Button from './ui/Button';
 
 function AmenitieLayout({ amenityType, onCustomClick }) {
   // Configuración para cada tipo de amenity
@@ -25,7 +25,7 @@ function AmenitieLayout({ amenityType, onCustomClick }) {
   };
 
   return (
-    <div className="mx-auto flex min-h-96 w-full max-w-sm flex-col overflow-hidden rounded-lg bg-white shadow-lg">
+    <div className="mx-auto flex min-h-96 w-full max-w-sm flex-col overflow-hidden rounded-md bg-white shadow-sm">
       {/* Sección superior: Imagen (70% del espacio) */}
       <div className="relative h-64 overflow-hidden">
         <ProgressiveImage
@@ -48,12 +48,9 @@ function AmenitieLayout({ amenityType, onCustomClick }) {
 
       {/* Sección inferior: Botón (10% del espacio) */}
       <div className="p-4 pt-0">
-        <button
-          onClick={handleClick}
-          className="w-full rounded-full bg-gradient-to-r from-gray-800 to-gray-600 px-6 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:from-gray-900 hover:to-gray-700 hover:shadow-xl"
-        >
+        <Button onClick={handleClick} variant="primary" className="w-full">
           Vistas 360°
-        </button>
+        </Button>
       </div>
     </div>
   );

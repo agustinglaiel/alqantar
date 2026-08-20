@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import BackgroundSlider from "../components/BackgroundSlider";
 import OptionCardWithHover from "../components/OptionCardWithHover";
 import ContactSection from "../components/ContactSection";
 import Perks from "../components/Perks";
+import Page from "../components/ui/Page";
+import Container from "../components/ui/Container";
+import Section from "../components/ui/Section";
 
 function HomePage() {
   const location = useLocation();
@@ -18,24 +21,24 @@ function HomePage() {
   }, [location]);
 
   return (
-    <div>
+    <Page offset={false}>
       <BackgroundSlider />
-      <section className="py-6">
-        <div className="mx-auto max-w-screen-xl px-4 pt-8">
+      <Section>
+        <Container>
           <OptionCardWithHover />
-        </div>
-      </section>
-      <section id="perks" className="bg-gray-100 py-6">
-        <div className="mx-auto max-w-screen-xl px-4">
+        </Container>
+      </Section>
+      <Section id="perks" bg="surface-alt">
+        <Container>
           <Perks />
-        </div>
-      </section>
-      <section id="contacto" className="bg-gray-100 py-8">
-        <div className="mx-auto max-w-screen-xl px-4">
+        </Container>
+      </Section>
+      <Section id="contacto" bg="surface-alt">
+        <Container>
           <ContactSection />
-        </div>
-      </section>
-    </div>
+        </Container>
+      </Section>
+    </Page>
   );
 }
 

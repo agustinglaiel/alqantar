@@ -1,10 +1,11 @@
-import logo from "../../public/images/logo.webp";
+import logo from "../assets/logo.webp";
 import { Facebook, Instagram, MessageCircleMore, Mail } from "lucide-react";
+import Container from "./ui/Container";
 
 function Footer() {
   return (
     <footer className="mt-8 bg-gray-800 py-8 text-white">
-      <div className="mx-auto max-w-screen-xl px-4">
+      <Container>
         {/* Desktop Layout */}
         <div className="hidden gap-4 md:flex md:items-start md:justify-between">
           {/* Izquierda: Dirección */}
@@ -96,6 +97,14 @@ function Footer() {
               </p>
               <p>
                 <a
+                  href="/masterplan"
+                  className="text-sm text-white transition-colors duration-200 hover:text-blue-400"
+                >
+                  Masterplan
+                </a>
+              </p>
+              <p>
+                <a
                   href="/avances"
                   className="text-sm text-white transition-colors duration-200 hover:text-blue-400"
                 >
@@ -158,7 +167,7 @@ function Footer() {
             © 2025 Alqantar. Todos los derechos reservados.
           </p>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

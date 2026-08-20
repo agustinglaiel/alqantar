@@ -1,7 +1,8 @@
 // Cambios en src/components/ApartmentInfo.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import apartmentData from '../utils/apartmentData';
+import Button from './ui/Button';
 
 function ApartmentInfo({ tower, typology, buttonText = "Más información", onDetailsClick }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -50,7 +51,7 @@ function ApartmentInfo({ tower, typology, buttonText = "Más información", onDe
           <>
             {currentIndex > 0 && (
               <button
-                className="absolute left-0 top-1/2 -translate-y-1/2 rounded-full bg-gray-200 bg-opacity-30 p-1.5 transition-all duration-200 hover:bg-opacity-50"
+                className="absolute left-0 top-1/2 -translate-y-1/2 rounded-full bg-gray-200/30 p-1.5 transition-all duration-fast hover:bg-gray-200/50"
                 onClick={handlePrev}
               >
                 <ChevronLeft className="size-4 text-gray-400" />
@@ -58,7 +59,7 @@ function ApartmentInfo({ tower, typology, buttonText = "Más información", onDe
             )}
             {currentIndex < info.features.length - 3 && (
               <button
-                className="absolute right-0 top-1/2 -translate-y-1/2 rounded-full bg-gray-200 bg-opacity-30 p-1.5 transition-all duration-200 hover:bg-opacity-50"
+                className="absolute right-0 top-1/2 -translate-y-1/2 rounded-full bg-gray-200/30 p-1.5 transition-all duration-fast hover:bg-gray-200/50"
                 onClick={handleNext}
               >
                 <ChevronRight className="size-4 text-gray-400" />
@@ -69,12 +70,9 @@ function ApartmentInfo({ tower, typology, buttonText = "Más información", onDe
       </div>
 
       <div className="p-4 pt-2">
-        <button
-          className="w-full rounded-full bg-gradient-to-r from-gray-800 to-gray-600 px-6 py-3 text-sm font-medium text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:from-gray-900 hover:to-gray-700 hover:shadow-xl"
-          onClick={onDetailsClick}
-        >
+        <Button onClick={onDetailsClick} variant="primary" className="w-full">
           {buttonText}
-        </button>
+        </Button>
       </div>
     </div>
   );
