@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
-import { MessageCircleMore } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
+import { ChevronLeft, ChevronRight, MessageCircleMore, Rotate3d } from "lucide-react";
 
 import units from "../data/units";
 import project, { whatsappLink } from "../data/project";
@@ -12,6 +12,12 @@ import Page from "../components/ui/Page";
 import Container from "../components/ui/Container";
 import Button from "../components/ui/Button";
 import useScrollDirection from "../hooks/useScrollDirection";
+
+// Los 4 datos que más pesan en una decisión de compra van destacados arriba
+// del resto de los íconos; el resto (vestidor, lavadero, asador, baulera...)
+// se compacta en una lista simple debajo, en vez de una grilla plana de 11
+// íconos idénticos.
+const FEATURED_LABELS = ["Dormitorios", "Baños", "Cocheras", "Superficie"];
 
 export default function ApartmentDetailPage() {
   const { tower, typology: typParam } = useParams();
@@ -26,6 +32,17 @@ export default function ApartmentDetailPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const data = units[tower]?.typologies?.[typology];
+
+  // Tipologías de la misma torre, para la navegación "anterior · siguiente".
+  const towerTypologies = Object.keys(units[tower]?.typologies || {});
+  const currentIndex = towerTypologies.indexOf(typology);
+  const hasSiblings = towerTypologies.length > 1 && currentIndex !== -1;
+  const prevTypology = hasSiblings
+    ? towerTypologies[(currentIndex - 1 + towerTypologies.length) % towerTypologies.length]
+    : null;
+  const nextTypology = hasSiblings
+    ? towerTypologies[(currentIndex + 1) % towerTypologies.length]
+    : null;
 
   // CTA de WhatsApp con mensaje prellenado
   const waLink = useMemo(() => {
@@ -55,6 +72,13 @@ export default function ApartmentDetailPage() {
     );
   }
 
+  const featuredFeatures = FEATURED_LABELS.map((label) =>
+    data.features?.find((f) => f.label === label)
+  ).filter(Boolean);
+  const restFeatures = (data.features || []).filter(
+    (f) => !FEATURED_LABELS.includes(f.label)
+  );
+
   // Funciones para el modal de imagen
   const handleImageClick = (index) => {
     setSelectedImageIndex(index);
@@ -66,13 +90,13 @@ export default function ApartmentDetailPage() {
   };
 
   return (
-    <Page className="min-h-svh bg-gray-100">
+    <Page className="min-h-svh bg-surface-alt">
       <Container className="pb-16 pt-8">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* Columna principal del contenido */}
           <div className="space-y-8 lg:col-span-8">
             {/* ImageCarousel */}
-            <div className="rounded-md border border-gray-200 bg-white p-4 shadow-sm">
+            <div className="rounded-md border border-line bg-surface p-4 shadow-sm">
               <ImageCarousel
                 images={data.images}
                 onImageClick={handleImageClick}
@@ -81,11 +105,11 @@ export default function ApartmentDetailPage() {
 
             {/* Descripción */}
             <section>
-              <div className="rounded-md border border-gray-200 bg-white p-6 shadow-sm">
-                <h2 className="mb-3 text-2xl font-bold text-gray-900">
+              <div className="rounded-md border border-line bg-surface p-6 shadow-sm">
+                <h2 className="mb-3 font-display text-h2 text-ink-900">
                   Descripción
                 </h2>
-                <p className="max-w-prose leading-relaxed text-gray-700">
+                <p className="max-w-prose text-body-l leading-relaxed text-ink-700">
                   {data.description}
                 </p>
               </div>
@@ -93,17 +117,17 @@ export default function ApartmentDetailPage() {
 
             {/* Características */}
             <section>
-              <div className="rounded-md border border-gray-200 bg-white p-6 shadow-sm">
+              <div className="rounded-md border border-line bg-surface p-6 shadow-sm">
                 {/* Detalles (bullets) si existen */}
                 {data.details?.length > 0 && (
                   <div>
-                    <h4 className="mb-2 text-2xl font-semibold text-gray-900">
+                    <h2 className="mb-3 font-display text-h2 text-ink-900">
                       Características
-                    </h4>
+                    </h2>
                     <ul className="space-y-2">
                       {data.details.map((item, i) => (
-                        <li key={i} className="flex items-start text-gray-700">
-                          <span className="mr-3 mt-2.5 size-2 shrink-0 rounded-full bg-blue-500" />
+                        <li key={i} className="flex items-start text-ink-700">
+                          <span className="mr-3 mt-2.5 size-2 shrink-0 rounded-full bg-accent-600" />
                           <span className="leading-relaxed">{item}</span>
                         </li>
                       ))}
@@ -120,56 +144,63 @@ export default function ApartmentDetailPage() {
               className="sticky space-y-4 transition-all duration-base ease-in-out"
               style={{ top: isHeaderVisible ? "calc(var(--header-h) + 1rem)" : "1rem" }}
             >
-              <div className="rounded-md border border-gray-200 bg-white p-5 shadow-sm">
-                <h1 className="text-xl font-bold leading-snug text-gray-900 md:text-2xl">
+              <div className="rounded-md border border-line bg-surface p-5 shadow-sm">
+                <h1 className="font-display text-h2 leading-snug text-ink-900">
                   {typology}
                 </h1>
 
                 <div className="mt-5 grid grid-cols-2 gap-3">
-                  <div className="text-sm">
-                    <div className="text-gray-500">Entrega estimada</div>
-                    <div className="font-semibold">{project.deliveryDate}</div>
+                  <div className="text-caption">
+                    <div className="text-ink-500">Entrega estimada</div>
+                    <div className="font-semibold text-ink-900">{project.deliveryDate}</div>
                   </div>
                   {data.superficieCubierta && data.superficieTotal && (
-                    <div className="text-sm">
-                      <div className="text-gray-500">Superficie</div>
-                      <div className="font-semibold">
+                    <div className="text-caption">
+                      <div className="text-ink-500">Superficie</div>
+                      <div className="font-semibold text-ink-900">
                         {data.superficieCubierta} cubiertos · {data.superficieTotal} totales
                       </div>
                     </div>
                   )}
                 </div>
 
-                {Array.isArray(data.features) && data.features.length > 0 && (
-                  <div className="mt-6">
-                    <h3 className="mb-3 text-sm font-semibold text-gray-900">
-                      Características
-                    </h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      {data.features.map((f, idx) => {
-                        const Icon = iconMap[f.icon];
-                        return (
-                          <div key={idx} className="flex items-center gap-2">
-                            <div
-                              className={`size-8 ${
-                                f.color || "bg-gray-600"
-                              } flex items-center justify-center rounded-full`}
-                            >
-                              {Icon && <Icon className="size-4 text-white" />}
-                            </div>
-                            <div className="text-left leading-tight">
-                              <div className="text-sm font-semibold text-gray-800">
-                                {f.value}
-                              </div>
-                              <div className="text-xs text-gray-500">
-                                {f.label}
-                              </div>
-                            </div>
+                {/* 4 datos destacados */}
+                {featuredFeatures.length > 0 && (
+                  <div className="mt-6 grid grid-cols-2 gap-3">
+                    {featuredFeatures.map((f) => {
+                      const Icon = iconMap[f.icon];
+                      return (
+                        <div
+                          key={f.label}
+                          className="flex items-center gap-3 rounded-md bg-accent-100 p-3"
+                        >
+                          <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent-600">
+                            {Icon && <Icon className="size-4 text-white" />}
                           </div>
-                        );
-                      })}
-                    </div>
+                          <div className="text-left leading-tight">
+                            <div className="text-body font-semibold text-ink-900">{f.value}</div>
+                            <div className="text-caption text-ink-500">{f.label}</div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
+                )}
+
+                {/* Resto de características, en lista compacta */}
+                {restFeatures.length > 0 && (
+                  <ul className="mt-4 space-y-2 border-t border-line pt-4">
+                    {restFeatures.map((f) => {
+                      const Icon = iconMap[f.icon];
+                      return (
+                        <li key={f.label} className="flex items-center gap-2 text-caption text-ink-700">
+                          {Icon && <Icon className="size-4 shrink-0 text-ink-500" aria-hidden="true" />}
+                          <span className="text-ink-500">{f.label}</span>
+                          <span className="ml-auto font-medium text-ink-900">{f.value}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 )}
 
                 {/* CTA */}
@@ -180,12 +211,49 @@ export default function ApartmentDetailPage() {
                     rel="noopener noreferrer"
                     variant="whatsapp"
                     size="lg"
-                    className="w-full"
+                    className="w-full justify-center"
                   >
                     Comunicate para más información
                     <MessageCircleMore size={18} className="opacity-90" />
                   </Button>
+
+                  {data.kuulaUrl && (
+                    <Button
+                      href={data.kuulaUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="secondary"
+                      size="lg"
+                      className="w-full justify-center"
+                    >
+                      <Rotate3d size={18} />
+                      Recorrido 360°
+                    </Button>
+                  )}
                 </div>
+
+                {/* Navegación entre tipologías de la misma torre */}
+                {hasSiblings && (
+                  <nav
+                    aria-label="Otras tipologías de la torre"
+                    className="mt-6 flex items-center justify-between border-t border-line pt-4 text-caption"
+                  >
+                    <Link
+                      to={`/ficha/${tower}/${encodeURIComponent(prevTypology)}`}
+                      className="flex items-center gap-1 text-ink-700 transition-colors duration-fast hover:text-ink-900"
+                    >
+                      <ChevronLeft className="size-4" aria-hidden="true" />
+                      {prevTypology}
+                    </Link>
+                    <Link
+                      to={`/ficha/${tower}/${encodeURIComponent(nextTypology)}`}
+                      className="flex items-center gap-1 text-ink-700 transition-colors duration-fast hover:text-ink-900"
+                    >
+                      {nextTypology}
+                      <ChevronRight className="size-4" aria-hidden="true" />
+                    </Link>
+                  </nav>
+                )}
               </div>
             </div>
           </aside>
