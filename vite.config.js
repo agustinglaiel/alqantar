@@ -13,10 +13,16 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Mapbox is huge (~700kb) — isolate it so it only loads on /ubicacion
-          mapbox: ['mapbox-gl', 'react-map-gl/mapbox'],
-          // React core
+          // React core — needed on every route, so eagerly modulepreloaded on purpose.
           vendor: ['react', 'react-dom', 'react-router-dom'],
+          // No manual 'mapbox' entry here on purpose (F5/D8): mapbox-gl and
+          // react-map-gl/mapbox are only ever reached via InteractiveMap.jsx's
+          // dynamic import(), triggered on demand from LocationPage. Rollup's
+          // automatic chunking already isolates them into their own chunk in
+          // that case — but naming them explicitly in this map makes Vite treat
+          // that chunk as reachable from the entry and modulepreload it (~1MB)
+          // on every route regardless. Leave this alone unless you also change
+          // how the map is loaded.
         },
       },
     },
