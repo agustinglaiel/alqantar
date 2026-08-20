@@ -7,7 +7,7 @@ import StickyCta from './StickyCta';
 
 function Layout({ children }) {
   return (
-    <div className="flex min-h-screen flex-col bg-gray-100">
+    <div className="flex min-h-screen flex-col bg-surface-alt">
       <Header />
       <main className="grow">{children}</main>
       <Footer />
