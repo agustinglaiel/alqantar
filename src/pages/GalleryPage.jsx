@@ -1,8 +1,16 @@
 import { useState } from "react";
 import Page from "../components/ui/Page";
 import Container from "../components/ui/Container";
+import Section from "../components/ui/Section";
+import PageHeader from "../components/ui/PageHeader";
+import Button from "../components/ui/Button";
 import MediaTile from "../components/media/MediaTile";
 import Lightbox from "../components/media/Lightbox";
+import { whatsappLink } from "../data/project";
+
+// Índices que se destacan ocupando el doble de ancho y alto en la grilla, para
+// dar ritmo y sugerir curaduría en vez de una grilla plana de tiles iguales.
+const FEATURED_INDICES = new Set([0, 5, 9]);
 
 function GalleryPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,14 +43,25 @@ function GalleryPage() {
   return (
     <Page className="min-h-screen">
       <Container className="py-12">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <PageHeader
+          overline="Alqantar"
+          title="Galería"
+          description="Un recorrido visual por el condominio: fachadas, amenities y el entorno de Villa Warcalde."
+          className="mb-10"
+        />
+        <div className="grid auto-rows-[160px] grid-cols-2 gap-4 sm:auto-rows-[200px] sm:grid-cols-3 lg:grid-cols-4">
           {mediaItems.map((item, index) => (
             <MediaTile
               key={index}
               src={item.src}
               type={item.type}
               alt={item.alt}
-              sizes="(min-width: 1280px) 294px, (min-width: 1024px) 31vw, (min-width: 640px) 47vw, 92vw"
+              sizeClassName={`size-full ${FEATURED_INDICES.has(index) ? "col-span-2 row-span-2" : ""}`}
+              sizes={
+                FEATURED_INDICES.has(index)
+                  ? "(min-width: 1024px) 620px, 92vw"
+                  : "(min-width: 1280px) 294px, (min-width: 1024px) 31vw, (min-width: 640px) 47vw, 46vw"
+              }
               onClick={() => handleImageClick(index)}
             />
           ))}
@@ -54,6 +73,17 @@ function GalleryPage() {
         mediaItems={mediaItems}
         initialIndex={selectedImageIndex}
       />
+      <Section bg="surface-alt" className="text-center">
+        <Container>
+          <h2 className="font-display text-h2 text-ink-900">¿Querés verlo en persona?</h2>
+          <p className="mx-auto mt-3 max-w-prose text-body-l text-ink-700">
+            Coordiná una visita guiada por el condominio con nuestro equipo de asesores.
+          </p>
+          <Button href={whatsappLink("Hola, me gustaría coordinar una visita a Alqantar.")} target="_blank" rel="noopener noreferrer" variant="whatsapp" size="lg" className="mt-6">
+            Coordinar visita por WhatsApp
+          </Button>
+        </Container>
+      </Section>
     </Page>
   );
 }
