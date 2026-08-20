@@ -1,110 +1,86 @@
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import ApartmentLayout from "../components/ApartmentLayout";
-import AmenitieLayout from "../components/AmenitieLayout";
-import TowerNavigation from "../components/TowerNavigation";
-import FutureUpgrade from "../components/FutureUpgrade";
+import { useState } from "react";
+import ProgressiveImage from "../components/ProgressiveImage";
+import TourEmbed from "../components/media/TourEmbed";
 import Page from "../components/ui/Page";
 import Container from "../components/ui/Container";
+import PageHeader from "../components/ui/PageHeader";
+import Button from "../components/ui/Button";
+import Badge from "../components/ui/Badge";
 import units from "../data/units";
 
-// URLs de Kuula para amenities (por ahora placeholder)
-const AMENITIES_KUULA_URLS = {
-  "sum": "https://kuula.co/share/collection/7DqTL?logo=0&info=0&fs=1&vr=1&sd=1&initload=0&thumbs=1",
-  "spa": "https://kuula.co/share/collection/7DTfh?logo=0&info=0&fs=1&vr=1&sd=1&initload=0&thumbs=1"
-};
+// Tours de amenities: no tienen un campo propio en src/data/units.js porque
+// no son tipologías, así que quedan acá — son de uso único en esta página.
+const AMENITY_TOURS = [
+  {
+    id: "sum",
+    title: "SUM privado",
+    image: "/images/amenities/15.webp",
+    kuulaUrl: "https://kuula.co/share/collection/7DqTL?logo=0&info=0&fs=1&vr=1&sd=1&initload=0&thumbs=1",
+  },
+  {
+    id: "spa",
+    title: "Gimnasio, sauna y sala de relax",
+    image: "/images/amenities/03.webp",
+    kuulaUrl: "https://kuula.co/share/collection/7DTfh?logo=0&info=0&fs=1&vr=1&sd=1&initload=0&thumbs=1",
+  },
+];
 
 function ThreeSixtyPage() {
-  const location = useLocation();
-  const [selectedTower, setSelectedTower] = useState("torre1");
+  const [activeTour, setActiveTour] = useState(null);
 
-  const handleOpenThreeSixty = (typology) => {
-    const url = units[selectedTower]?.typologies?.[typology]?.kuulaUrl;
-    if (url) {
-      window.open(url, '_blank');
-    }
-  };
+  // Grilla unificada de tipologías + amenities en un solo nivel (reemplaza
+  // el TowerNavigation con "amenities" metido como si fuera una torre):
+  // ambas son "cosas con un recorrido 360°".
+  const typologyTours = Object.entries(units.torre1?.typologies ?? {}).map(([name, data]) => ({
+    id: name,
+    title: name,
+    image: data.mainImage,
+    kuulaUrl: data.kuulaUrl,
+  }));
 
-  const handleOpenAmenityThreeSixty = (amenityType) => {
-    const url = AMENITIES_KUULA_URLS[amenityType];
-    if (url && !url.includes('placeholder')) {
-      window.open(url, '_blank');
-    } else {
-      // Por ahora, mostrar alerta de que está en desarrollo
-      alert('Las vistas 360° de este amenity estarán disponibles próximamente.');
-    }
-  };
-
-  const handleTowerChange = (towerId) => {
-    setSelectedTower(towerId);
-  };
-
-  const renderContent = () => {
-    if (selectedTower === 'amenities') {
-      return (
-        <div className="mx-auto grid max-w-4xl grid-cols-1 justify-center gap-8 md:grid-cols-2">
-          <AmenitieLayout
-            amenityType="sum"
-            onCustomClick={handleOpenAmenityThreeSixty}
-          />
-          <AmenitieLayout
-            amenityType="spa"
-            onCustomClick={handleOpenAmenityThreeSixty}
-          />
-        </div>
-      );
-    }
-
-    const typologies = Object.keys(units[selectedTower]?.typologies || {});
-
-    if (typologies.length > 0) {
-      return (
-        <div className="grid auto-rows-fr grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {typologies.map((typology) => (
-            <ApartmentLayout
-              key={typology}
-              tower={selectedTower}
-              typology={typology}
-              buttonText="Vistas 360"
-              onCustomClick={handleOpenThreeSixty}
-            />
-          ))}
-        </div>
-      );
-    }
-
-    return (
-      <div className="flex justify-center">
-        <div className="w-full max-w-2xl rounded-md bg-white shadow-sm">
-          <FutureUpgrade
-            title="Próximamente"
-            message="Estamos trabajando en las vistas 360° de esta torre. Muy pronto vas a poder verlas acá."
-            icon="clock"
-            size="medium"
-          />
-        </div>
-      </div>
-    );
-  };
-
-  useEffect(() => {
-    if (location.hash) {
-      const element = document.getElementById(location.hash.substring(1));
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, [location]);
+  const tours = [...typologyTours, ...AMENITY_TOURS];
 
   return (
-    <Page className="relative min-h-screen">
-      <TowerNavigation onTowerChange={handleTowerChange} showAmenities={true} />
+    <Page>
+      <Container className="py-12">
+        <PageHeader
+          overline="Alqantar"
+          title="Recorridos 360°"
+          description="Recorré las tipologías de la Torre 1 y los amenities principales como si ya estuvieras ahí."
+          className="mb-10"
+        />
 
-      <Container className="pb-20 text-center">
-        <section>
-          {renderContent()}
-        </section>
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {tours.map((tour) => (
+            <div key={tour.id} className="overflow-hidden rounded-md bg-surface shadow-sm">
+              <ProgressiveImage
+                src={tour.image}
+                alt={`Vista de ${tour.title} de Alqantar Condominio`}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 47vw, 92vw"
+                className="aspect-[4/3] w-full"
+              />
+              <div className="flex flex-col items-center gap-3 p-5 text-center">
+                <h3 className="text-h3 font-semibold text-ink-900">{tour.title}</h3>
+                {tour.kuulaUrl ? (
+                  <Button onClick={() => setActiveTour(tour)} variant="ghost">
+                    Ver recorrido 360° →
+                  </Button>
+                ) : (
+                  // Reemplaza el alert() nativo (B10) por un estado vacío diseñado.
+                  <Badge>Próximamente</Badge>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </Container>
+
+      <TourEmbed
+        isOpen={Boolean(activeTour)}
+        onClose={() => setActiveTour(null)}
+        url={activeTour?.kuulaUrl}
+        title={activeTour ? `Recorrido 360° — ${activeTour.title}` : undefined}
+      />
     </Page>
   );
 }
