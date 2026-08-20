@@ -16,7 +16,6 @@ import {
   Bubbles
 } from "lucide-react";
 import amenitiesData, { amenityCarouselImages } from "../utils/amenitiesData";
-import Header from "../components/Header";
 import MediaDisplay from "../components/MediaDisplay";
 
 // Mapeo de iconos para diferentes tipos de amenities
@@ -122,8 +121,7 @@ function AmenitiesPage() {
 
   return (
     <div className="relative">
-      <Header />
-      <div className="z-60 relative bg-opacity-95 pt-32">
+      <div className="relative bg-opacity-95 pt-32">
         <div className="mx-auto max-w-screen-xl px-4 pb-12 pt-20">
           {/* Header */}
           <div className="mb-4 text-center">

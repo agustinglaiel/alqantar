@@ -47,7 +47,7 @@ function OptionCardWithHover() {
         <Link
           key={index}
           to={option.linkTo}
-          className="perspective-1000 group relative h-64 w-full overflow-hidden rounded-lg shadow-lg"
+          className="group relative h-64 w-full overflow-hidden rounded-lg shadow-lg"
         >
           {/* Imagen de fondo */}
           <div className="absolute size-full">
@@ -79,8 +79,6 @@ function OptionCardWithHover() {
               </div>
             </div>
           </div>
-          {/* Capa para el efecto 3D */}
-          <div className="group-hover:translate-z-10 absolute inset-0 transition-transform duration-300" />
         </Link>
       ))}
     </div>

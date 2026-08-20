@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const TOWERS = [
   { id: 'torre1', name: 'Torres 1 y 2' },
@@ -21,11 +21,6 @@ function TowerNavigation({ onTowerChange, showAmenities = false }) {
 
   // Calcular el índice de la opción activa
   const activeIndex = navigationOptions.findIndex(option => option.id === activeTower);
-
-  // Forzar actualización del estilo para asegurar la transición
-  useEffect(() => {
-    // Esto asegura que el DOM se actualice tras el cambio de activeTower
-  }, [activeTower]);
 
   return (
     <div className="relative z-20 w-full">

@@ -7,7 +7,7 @@ function LazyMediaCard({ src, type = "image", alt, onClick, className = "", imag
   return (
     <div
       onClick={onClick}
-      className={`perspective-1000 group relative h-52 w-full cursor-pointer overflow-hidden rounded-lg shadow-lg ${className}`}
+      className={`group relative h-52 w-full cursor-pointer overflow-hidden rounded-lg shadow-lg ${className}`}
     >
       <div className="absolute size-full">
         {isVideo ? (
@@ -31,7 +31,6 @@ function LazyMediaCard({ src, type = "image", alt, onClick, className = "", imag
           />
         )}
       </div>
-      <div className="group-hover:translate-z-10 absolute inset-0 transition-transform duration-300" />
 
       {/* Overlay con ícono de zoom */}
       <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-0 transition-all duration-300 group-hover:bg-opacity-20">
