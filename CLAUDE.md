@@ -58,19 +58,35 @@ React Router v7 with these routes:
 - `/masterplan` → `MasterplanPage`
 - `/360` → `ThreeSixtyPage`
 
-### Data Layer (`src/utils/`)
+### Data Layer (`src/data/` + `src/utils/`)
 
 All content is **static data** — no backend or API calls:
-- `apartmentData.js` — typologies keyed by `torre1.['Tipología N']`, each with images, features (lucide-react icons), description, and detail bullets
-- `amenitiesData.js` — amenity list + carousel image paths
-- `imageManifest.js` — **generated**, do not edit by hand. Maps each `/images/*.webp` to its
-  intrinsic size, the widths available under `/images/opt/`, and a base64 LQIP placeholder
+- `src/data/project.js` — address, coordinates, delivery date, contact/social links, and
+  masterplan metrics. Single source of truth (D9); nothing outside this file should hardcode them.
+- `src/data/units.js` — towers → typologies (ex `apartmentData.js`), each with images, features
+  (icons referenced by name, resolved via `src/utils/icons.js`), description,
+  `superficieCubierta`/`superficieTotal`, and `kuulaUrl`.
+- `src/data/navigation.js` — single source of truth for the header nav (desktop dropdowns +
+  mobile drawer sections).
+- `src/utils/amenitiesData.js` — amenity list + carousel image paths.
+- `src/utils/imageManifest.js` — **generated**, do not edit by hand. Maps each `/images/*.webp` to its
+  intrinsic size, the widths available under `/images/opt/`, and a base64 LQIP placeholder.
 
 ### Key Architectural Patterns
 
-**Header hide-on-scroll**: `Header` tracks scroll direction and hides on scroll-down (`-translate-y-full`). `ApartmentDetailPage` replicates this logic locally to adjust its sticky aside `top` offset — this duplication is intentional.
+**Header hide-on-scroll**: `Header` and `ApartmentDetailPage`'s sticky aside both drive their
+show/hide behavior off the same shared `useScrollDirection` hook
+(`src/hooks/useScrollDirection.js`, with a scroll-delta threshold and a `minY` floor so trackpad
+micro-scrolls don't cause flicker) — there is no duplicated scroll logic between them.
 
 **Opaque vs. transparent header**: On `HomePage` the header starts transparent and turns opaque on scroll. All other pages are always opaque. The list of opaque pages is hardcoded in `Header.jsx`.
+
+**Per-page SEO** (`src/components/ui/Seo.jsx`): each page renders `<Seo title description path ogImage>`
+near the top of its JSX; React 19 hoists the `<title>`/`<meta>`/`<link>` tags it renders to
+`<head>` natively (no `react-helmet`). Structured data (`src/components/ui/JsonLd.jsx`) is
+rendered once, site-wide, from `Layout.jsx`. Important caveat: this is a fully client-rendered
+SPA (no SSR/prerendering) — crawlers that don't execute JavaScript (WhatsApp, Facebook, Twitter
+link-preview bots) will never see these tags, only crawlers that render JS (Googlebot) will.
 
 **Progressive images**: every content image goes through `ProgressiveImage`, which paints the
 inline LQIP blur immediately, picks a size via `srcset`/`sizes`, starts fetching 400px before
@@ -83,12 +99,15 @@ Note: `ProgressiveImage` only applies `relative` to its wrapper when the caller 
 positioning class. Tailwind emits `.relative` after `.absolute`, so hardcoding it would silently
 override callers like `BackgroundSlider` that need the wrapper absolutely positioned.
 
-**Layout wrapper** (`src/components/Layout.jsx`): Wraps every page with `<Header>`, `<Footer>`, Vercel `<Analytics>`, and `<SpeedInsights>`.
+**Layout wrapper** (`src/components/Layout.jsx`): Wraps every page with a skip link ("Ir al
+contenido" → `#main-content`, visually hidden until focused), `<Header>`, `<Footer>`,
+`<StickyCta>`, site-wide JSON-LD (`<JsonLd>`), Vercel `<Analytics>`, and `<SpeedInsights>`.
 
 ### External Integrations
 
-- **Mapbox GL** (`react-map-gl/mapbox`) on `LocationPage` — token from `VITE_MAPBOX_ACCESS_TOKEN` env var
-- **EmailJS** (`@emailjs/browser`) — dependency available, check components for usage
+- **Mapbox GL** (`react-map-gl/mapbox`) on `LocationPage` — lazy-loaded via `React.lazy()` behind
+  a "Ver mapa interactivo" button (D8), so the ~1 MB `mapbox-gl` chunk isn't in the initial
+  bundle; token from `VITE_MAPBOX_ACCESS_TOKEN` env var
 - **Vercel Analytics + Speed Insights** — injected globally in `Layout.jsx`
 
 ### Static Assets
@@ -103,7 +122,11 @@ and re-running the build.
 
 ### Styling
 
-Tailwind CSS v3. `eslint-plugin-tailwindcss` enforces classname order (warn-level). No custom theme extensions.
+Tailwind CSS v3 with a design-token system: `src/styles/tokens.css` defines CSS custom
+properties (warm-neutral + sierra-green palette, Fraunces/Inter type scale, spacing, radii,
+shadows, motion durations), mirrored into `tailwind.config.js`'s `theme.extend` as Tailwind
+utilities (`bg-surface-alt`, `text-ink-700`, `font-display`, etc). `eslint-plugin-tailwindcss`
+enforces classname order (warn-level).
 
 ### Vite Config Note
 

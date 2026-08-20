@@ -24,16 +24,38 @@ function BackgroundSlider() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
-    const intervalId = setInterval(() => {
+    let intervalId = null;
+
+    const advance = () => {
       setCurrentIndex((prev) => {
         const next = (prev + 1) % IMAGES.length;
         // Ensure current + next + one-ahead are in the DOM before transitioning
         setRenderedCount((count) => Math.max(count, Math.min(next + 2, IMAGES.length)));
         return next;
       });
-    }, INTERVAL_DURATION);
+    };
 
-    return () => clearInterval(intervalId);
+    const start = () => {
+      if (intervalId !== null) return;
+      intervalId = setInterval(advance, INTERVAL_DURATION);
+    };
+    const stop = () => {
+      if (intervalId === null) return;
+      clearInterval(intervalId);
+      intervalId = null;
+    };
+
+    // Pausa el auto-avance cuando la pestaña no está visible: evita seguir
+    // animando (y descargando imágenes) en una pestaña de fondo.
+    const handleVisibilityChange = () => (document.hidden ? stop() : start());
+
+    if (!document.hidden) start();
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      stop();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   return (
