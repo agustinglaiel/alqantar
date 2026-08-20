@@ -12,22 +12,24 @@ import {
   ShieldCheck,
   MapPin
 } from "lucide-react";
+import project from "../data/project";
 
 function Perks() {
+  const { metrics } = project;
   const perks = [
     {
       icon: Building2,
-      title: "54 Unidades",
+      title: `${metrics.units} Unidades`,
       description: "Espacios residenciales modernos y funcionales diseñados para tu comodidad."
     },
     {
       icon: Car,
-      title: "126 Cocheras Subterráneas",
+      title: `${metrics.parkingUnderground} Cocheras Subterráneas`,
       description: "Estacionamiento seguro y amplio para todos los residentes."
     },
     {
       icon: Car,
-      title: "35 Cocheras de Cortesía",
+      title: `${metrics.parkingCourtesy} Cocheras de Cortesía`,
       description: "Estacionamiento seguro y amplio para tus invitados."
     },
     {
@@ -62,7 +64,7 @@ function Perks() {
     },
     {
       icon: Trees,
-      title: "12.300 m² de Espacios Verdes",
+      title: `${metrics.greenSpaceM2.toLocaleString("es-AR")} m² de Espacios Verdes`,
       description: "Jardines y áreas naturales para conectar con la naturaleza."
     },
     {
@@ -73,7 +75,7 @@ function Perks() {
     {
       icon: MapPin,
       title: "Entorno Incomparable",
-      description: "Ubicación en Villa Warcalde, Córdoba"
+      description: `Ubicación en ${project.address.neighborhood}, ${project.address.city}`
     }
   ];
 

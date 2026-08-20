@@ -1,13 +1,14 @@
 // Cambios en src/components/ApartmentInfo.jsx
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import apartmentData from '../utils/apartmentData';
+import units from '../data/units';
+import iconMap from '../utils/icons';
 import Button from './ui/Button';
 
 function ApartmentInfo({ tower, typology, buttonText = "Más información", onDetailsClick }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const info = apartmentData[tower]?.[typology] || {
+  const info = units[tower]?.typologies?.[typology] || {
     description: 'Información no disponible.',
     size: 'N/A',
     features: [],
@@ -33,18 +34,21 @@ function ApartmentInfo({ tower, typology, buttonText = "Más información", onDe
             className="flex transition-transform duration-300 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}px)` }}
           >
-            {info.features.map((feature, index) => (
-              <div
-                key={index}
-                className="flex w-[100px] shrink-0 flex-col items-center justify-center text-center"
-              >
-                <div className={`size-8 ${feature.color} mb-1 flex items-center justify-center rounded-full`}>
-                  <feature.icon className="size-4 text-white" />
+            {info.features.map((feature, index) => {
+              const Icon = iconMap[feature.icon];
+              return (
+                <div
+                  key={index}
+                  className="flex w-[100px] shrink-0 flex-col items-center justify-center text-center"
+                >
+                  <div className={`size-8 ${feature.color} mb-1 flex items-center justify-center rounded-full`}>
+                    {Icon && <Icon className="size-4 text-white" />}
+                  </div>
+                  <span className="text-sm font-semibold text-gray-800">{feature.value}</span>
+                  <span className="text-xs text-gray-500">{feature.label}</span>
                 </div>
-                <span className="text-sm font-semibold text-gray-800">{feature.value}</span>
-                <span className="text-xs text-gray-500">{feature.label}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
         {info.features.length > 3 && (

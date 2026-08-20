@@ -4,16 +4,11 @@ import ApartmentLayout from "../components/ApartmentLayout";
 import FutureUpgrade from "../components/FutureUpgrade"; // 👈 nuevo
 import Page from "../components/ui/Page";
 import Container from "../components/ui/Container";
-
-// Mapeo de tipologías por torre
-const TYPOLOGIES_BY_TOWER = {
-  torre1: ["Tipología 1", "Tipología 2", "Tipología 3"],
-  // torre2: [], // si no hay tipologías, dejá el array vacío o directamente omití la clave
-};
+import units from "../data/units";
 
 function ApartmentsPage() {
   const [selectedTower, setSelectedTower] = useState("torre1");
-  const typologies = TYPOLOGIES_BY_TOWER[selectedTower] || [];
+  const typologies = Object.keys(units[selectedTower]?.typologies || {});
 
   return (
     <Page className="relative min-h-svh">

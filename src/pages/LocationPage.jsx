@@ -3,13 +3,14 @@ import Map, { Marker } from "react-map-gl/mapbox";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Page from "../components/ui/Page";
 import Container from "../components/ui/Container";
+import project, { addressFull } from "../data/project";
 
 const MAPBOX_TOKEN =
   import.meta.env?.VITE_MAPBOX_ACCESS_TOKEN || "TU_TOKEN_PUBLICO_AQUI";
 
 function LocationPage() {
   const [mapLocations] = useState([]);
-  const mapCenter = { lat: -31.33593, lng: -64.30234 };
+  const mapCenter = project.coordinates;
 
   const mapContainerStyle = {
     width: "100%",
@@ -41,7 +42,7 @@ function LocationPage() {
               rel="noopener noreferrer"
               className="text-lg text-gray-600 transition-colors duration-200 hover:text-blue-500 hover:underline"
             >
-              José María Eguía Zanón 9932, Villa Warcalde, Córdoba
+              {addressFull}
             </a>
           </div>
 

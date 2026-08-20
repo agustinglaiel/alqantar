@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { MessageCircleMore } from "lucide-react";
 import Button from "./ui/Button";
+import { whatsappLink } from "../data/project";
 
-const WHATSAPP_LINK = "https://wa.me/5493517496383";
+const WHATSAPP_LINK = whatsappLink();
 const SHOW_AFTER_Y = 300;
 
 /**

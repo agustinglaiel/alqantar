@@ -1,5 +1,6 @@
 import React from "react";
 import { MessageCircleMore, Instagram, Facebook, Mail } from "lucide-react";
+import project, { whatsappLink } from "../data/project";
 
 function ContactSection() {
   return (
@@ -17,7 +18,7 @@ function ContactSection() {
           {/* WhatsApp */}
           <div className="flex flex-col items-center">
             <a
-              href="https://wa.me/5493517496383"
+              href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center"
@@ -34,7 +35,7 @@ function ContactSection() {
           {/* Instagram */}
           <div className="flex flex-col items-center">
             <a
-              href="https://www.instagram.com/alqantar_condominio"
+              href={project.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center"
@@ -51,7 +52,7 @@ function ContactSection() {
           {/* Facebook */}
           <div className="flex flex-col items-center">
             <a
-              href="https://www.facebook.com/alqantar.condominio"
+              href={project.social.facebook}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center"
@@ -68,7 +69,7 @@ function ContactSection() {
           {/* Email */}
           <div className="flex flex-col items-center">
             <a
-              href="mailto:info@alqantar.com"
+              href={`mailto:${project.email}`}
               className="group flex flex-col items-center"
             >
               <div className="mb-3 flex size-20 items-center justify-center rounded-full bg-gray-600 shadow-lg transition-colors duration-200 group-hover:bg-gray-500">

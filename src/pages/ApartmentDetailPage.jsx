@@ -2,7 +2,9 @@ import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MessageCircleMore } from "lucide-react";
 
-import apartmentData from "../utils/apartmentData";
+import units from "../data/units";
+import project, { whatsappLink } from "../data/project";
+import iconMap from "../utils/icons";
 import ImageCarousel from "../components/ImageCarousel";
 import Lightbox from "../components/media/Lightbox";
 import FutureUpgrade from "../components/FutureUpgrade";
@@ -23,13 +25,13 @@ export default function ApartmentDetailPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  const data = apartmentData[tower]?.[typology];
+  const data = units[tower]?.typologies?.[typology];
 
   // CTA de WhatsApp con mensaje prellenado
   const waLink = useMemo(() => {
     if (!data) return "";
     const msg = `Hola, me interesa la ${typology} de ${tower.toUpperCase()} en Alqantar. ¿Podrían enviarme más información?`;
-    return `https://wa.me/5493517496383?text=${encodeURIComponent(msg)}`;
+    return whatsappLink(msg);
   }, [data, tower, typology]);
 
   // Si no hay data, mostramos el componente "Próximamente"
@@ -126,8 +128,16 @@ export default function ApartmentDetailPage() {
                 <div className="mt-5 grid grid-cols-2 gap-3">
                   <div className="text-sm">
                     <div className="text-gray-500">Entrega estimada</div>
-                    <div className="font-semibold">Diciembre 2026</div>
+                    <div className="font-semibold">{project.deliveryDate}</div>
                   </div>
+                  {data.superficieCubierta && data.superficieTotal && (
+                    <div className="text-sm">
+                      <div className="text-gray-500">Superficie</div>
+                      <div className="font-semibold">
+                        {data.superficieCubierta} cubiertos · {data.superficieTotal} totales
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {Array.isArray(data.features) && data.features.length > 0 && (
@@ -136,26 +146,28 @@ export default function ApartmentDetailPage() {
                       Características
                     </h3>
                     <div className="grid grid-cols-2 gap-3">
-                      {data.features.map((f, idx) => (
-                        <div key={idx} className="flex items-center gap-2">
-                          <div
-                            className={`size-8 ${
-                              f.color || "bg-gray-600"
-                            } flex items-center justify-center rounded-full`}
-                          >
-                            {/* el icono ya viene en f.icon desde apartmentData */}
-                            <f.icon className="size-4 text-white" />
-                          </div>
-                          <div className="text-left leading-tight">
-                            <div className="text-sm font-semibold text-gray-800">
-                              {f.value}
+                      {data.features.map((f, idx) => {
+                        const Icon = iconMap[f.icon];
+                        return (
+                          <div key={idx} className="flex items-center gap-2">
+                            <div
+                              className={`size-8 ${
+                                f.color || "bg-gray-600"
+                              } flex items-center justify-center rounded-full`}
+                            >
+                              {Icon && <Icon className="size-4 text-white" />}
                             </div>
-                            <div className="text-xs text-gray-500">
-                              {f.label}
+                            <div className="text-left leading-tight">
+                              <div className="text-sm font-semibold text-gray-800">
+                                {f.value}
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                {f.label}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}

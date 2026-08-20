@@ -1,10 +1,10 @@
 // Cambios en src/components/ApartmentImage.jsx
 import React from 'react';
-import apartmentData from '../utils/apartmentData';
+import units from '../data/units';
 import ProgressiveImage from './ProgressiveImage';
 
 function ApartmentImage({ tower, typology }) {
-  const data = apartmentData[tower]?.[typology] || {};
+  const data = units[tower]?.typologies?.[typology] || {};
   const imageSrc = data.mainImage || '/images/default.webp';
 
   return (

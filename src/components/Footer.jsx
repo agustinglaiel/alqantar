@@ -1,6 +1,7 @@
 import logo from "../assets/logo.webp";
 import { Facebook, Instagram, MessageCircleMore, Mail } from "lucide-react";
 import Container from "./ui/Container";
+import project, { whatsappLink } from "../data/project";
 
 function Footer() {
   return (
@@ -12,11 +13,11 @@ function Footer() {
           <div className="flex-1 text-left">
             <h4 className="mb-2 font-semibold text-gray-300">Dirección</h4>
             <p className="text-sm leading-relaxed">
-              José María Eguía Zanón 9932,
+              {project.address.street},
               <br />
-              Villa Warcalde,
+              {project.address.neighborhood},
               <br />
-              Córdoba
+              {project.address.city}
             </p>
           </div>
           
@@ -27,7 +28,7 @@ function Footer() {
             <img src={logo} alt="Alqantar Logo" className="mb-2 h-12 w-auto" />
             <div className="flex space-x-4">
               <a
-                href="https://www.facebook.com/alqantar.condominio"
+                href={project.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-blue-500"
@@ -35,7 +36,7 @@ function Footer() {
                 <Facebook size={20} />
               </a>
               <a
-                href="https://www.instagram.com/alqantar_condominio"
+                href={project.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-pink-500"
@@ -43,7 +44,7 @@ function Footer() {
                 <Instagram size={20} />
               </a>
               <a
-                href="https://wa.me/5493517496383"
+                href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-green-500"
@@ -51,7 +52,7 @@ function Footer() {
                 <MessageCircleMore size={20} />
               </a>
               <a
-                href="mailto:info@alqantar.com"
+                href={`mailto:${project.email}`}
                 className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-gray-300"
               >
                 <Mail size={20} />
@@ -130,7 +131,7 @@ function Footer() {
             <img src={logo} alt="Alqantar Logo" className="mb-3 h-12 w-auto object-contain" />
             <div className="flex space-x-4">
               <a
-                href="https://www.facebook.com/alqantar.condominio"
+                href={project.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 transition-colors duration-200 hover:text-blue-500"
@@ -138,7 +139,7 @@ function Footer() {
                 <Facebook size={20} />
               </a>
               <a
-                href="https://www.instagram.com/alqantar_condominio"
+                href={project.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 transition-colors duration-200 hover:text-pink-500"
@@ -146,7 +147,7 @@ function Footer() {
                 <Instagram size={20} />
               </a>
               <a
-                href="https://wa.me/5493517496383"
+                href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 transition-colors duration-200 hover:text-green-500"
@@ -154,7 +155,7 @@ function Footer() {
                 <MessageCircleMore size={20} />
               </a>
               <a
-                href="mailto:info@alqantar.com"
+                href={`mailto:${project.email}`}
                 className="text-gray-400 transition-colors duration-200 hover:text-gray-300"
               >
                 <Mail size={20} />

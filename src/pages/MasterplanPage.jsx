@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProgressiveImage from "../components/ProgressiveImage";
 import Page from "../components/ui/Page";
+import project from "../data/project";
 
 function MasterplanPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -11,23 +12,25 @@ function MasterplanPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const { metrics } = project;
+  // en-US formatting preserves the comma-thousands look this page already had.
   const features = [
-    "M2 DE CONSTRUCCIÓN: 18,439.62 m²",
-    "SUPERFICIE DEL TERRENO: 15,576.8 m²",
+    `M2 DE CONSTRUCCIÓN: ${metrics.constructionM2.toLocaleString("en-US")} m²`,
+    `SUPERFICIE DEL TERRENO: ${metrics.landM2.toLocaleString("en-US")} m²`,
     "36 UNIDADES DE 3 y 2 DORMITORIOS CON 2 COCHERAS SUBTERRÁNEAS Y BAULERA",
     "18 UNIDADES DE 3 DORMITORIOS VIP CON 3 COCHERAS SUBTERRÁNEAS Y BAULERA",
     "ETAPA 1: TORRE 1 | ETAPA 2: TORRE 2 | ETAPA 3: TORRES VIPs",
-    "SUPERFICIE DE ESPACIOS VERDES: 12,300 m²",
+    `SUPERFICIE DE ESPACIOS VERDES: ${metrics.greenSpaceM2.toLocaleString("en-US")} m²`,
     "GIMNASIO",
     "SAUNA",
     "SALA DE RELAX",
     "SOLARIUM HÚMEDO",
     "SOLARIUM SECO",
-    "PISCHINA DE 24.3 M DE LARGO",
-    "3 QUINCHOS CON CAPACIDAD DE 25 PERSONAS",
+    `PISCHINA DE ${metrics.poolLengthM} M DE LARGO`,
+    `3 QUINCHOS CON CAPACIDAD DE ${metrics.sumCapacity} PERSONAS`,
     "COWORKING Y OFICINA PRIVADA",
-    "4 TIPOLOGÍAS",
-    "35 COCHERAS DE CORTESÍA"
+    `${metrics.typologiesCount} TIPOLOGÍAS`,
+    `${metrics.parkingCourtesy} COCHERAS DE CORTESÍA`,
   ];
 
   return(

@@ -1,0 +1,192 @@
+// src/data/units.js
+//
+// Towers → typologies (D9). Adding a typology means editing this file only:
+// ApartmentsPage and ThreeSixtyPage derive their typology lists from here
+// instead of declaring their own TYPOLOGIES_BY_TOWER, and each typology
+// carries its own Kuula 360° tour URL instead of a separate lookup object.
+//
+// Icons are referenced by name (see src/utils/icons.js) rather than
+// importing lucide-react components in this data file — components resolve
+// the string to the actual icon.
+//
+// superficieCubierta / superficieTotal are kept as separate, explicitly
+// labeled fields (fixes B5): the old single "size" field conflated covered
+// surface with total surface (terraces + common areas), which read as a
+// contradiction against the number quoted in the description prose.
+
+const units = {
+  torre1: {
+    typologies: {
+      "Tipología 1": {
+        mainImage: "/images/tipologia01/02.webp",
+        images: [
+          { src: "/images/tipologia01/01.webp", alt: "Plano de planta de la Tipología 1 (Depto A), Torre 1" },
+          { src: "/images/tipologia01/02.webp", alt: "Vista cenital del departamento completo con living, cocina y dormitorios" },
+          { src: "/images/tipologia01/03.webp", alt: "Vista isométrica de la Tipología 1 con la distribución completa de ambientes" },
+          { src: "/images/tipologia01/04.webp", alt: "Balcón terraza con sillones y mesa, con vista al living y comedor" },
+          { src: "/images/tipologia01/05.webp", alt: "Balcón en esquina con sillones de mimbre y vista a la calle arbolada" },
+          { src: "/images/tipologia01/06.webp", alt: "Balcón terraza con asador integrado, mesa de madera y living al fondo" },
+          { src: "/images/tipologia01/07.webp", alt: "Pasillo interior con pared espejada que conecta los ambientes" },
+          { src: "/images/tipologia01/08.webp", alt: "Cocina equipada con hornos empotrados y pasillo hacia el living" },
+          { src: "/images/tipologia01/09.webp", alt: "Cocina en línea con anafe, bacha y mesada en tonos cálidos" },
+          { src: "/images/tipologia01/10.webp", alt: "Dormitorio infantil con escritorio, carpa tipi y mural de bosque" },
+          { src: "/images/tipologia01/11.webp", alt: "Dormitorio infantil con cama individual y mural de árboles iluminado" },
+          { src: "/images/tipologia01/12.webp", alt: "Detalle del mural de bosque con luces integradas sobre la cama infantil" },
+          { src: "/images/tipologia01/13.webp", alt: "Vestidor en suite con placares y pasillo hacia el resto del departamento" },
+          { src: "/images/tipologia01/14.webp", alt: "Dormitorio en suite con mueble bajo TV en madera y ventanal al jardín" },
+          { src: "/images/tipologia01/15.webp", alt: "Sala de estar en suite con sillón de lectura junto a mesa auxiliar" },
+          { src: "/images/tipologia01/16.webp", alt: "Dormitorio principal con cuadro de gran formato y mesa de luz" },
+          { src: "/images/tipologia01/17.webp", alt: "Dormitorio con ventanal de piso a techo y vista arbolada" },
+          { src: "/images/tipologia01/18.webp", alt: "Living con biblioteca de diseño, TV y mesa ratona" },
+          { src: "/images/tipologia01/19.webp", alt: "Living con sillones y plantas junto a ventanal corrido al balcón" },
+          { src: "/images/tipologia01/20.webp", alt: "Living integrado al balcón exterior con reposeras y vista verde" },
+          { src: "/images/tipologia01/21.webp", alt: "Comedor con mesa para ocho personas y galería de cuadros" },
+          { src: "/images/tipologia01/22.webp", alt: "Comedor integrado al living con biblioteca y TV de pantalla plana" },
+          { src: "/images/tipologia01/23.webp", alt: "Balcón terraza con mobiliario de exterior y vista a la cocina y el lavadero" },
+          { src: "/images/tipologia01/24.webp", alt: "Pasillo de distribución hacia los dormitorios y el living" },
+          { src: "/images/tipologia01/25.webp", alt: "Vestidor en suite con placares abiertos y estantería de blanquería" },
+        ],
+        description:
+          "La Tipología 01 de Alqantar Condominio ha sido diseñada en esquina, lo que le otorga mayor amplitud visual, luminosidad y privacidad. Concebida para quienes buscan una unidad exclusiva de dos dormitorios, combina la comodidad de espacios generosos con la calidez de un entorno natural único en Villa Warcalde. Con una superficie propia de 175 m², esta tipología integra ambientes funcionales y elegantes, que se prolongan hacia balcones concebidos para disfrutar del verde y las vistas abiertas en cada momento del día.",
+        superficieCubierta: "175 m²",
+        superficieTotal: "275 m²",
+        kuulaUrl: "https://kuula.co/share/collection/71rs9?logo=0&info=0&fs=1&vr=1&sd=1&initload=0&thumbs=1",
+        features: [
+          { icon: "BedDouble", value: "2", color: "bg-gray-600", label: "Dormitorios" },
+          { icon: "ShowerHead", value: "3", color: "bg-gray-600", label: "Baños" },
+          { icon: "Grid", value: "1", color: "bg-gray-600", label: "Vestidor en Suite" },
+          { icon: "ChefHat", value: "1", color: "bg-gray-600", label: "Cocina" },
+          { icon: "Sofa", value: "1", color: "bg-gray-600", label: "Estar/Comedor" },
+          { icon: "Shirt", value: "1", color: "bg-gray-600", label: "Lavadero" },
+          { icon: "Car", value: "2", color: "bg-gray-600", label: "Cocheras" },
+          { icon: "Utensils", value: "1", color: "bg-gray-600", label: "Asador" },
+          { icon: "DoorOpen", value: "3", color: "bg-gray-600", label: "Balcones" },
+          { icon: "Layers", value: "1", color: "bg-gray-600", label: "Baulera" },
+          { icon: "Square", value: "275 m²", color: "bg-gray-600", label: "Superficie" },
+        ],
+        details: [
+          "2 dormitorios con balcón propio: uno de ellos en suite con vestidor y el otro con placard. Ambos amoblamientos Johnson.",
+          "Living comedor integrado, con puertas ventanas de aluminio con DVH, que conectan al balcón terraza con asador.",
+          "Cocina moderna y equipada, con amoblamientos Johnson, anafe, horno y extractor.",
+          "Espacio independiente destinado a lavadero, que aporta practicidad y organización al hogar.",
+          "2 baños completos con terminaciones premium, más un toilette que independiza el área social de la privada.",
+          "Sistema de climatización propio, con dos equipos de aire frío/calor centralizados, garantizando confort durante todo el año.",
+          "2 cocheras subterráneas y 1 baulera privada incluidas.",
+        ],
+      },
+      "Tipología 2": {
+        mainImage: "/images/tipologia02/02.webp",
+        images: [
+          { src: "/images/tipologia02/01.webp", alt: "Plano de planta de la Tipología 2 (Depto B/D/E), Torre 1" },
+          { src: "/images/tipologia02/02.webp", alt: "Vista cenital del departamento completo con tres dormitorios, living y cocina" },
+          { src: "/images/tipologia02/03.webp", alt: "Vista isométrica de la Tipología 2 con la distribución completa de ambientes" },
+          { src: "/images/tipologia02/04.webp", alt: "Balcón terraza con mesa de comedor exterior y vista al living" },
+          { src: "/images/tipologia02/05.webp", alt: "Balcón terraza con asador integrado y mesa de comedor al aire libre" },
+          { src: "/images/tipologia02/06.webp", alt: "Detalle del asador integrado en el balcón terraza" },
+          { src: "/images/tipologia02/07.webp", alt: "Comedor con lámpara colgante y vista al living con TV de pantalla panorámica" },
+          { src: "/images/tipologia02/08.webp", alt: "Living con TV de pantalla panorámica y pasillo hacia la cocina" },
+          { src: "/images/tipologia02/09.webp", alt: "Dormitorio en suite con placares y cuadros geométricos sobre la cabecera" },
+          { src: "/images/tipologia02/10.webp", alt: "Dormitorio en suite con TV integrada para gaming y vista a las sierras" },
+          { src: "/images/tipologia02/11.webp", alt: "Escritorio con estantería de libros junto al ventanal del balcón" },
+          { src: "/images/tipologia02/12.webp", alt: "Detalle del balcón con vista al bosque desde el escritorio" },
+          { src: "/images/tipologia02/13.webp", alt: "Dormitorio secundario con dos camas individuales y placar" },
+          { src: "/images/tipologia02/14.webp", alt: "Dormitorio principal con cómoda, espejo y ventanal al balcón" },
+          { src: "/images/tipologia02/15.webp", alt: "Dormitorio principal en tonos claros con placares empotrados" },
+          { src: "/images/tipologia02/16.webp", alt: "Pasillo hacia el baño en suite junto al dormitorio principal" },
+          { src: "/images/tipologia02/17.webp", alt: "Dormitorio con balcón propio y vista a los árboles del entorno" },
+          { src: "/images/tipologia02/18.webp", alt: "Living con mueble TV integrado y vitrina decorativa junto al balcón" },
+          { src: "/images/tipologia02/19.webp", alt: "Sala de estar con sillones y mesa ratona junto al pasillo de acceso" },
+          { src: "/images/tipologia02/20.webp", alt: "Dormitorio principal con cabecera tapizada y cuadros en blanco y negro" },
+          { src: "/images/tipologia02/21.webp", alt: "Mueble TV con vitrina y estantería decorativa en el living" },
+          { src: "/images/tipologia02/22.webp", alt: "Living comedor integrado con vista panorámica al entorno arbolado" },
+          { src: "/images/tipologia02/23.webp", alt: "Comedor formal para diez personas junto al living principal" },
+          { src: "/images/tipologia02/24.webp", alt: "Living con sofá modular, TV y vista panorámica a la vegetación" },
+          { src: "/images/tipologia02/25.webp", alt: "Living con sofá curvo, mesa ratona y mueble TV con vitrina decorativa" },
+          { src: "/images/tipologia02/26.webp", alt: "Detalle del mueble TV con estantería de objetos decorativos" },
+          { src: "/images/tipologia02/27.webp", alt: "Living integrado al comedor con biblioteca y placares" },
+          { src: "/images/tipologia02/28.webp", alt: "Comedor formal con mesa para diez personas y cuadros en la pared" },
+          { src: "/images/tipologia02/29.webp", alt: "Vestidor con placares, espejo de cuerpo entero y pasillo interior" },
+          { src: "/images/tipologia02/30.webp", alt: "Detalle del vestidor con placares abiertos, prendas y accesorios" },
+        ],
+        description:
+          "La Tipología 02 de Alqantar Condominio ha sido diseñada en esquina, ofreciendo mayor luminosidad, amplitud visual y privacidad. Pensada para quienes buscan una residencia de gran categoría, combina la comodidad de tres dormitorios con la calidez de un entorno natural único en Villa Warcalde. Con una superficie propia de 210 m², esta tipología se distingue por su distribución inteligente, que potencia la vida social y al mismo tiempo resguarda la intimidad de los espacios privados. Cada ambiente se prolonga hacia balcones concebidos para disfrutar del verde y de las vistas abiertas en cualquier momento del día.",
+        superficieCubierta: "210 m²",
+        superficieTotal: "320 m²",
+        kuulaUrl: "https://kuula.co/share/collection/71yMy?logo=0&info=0&fs=1&vr=1&sd=1&initload=0&thumbs=1",
+        features: [
+          { icon: "BedDouble", value: "3", color: "bg-gray-600", label: "Dormitorios" },
+          { icon: "ShowerHead", value: "3", color: "bg-gray-600", label: "Baños" },
+          { icon: "Grid", value: "1", color: "bg-gray-600", label: "Vestidor en Suite" },
+          { icon: "ChefHat", value: "1", color: "bg-gray-600", label: "Cocina" },
+          { icon: "Sofa", value: "1", color: "bg-gray-600", label: "Estar/Comedor" },
+          { icon: "Shirt", value: "1", color: "bg-gray-600", label: "Lavadero" },
+          { icon: "Car", value: "2", color: "bg-gray-600", label: "Cocheras" },
+          { icon: "Utensils", value: "1", color: "bg-gray-600", label: "Asador" },
+          { icon: "DoorOpen", value: "4", color: "bg-gray-600", label: "Balcones" },
+          { icon: "Layers", value: "1", color: "bg-gray-600", label: "Baulera" },
+          { icon: "Square", value: "320 m²", color: "bg-gray-600", label: "Superficie" },
+        ],
+        details: [
+          "3 dormitorios con balcón propio: la suite principal con vestidor, y los otros dos con placares. Todos los amoblamientos Johnson.",
+          "Living comedor integrado, con puertas ventanas de aluminio con DVH, que conectan al balcón terraza con asador.",
+          "Cocina moderna y equipada, con amoblamientos Johnson, anafe, horno y extractor.",
+          "Espacio independiente destinado a lavadero, que aporta practicidad y organización al hogar.",
+          "2 baños completos con terminaciones premium, más un toilette que independiza el área social de la privada.",
+          "Sistema de climatización propio, con dos equipos de aire frío/calor centralizados, garantizando confort durante todo el año.",
+          "2 cocheras subterráneas y 1 baulera privada incluidas.",
+        ],
+      },
+      "Tipología 3": {
+        mainImage: "/images/tipologia03/02.webp",
+        images: [
+          { src: "/images/tipologia03/01.webp", alt: "Plano de planta de la Tipología 3 (Depto C/F), Torre 1" },
+          { src: "/images/tipologia03/02.webp", alt: "Vista cenital del departamento completo con dos dormitorios, living y cocina" },
+          { src: "/images/tipologia03/03.webp", alt: "Vista isométrica de la Tipología 3 con la distribución completa de ambientes" },
+          { src: "/images/tipologia03/04.webp", alt: "Balcón terraza con asador integrado y mesa de comedor exterior" },
+          { src: "/images/tipologia03/05.webp", alt: "Balcón terraza con asador y vista al living y comedor a través de los ventanales" },
+          { src: "/images/tipologia03/06.webp", alt: "Balcón con macetas junto al ventanal del dormitorio principal" },
+          { src: "/images/tipologia03/07.webp", alt: "Dormitorio infantil con escritorio y ventanal con vista al entorno arbolado" },
+          { src: "/images/tipologia03/08.webp", alt: "Dormitorio infantil con collage de fotos y juguetes junto al escritorio" },
+          { src: "/images/tipologia03/09.webp", alt: "Placar empotrado del dormitorio infantil junto al pasillo interior" },
+          { src: "/images/tipologia03/10.webp", alt: "Dormitorio infantil con cama individual y vista al balcón" },
+          { src: "/images/tipologia03/11.webp", alt: "Dormitorio principal con escritorio, revestimiento de madera y ventanal al balcón" },
+          { src: "/images/tipologia03/12.webp", alt: "Dormitorio principal con cuadros sobre la cabecera y luminarias colgantes" },
+          { src: "/images/tipologia03/13.webp", alt: "Dormitorio en suite con mueble TV, escritorio y ventanal a las sierras" },
+          { src: "/images/tipologia03/14.webp", alt: "Living con sillones, obra de arte y TV integrada a la pared" },
+          { src: "/images/tipologia03/15.webp", alt: "Comedor formal para ocho personas junto a un tapiz decorativo" },
+          { src: "/images/tipologia03/16.webp", alt: "Comedor integrado al living con biblioteca decorativa y placares" },
+          { src: "/images/tipologia03/17.webp", alt: "Vestidor en suite con placares abiertos y prendas colgadas" },
+        ],
+        description:
+          "La Tipología 03 de Alqantar Condominio fue pensada para quienes priorizan el equilibrio entre diseño y funcionalidad, con dos dormitorios y un asador privado que invita a la vida al aire libre. Combina la practicidad de una distribución compacta con la calidez de un entorno natural único en Villa Warcalde. Con una superficie propia de 167 m², esta tipología integra ambientes luminosos y bien resueltos, que se prolongan hacia balcones concebidos para disfrutar del verde y las vistas abiertas en cada momento del día.",
+        superficieCubierta: "167 m²",
+        superficieTotal: "265 m²",
+        kuulaUrl: "https://kuula.co/share/collection/7DpJR?logo=0&info=0&fs=1&vr=1&sd=1&initload=0&thumbs=1",
+        features: [
+          { icon: "BedDouble", value: "2", color: "bg-gray-600", label: "Dormitorios" },
+          { icon: "ShowerHead", value: "3", color: "bg-gray-600", label: "Baños" },
+          { icon: "Grid", value: "1", color: "bg-gray-600", label: "Vestidor en Suite" },
+          { icon: "ChefHat", value: "1", color: "bg-gray-600", label: "Cocina" },
+          { icon: "Sofa", value: "1", color: "bg-gray-600", label: "Estar/Comedor" },
+          { icon: "Shirt", value: "1", color: "bg-gray-600", label: "Lavadero" },
+          { icon: "Car", value: "2", color: "bg-gray-600", label: "Cocheras" },
+          { icon: "Utensils", value: "1", color: "bg-gray-600", label: "Asador" },
+          { icon: "Layers", value: "1", color: "bg-gray-600", label: "Baulera" },
+          { icon: "DoorOpen", value: "2", color: "bg-gray-600", label: "Balcones" },
+          { icon: "Square", value: "265 m²", color: "bg-gray-600", label: "Superficie" },
+        ],
+        details: [
+          "2 dormitorios con balcón propio: uno de ellos en suite con vestidor y el otro con placard. Ambos amoblamientos Johnson.",
+          "Living comedor integrado, con puertas ventanas de aluminio con DVH, que conectan al balcón terraza con asador.",
+          "Cocina moderna y equipada, con amoblamientos Johnson, anafe, horno y extractor.",
+          "Espacio independiente destinado a lavadero, que aporta practicidad y organización al hogar.",
+          "2 baños completos con terminaciones premium, más un toilette que independiza el área social de la privada.",
+          "Sistema de climatización propio, con dos equipos de aire frío/calor centralizados, garantizando confort durante todo el año.",
+          "2 cocheras subterráneas y 1 baulera privada incluidas.",
+        ],
+      },
+    },
+  },
+};
+
+export default units;

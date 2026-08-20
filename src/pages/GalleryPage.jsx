@@ -9,18 +9,18 @@ function GalleryPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const mediaItems = [
-    { src: "/images/01.webp", alt: "Imagen 1", title: "Imagen 1", type: "image" },
-    { src: "/images/02.webp", alt: "Imagen 2", title: "Imagen 2", type: "image" },
-    { src: "/images/03.webp", alt: "Imagen 3", title: "Imagen 3", type: "image" },
-    { src: "/images/04.webp", alt: "Imagen 4", title: "Imagen 4", type: "image" },
-    { src: "/images/05.webp", alt: "Imagen 5", title: "Imagen 5", type: "image" },
-    { src: "/images/06.webp", alt: "Imagen 6", title: "Imagen 6", type: "image" },
-    { src: "/images/07.webp", alt: "Imagen 7", title: "Imagen 7", type: "image" },
-    { src: "/images/08.webp", alt: "Imagen 8", title: "Imagen 8", type: "image" },
-    { src: "/images/09.webp", alt: "Imagen 9", title: "Imagen 9", type: "image" },
-    { src: "/images/10.webp", alt: "Imagen 10", title: "Imagen 10", type: "image" },
-    { src: "/images/11.webp", alt: "Imagen 11", title: "Imagen 11", type: "image" },
-    { src: "/images/12.webp", alt: "Imagen 12", title: "Imagen 12", type: "image" },
+    { src: "/images/01.webp", alt: "Fachada de acceso al condominio Alqantar al atardecer, con portón de ingreso vehicular", type: "image" },
+    { src: "/images/02.webp", alt: "Vista lateral del edificio con balcones iluminados entre los jardines, al anochecer", type: "image" },
+    { src: "/images/03.webp", alt: "Fachada posterior del edificio con jardines paisajísticos y sendero iluminado", type: "image" },
+    { src: "/images/04.webp", alt: "Vista panorámica del conjunto de edificios entre los árboles de Villa Warcalde", type: "image" },
+    { src: "/images/05.webp", alt: "Acceso vehicular a los edificios iluminado al atardecer", type: "image" },
+    { src: "/images/06.webp", alt: "Vista aérea del condominio integrado a la vegetación de Villa Warcalde", type: "image" },
+    { src: "/images/07.webp", alt: "Fachada del edificio junto al acceso vehicular en horas del atardecer", type: "image" },
+    { src: "/images/08.webp", alt: "Piscina y solárium con deck de madera junto al gimnasio al aire libre", type: "image" },
+    { src: "/images/09.webp", alt: "Sendero peatonal entre los edificios rodeado de jardines y un árbol añoso", type: "image" },
+    { src: "/images/10.webp", alt: "Terraza con living exterior, quincho y vista a la piscina", type: "image" },
+    { src: "/images/11.webp", alt: "Vista aérea del condominio con la piscina, los jardines y los accesos", type: "image" },
+    { src: "/images/12.webp", alt: "Vista aérea del conjunto de edificios integrado al paisaje de sierras y bosque", type: "image" },
   ];
 
   const handleImageClick = (index) => {
