@@ -1,0 +1,78 @@
+/* src/styles/tokens.css — design tokens, §4.1–§4.4 de PLAN-REFACTOR.md */
+
+:root {
+  /* Neutrales cálidos — la base del sitio */
+  --ink-900: #1c1a17;
+  --ink-700: #3d3935;
+  --ink-500: #6b655d;
+  --ink-300: #a8a199;
+  --surface: #ffffff;
+  --surface-alt: #f7f5f2;
+  --line: #e5e0d8;
+
+  /* Acento — verde sierra */
+  --accent-700: #2f4a3c;
+  --accent-600: #3a5a48;
+  --accent-100: #e6ede8;
+
+  /* Detalle — dorado. Solo filetes, subrayados, overlines. Nunca fondo de botón. */
+  --gold-600: #96754a;
+  --gold-500: #b08d57;
+
+  /* Funcionales */
+  --whatsapp: #25d366;
+  --focus: #3a5a48;
+
+  /* Tipografía */
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+
+  /* Espaciado y layout */
+  --header-h: 4rem; /* 5rem en ≥768px */
+  --section-y: clamp(3rem, 8vw, 7rem);
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --content-max: 1280px;
+  --prose-max: 68ch;
+
+  /* Radios, sombras, motion */
+  --radius-sm: 4px;
+  --radius-md: 12px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px rgb(28 26 23 / .05), 0 1px 3px rgb(28 26 23 / .06);
+  --shadow-md: 0 4px 12px rgb(28 26 23 / .08), 0 2px 4px rgb(28 26 23 / .04);
+
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-h: 5rem;
+  }
+}
+
+/* overline (§4.2): letter-spacing y uppercase no entran en la tupla de fontSize
+   de Tailwind, así que quedan acá como utilidad aparte. Combinar con la clase
+   Tailwind `text-overline` (tamaño/peso/interlineado):
+   className="text-overline font-semibold overline" */
+.overline {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Foco visible global */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

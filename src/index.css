@@ -1,5 +1,7 @@
 /* src/index.css */
-@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/inter";
+@import "./styles/tokens.css";
 
 @tailwind base;
 @tailwind components;
@@ -7,10 +9,6 @@
 
 html {
   scroll-behavior: smooth;
-}
-
-.cursive {
-  font-family: "Pacifico", cursive;
 }
 
 body {
