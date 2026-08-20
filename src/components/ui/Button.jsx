@@ -4,7 +4,10 @@ const VARIANT_CLASSES = {
   primary: "bg-accent-600 text-white hover:bg-accent-700",
   secondary: "border border-ink-900 text-ink-900 hover:bg-ink-900 hover:text-white",
   ghost: "text-ink-900 hover:bg-surface-alt",
-  whatsapp: "bg-whatsapp text-white hover:brightness-95",
+  // White text on --whatsapp (#25D366) is ~2:1 contrast — fails WCAG AA.
+  // ink-900 on the same green is ~8.75:1, so it stays legible without
+  // touching the brand-green token itself.
+  whatsapp: "bg-whatsapp text-ink-900 hover:brightness-95",
 };
 
 const SIZE_CLASSES = {

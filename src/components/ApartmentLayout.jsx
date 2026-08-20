@@ -38,7 +38,9 @@ function ApartmentLayout({ tower, typology, buttonText = "Ver ficha completa", o
 
       <div className="flex flex-1 flex-col gap-4 p-5">
         <div className="flex items-baseline justify-between">
-          <h3 className="text-h3 font-semibold text-ink-900">Tipología {number}</h3>
+          {/* h2, no h3: en /departamentos es el primer nivel de heading debajo
+              del h1 de la página (no hay un h2 intermedio que lo preceda). */}
+          <h2 className="text-h3 font-semibold text-ink-900">Tipología {number}</h2>
           {surface && <span className="text-caption text-ink-500">{surface} totales</span>}
         </div>
 

@@ -9,6 +9,7 @@ import Section from "../components/ui/Section";
 import Button from "../components/ui/Button";
 import ProgressiveImage from "../components/ProgressiveImage";
 import Overline from "../components/ui/Overline";
+import Seo from "../components/ui/Seo";
 
 // Tres bloques narrativos alternados que reemplazan la grilla de accesos
 // directos (redundante con el header): cuentan el proyecto en vez de listar
@@ -54,6 +55,11 @@ function HomePage() {
 
   return (
     <Page offset={false}>
+      <Seo
+        title="Alqantar Condominio — Villa Warcalde, Córdoba"
+        description="Departamentos de 2 y 3 dormitorios entre sierras y bosque nativo, a minutos del centro de Córdoba. 54 unidades, 12.300 m² de espacios verdes y amenities completos en Villa Warcalde."
+        path="/"
+      />
       <BackgroundSlider />
 
       <Section>

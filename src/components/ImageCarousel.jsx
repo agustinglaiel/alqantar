@@ -77,21 +77,30 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
       >
         {/* Contenedor con ratio fijo (16:9 por defecto) */}
         <div className="relative w-full" style={aspectStyle}>
-          {/* Imagen entra completa */}
-          <ProgressiveImage
-            src={validImages[selectedImageIndex].src}
-            alt={validImages[selectedImageIndex].alt || 'Imagen'}
-            fit="contain"
-            sizes="(min-width: 1024px) 830px, 92vw"
-            priority
-            className="absolute inset-0 size-full cursor-pointer"
+          {/* Imagen entra completa. El click para ampliar vive en el <button>
+              que la envuelve (no en la imagen directamente) para que sea
+              alcanzable por teclado — antes el onClick estaba en un <div>. */}
+          <button
+            type="button"
             onClick={() => onImageClick && onImageClick(selectedImageIndex)}
-          />
+            aria-label="Ver imagen ampliada"
+            className="absolute inset-0 size-full cursor-pointer"
+          >
+            <ProgressiveImage
+              src={validImages[selectedImageIndex].src}
+              alt={validImages[selectedImageIndex].alt || 'Imagen'}
+              fit="contain"
+              sizes="(min-width: 1024px) 830px, 92vw"
+              priority
+              className="size-full"
+            />
+          </button>
 
           {/* Flecha izquierda */}
           {showLeftArrow && (
             <button
               onClick={handlePrevious}
+              aria-label="Imagen anterior"
               className="absolute left-4 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all duration-fast hover:bg-black/70"
             >
               <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,6 +113,7 @@ function ImageCarousel({ images, aspect = '16/9', onImageClick }) {
           {showRightArrow && (
             <button
               onClick={handleNext}
+              aria-label="Imagen siguiente"
               className="absolute right-4 top-1/2 z-10 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white transition-all duration-fast hover:bg-black/70"
             >
               <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

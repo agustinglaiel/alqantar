@@ -7,6 +7,7 @@ import Container from "../components/ui/Container";
 import PageHeader from "../components/ui/PageHeader";
 import Button from "../components/ui/Button";
 import Overline from "../components/ui/Overline";
+import Seo from "../components/ui/Seo";
 import units from "../data/units";
 import { whatsappLink } from "../data/project";
 
@@ -26,6 +27,11 @@ function ApartmentsPage() {
 
   return (
     <Page className="min-h-svh bg-surface-alt">
+      <Seo
+        title="Departamentos"
+        description="Tipologías de 2 y 3 dormitorios en Alqantar Condominio, con balcón propio y cocheras. Torres 1 y 2 en construcción, Torres VIP como próxima etapa."
+        path="/departamentos"
+      />
       <Container className="pt-12 text-center">
         <PageHeader
           overline="Alqantar"

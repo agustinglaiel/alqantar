@@ -11,7 +11,10 @@ function Footer() {
         <div className="hidden gap-4 md:flex md:items-start md:justify-between">
           {/* Izquierda: Dirección */}
           <div className="flex-1 text-left">
-            <h4 className="mb-2 font-semibold text-gray-300">Dirección</h4>
+            {/* p, no heading: el footer no debe introducir su propio nivel
+                de heading — la última sección de contenido termina en h2
+                ("Conversemos sobre Alqantar"), y un h4 acá saltaría el h3. */}
+            <p className="mb-2 font-semibold text-gray-300">Dirección</p>
             <p className="text-sm leading-relaxed">
               {project.address.street},
               <br />
@@ -23,14 +26,19 @@ function Footer() {
           
           {/* Centro: Logo y Redes Sociales - Alineado arriba */}
           <div className="flex flex-1 flex-col items-center">
-            {/* Título invisible para alinear con otros títulos */}
-            <h4 className="mb-2 font-semibold text-transparent">Logo</h4>
+            {/* Título invisible para alinear con otros títulos. aria-hidden:
+                color transparent no lo oculta de un lector de pantalla, y no
+                aporta nada leerlo. */}
+            <p aria-hidden="true" className="mb-2 font-semibold text-transparent">
+              Logo
+            </p>
             <img src={logo} alt="Alqantar Logo" className="mb-2 h-12 w-auto" />
             <div className="flex space-x-4">
               <a
                 href={project.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Facebook de Alqantar"
                 className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-blue-500"
               >
                 <Facebook size={20} />
@@ -39,6 +47,7 @@ function Footer() {
                 href={project.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram de Alqantar"
                 className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-pink-500"
               >
                 <Instagram size={20} />
@@ -47,22 +56,24 @@ function Footer() {
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Escribir por WhatsApp"
                 className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-green-500"
               >
                 <MessageCircleMore size={20} />
               </a>
               <a
                 href={`mailto:${project.email}`}
+                aria-label="Enviar un email"
                 className="text-gray-400 transition-colors duration-200 hover:scale-110 hover:text-gray-300"
               >
                 <Mail size={20} />
               </a>
             </div>
           </div>
-          
+
           {/* Derecha: Enlaces */}
           <div className="flex-1 text-right">
-            <h4 className="mb-2 font-semibold text-gray-300">Navegación</h4>
+            <p className="mb-2 font-semibold text-gray-300">Navegación</p>
             <div className="space-y-1">
               <p>
                 <a
@@ -134,6 +145,7 @@ function Footer() {
                 href={project.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Facebook de Alqantar"
                 className="text-gray-400 transition-colors duration-200 hover:text-blue-500"
               >
                 <Facebook size={20} />
@@ -142,6 +154,7 @@ function Footer() {
                 href={project.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram de Alqantar"
                 className="text-gray-400 transition-colors duration-200 hover:text-pink-500"
               >
                 <Instagram size={20} />
@@ -150,12 +163,14 @@ function Footer() {
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Escribir por WhatsApp"
                 className="text-gray-400 transition-colors duration-200 hover:text-green-500"
               >
                 <MessageCircleMore size={20} />
               </a>
               <a
                 href={`mailto:${project.email}`}
+                aria-label="Enviar un email"
                 className="text-gray-400 transition-colors duration-200 hover:text-gray-300"
               >
                 <Mail size={20} />

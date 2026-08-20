@@ -21,11 +21,17 @@ function MediaTile({
   scaleOnHover = false,
 }) {
   const isVideo = type.toLowerCase() === "video";
+  // Renders as a real <button> when clickable, so the tile is reachable and
+  // activatable by keyboard — before this was a <div onClick>, invisible to
+  // Tab/Enter/Space.
+  const Tag = onClick ? "button" : "div";
 
   return (
-    <div
+    <Tag
+      type={onClick ? "button" : undefined}
       onClick={onClick}
-      className={`group relative cursor-pointer overflow-hidden rounded-md shadow-sm ${sizeClassName} ${className}`}
+      aria-label={onClick ? alt || "Ver imagen ampliada" : undefined}
+      className={`group relative block cursor-pointer overflow-hidden rounded-md shadow-sm ${sizeClassName} ${className}`}
     >
       <div className="absolute size-full">
         {isVideo ? (
@@ -64,7 +70,7 @@ function MediaTile({
           />
         </svg>
       </div>
-    </div>
+    </Tag>
   );
 }
 

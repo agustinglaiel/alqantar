@@ -7,6 +7,7 @@ import PageHeader from "../components/ui/PageHeader";
 import Overline from "../components/ui/Overline";
 import Button from "../components/ui/Button";
 import ProgressiveImage from "../components/ProgressiveImage";
+import Seo from "../components/ui/Seo";
 import project, { addressFull } from "../data/project";
 
 const InteractiveMap = lazy(() => import("../components/InteractiveMap"));
@@ -30,6 +31,12 @@ function LocationPage() {
 
   return (
     <Page>
+      <Seo
+        title="Ubicación"
+        description={`Alqantar Condominio está en ${addressFull}: a minutos del centro de Córdoba, entre el arbolado de Villa Belgrano y el camino hacia las sierras.`}
+        path="/ubicacion"
+        ogImage="/images/06.webp"
+      />
       <Container className="py-12">
         <PageHeader overline="Alqantar" title="Ubicación" description={addressFull} className="mb-10" />
 

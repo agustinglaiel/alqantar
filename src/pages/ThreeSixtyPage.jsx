@@ -6,6 +6,7 @@ import Container from "../components/ui/Container";
 import PageHeader from "../components/ui/PageHeader";
 import Button from "../components/ui/Button";
 import Badge from "../components/ui/Badge";
+import Seo from "../components/ui/Seo";
 import units from "../data/units";
 
 // Tours de amenities: no tienen un campo propio en src/data/units.js porque
@@ -42,6 +43,11 @@ function ThreeSixtyPage() {
 
   return (
     <Page>
+      <Seo
+        title="Recorridos 360°"
+        description="Recorré las tipologías de la Torre 1 y los amenities principales de Alqantar Condominio en 360°, como si ya estuvieras ahí."
+        path="/360"
+      />
       <Container className="py-12">
         <PageHeader
           overline="Alqantar"
@@ -60,7 +66,9 @@ function ThreeSixtyPage() {
                 className="aspect-[4/3] w-full"
               />
               <div className="flex flex-col items-center gap-3 p-5 text-center">
-                <h3 className="text-h3 font-semibold text-ink-900">{tour.title}</h3>
+                {/* h2, no h3: es el primer nivel de heading debajo del h1 de
+                    la página, sin un h2 intermedio que lo preceda. */}
+                <h2 className="text-h3 font-semibold text-ink-900">{tour.title}</h2>
                 {tour.kuulaUrl ? (
                   <Button onClick={() => setActiveTour(tour)} variant="ghost">
                     Ver recorrido 360° →

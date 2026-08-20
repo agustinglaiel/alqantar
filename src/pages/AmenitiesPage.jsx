@@ -24,6 +24,7 @@ import Section from "../components/ui/Section";
 import PageHeader from "../components/ui/PageHeader";
 import Overline from "../components/ui/Overline";
 import Button from "../components/ui/Button";
+import Seo from "../components/ui/Seo";
 
 // Mapeo de iconos por título de amenity.
 const ICON_MAP = {
@@ -67,6 +68,12 @@ function AmenitiesPage() {
 
   return (
     <Page>
+      <Seo
+        title="Amenities"
+        description="Pileta, gimnasio, sauna, SUM y espacios verdes en Alqantar Condominio: la vida social del edificio, a un piso de distancia."
+        path="/amenities"
+        ogImage="/images/amenities/07.webp"
+      />
       <Container className="py-12">
         <PageHeader
           overline="Alqantar"

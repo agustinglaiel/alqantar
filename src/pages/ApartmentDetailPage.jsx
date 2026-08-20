@@ -11,6 +11,7 @@ import FutureUpgrade from "../components/FutureUpgrade";
 import Page from "../components/ui/Page";
 import Container from "../components/ui/Container";
 import Button from "../components/ui/Button";
+import Seo from "../components/ui/Seo";
 import useScrollDirection from "../hooks/useScrollDirection";
 
 // Los 4 datos que más pesan en una decisión de compra van destacados arriba
@@ -55,6 +56,7 @@ export default function ApartmentDetailPage() {
   if (!data) {
     return (
       <Page>
+        <Seo title="Ficha no disponible" path={`/ficha/${tower}/${encodeURIComponent(typology)}`} />
         <Container className="py-24">
           <FutureUpgrade
             title="Ficha no disponible"
@@ -91,7 +93,19 @@ export default function ApartmentDetailPage() {
 
   return (
     <Page className="min-h-svh bg-surface-alt">
+      <Seo
+        title={`${typology} — ${data.superficieCubierta} cubiertos`}
+        description={`${typology} de Alqantar Condominio: ${data.superficieCubierta} cubiertos, ${data.superficieTotal} totales, en Villa Warcalde, Córdoba.`}
+        path={`/ficha/${tower}/${encodeURIComponent(typology)}`}
+        ogImage={data.mainImage}
+      />
       <Container className="pb-16 pt-8">
+        {/* h1 oculto: la jerarquía visual pone el nombre de la tipología en el
+            aside (a la derecha en desktop, después del contenido principal en
+            el DOM), pero un lector de pantalla debe encontrar el h1 antes que
+            los h2 de "Descripción"/"Características". El título visible del
+            aside es un <p>, no un heading duplicado (ver más abajo). */}
+        <h1 className="sr-only">{typology} — Alqantar Condominio</h1>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* Columna principal del contenido */}
           <div className="space-y-8 lg:col-span-8">
@@ -145,9 +159,12 @@ export default function ApartmentDetailPage() {
               style={{ top: isHeaderVisible ? "calc(var(--header-h) + 1rem)" : "1rem" }}
             >
               <div className="rounded-md border border-line bg-surface p-5 shadow-sm">
-                <h1 className="font-display text-h2 leading-snug text-ink-900">
+                {/* No es un heading: el h1 de la página vive arriba (sr-only)
+                    para que el orden de navegación por encabezados quede
+                    h1 > h2 > h2, en vez de h2 > h2 > h1. */}
+                <p className="font-display text-h2 leading-snug text-ink-900">
                   {typology}
-                </h1>
+                </p>
 
                 <div className="mt-5 grid grid-cols-2 gap-3">
                   <div className="text-caption">

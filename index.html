@@ -1,10 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alqantar - Condominio</title>
+    <!--
+      Sin <title> estático a propósito: cada página renderiza el suyo vía
+      <Seo> (src/components/ui/Seo.jsx), que React 19 sube al <head>
+      automáticamente. Un <title> fijo acá conviviría con el de React —
+      la spec de HTML usa el primer <title> del documento para
+      document.title, así que el estático "ganaría" y el dinámico por
+      ruta nunca se vería reflejado en la pestaña. Ver PLAN-REFACTOR.md
+      §6 (F6) y CLAUDE.md para el caveat de SPA sin SSR: los crawlers que
+      no ejecutan JS (WhatsApp, Facebook) tampoco ven este <title> dinámico.
+    -->
     <script>
       // El hero sólo se renderiza en la home. Como es una SPA con un único index.html,
       // un <link rel=preload> estático dispararía en todas las rutas y bajaría hasta

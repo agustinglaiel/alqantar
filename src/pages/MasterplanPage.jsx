@@ -4,6 +4,7 @@ import Container from "../components/ui/Container";
 import Section from "../components/ui/Section";
 import PageHeader from "../components/ui/PageHeader";
 import Button from "../components/ui/Button";
+import Seo from "../components/ui/Seo";
 import project from "../data/project";
 
 function MasterplanPage() {
@@ -22,6 +23,12 @@ function MasterplanPage() {
 
   return (
     <Page>
+      <Seo
+        title="Masterplan"
+        description={`El plan general de Alqantar Condominio: ${metrics.units} departamentos, ${metrics.typologiesCount} tipologías y ${metrics.greenSpaceM2.toLocaleString("es-AR")} m² de espacios verdes en tres etapas.`}
+        path="/masterplan"
+        ogImage="/images/planimetria.webp"
+      />
       <Container className="py-12">
         <PageHeader
           overline="Alqantar"

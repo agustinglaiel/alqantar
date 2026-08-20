@@ -91,10 +91,11 @@ function FutureUpgrade({
         </div>
       </div>
 
-      {/* Título */}
-      <h3 className={`mb-3 font-bold text-gray-800 ${currentSize.title}`}>
+      {/* Título. h1: su único uso hoy (ApartmentDetailPage con una ficha
+          inexistente) no tiene otro heading de página. */}
+      <h1 className={`mb-3 font-bold text-gray-800 ${currentSize.title}`}>
         {title}
-      </h3>
+      </h1>
 
       {/* Mensaje */}
       <p className={`mb-6 max-w-md leading-relaxed text-gray-600 ${currentSize.message}`}>
@@ -117,8 +118,9 @@ function FutureUpgrade({
         />
       </div>
 
-      {/* Texto adicional sutil */}
-      <div className="mt-4 flex items-center space-x-1 text-xs text-gray-400">
+      {/* Texto adicional sutil. gray-400 sobre blanco no llega a AA (~2.5:1);
+          gray-500 sí (~4.8:1). */}
+      <div className="mt-4 flex items-center space-x-1 text-xs text-gray-500">
         <span>Gracias por su paciencia</span>
       </div>
     </div>

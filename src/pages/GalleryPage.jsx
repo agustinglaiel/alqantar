@@ -6,6 +6,7 @@ import PageHeader from "../components/ui/PageHeader";
 import Button from "../components/ui/Button";
 import MediaTile from "../components/media/MediaTile";
 import Lightbox from "../components/media/Lightbox";
+import Seo from "../components/ui/Seo";
 import { whatsappLink } from "../data/project";
 
 // Índices que se destacan ocupando el doble de ancho y alto en la grilla, para
@@ -42,6 +43,12 @@ function GalleryPage() {
 
   return (
     <Page className="min-h-screen">
+      <Seo
+        title="Galería"
+        description="Fachadas, amenities y el entorno de Alqantar Condominio en Villa Warcalde: un recorrido visual completo por el proyecto."
+        path="/galeria"
+        ogImage="/images/01.webp"
+      />
       <Container className="py-12">
         <PageHeader
           overline="Alqantar"

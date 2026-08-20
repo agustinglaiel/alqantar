@@ -2,6 +2,7 @@ import AvancesDisplay from "../components/AvancesDisplay";
 import Page from "../components/ui/Page";
 import Container from "../components/ui/Container";
 import PageHeader from "../components/ui/PageHeader";
+import Seo from "../components/ui/Seo";
 
 // "18 de 70 departamentos" sin fecha lee como incertidumbre, no como
 // progreso: se agrega cuándo se actualizó por última vez.
@@ -17,6 +18,11 @@ const METRICS = [
 export default function AvancesPage() {
   return (
     <Page>
+      <Seo
+        title="Avances de obra"
+        description={`Estado de la construcción de Alqantar Condominio, actualizado al ${LAST_UPDATED}.`}
+        path="/avances"
+      />
       <Container className="pt-12 text-center">
         <PageHeader
           overline="Alqantar"

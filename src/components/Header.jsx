@@ -9,7 +9,7 @@ import Button from "./ui/Button";
 const OPAQUE_PAGES = ["/galeria", "/departamentos", "/ubicacion", "/avances", "/masterplan", "/amenities", "/360"];
 
 /** Desktop dropdown for one nav group ("El Proyecto", "Unidades", "Experiencia"). */
-function NavGroup({ group, isActive }) {
+function NavGroup({ group, isActive, currentPath }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -57,6 +57,7 @@ function NavGroup({ group, isActive }) {
               key={item.path}
               to={item.path}
               role="menuitem"
+              aria-current={currentPath === item.path ? "page" : undefined}
               onClick={() => setOpen(false)}
               className="block rounded-sm px-3 py-2 text-body text-ink-700 transition-colors duration-fast hover:bg-surface-alt hover:text-ink-900"
             >
@@ -143,11 +144,13 @@ function Header() {
                   key={group.label}
                   group={group}
                   isActive={group.items.some((item) => item.path === location.pathname)}
+                  currentPath={location.pathname}
                 />
               ) : (
                 <Link
                   key={group.path}
                   to={group.path}
+                  aria-current={location.pathname === group.path ? "page" : undefined}
                   className={`text-body font-medium transition-colors duration-fast ${
                     location.pathname === group.path ? "text-white" : "text-white/85 hover:text-white"
                   }`}
@@ -172,8 +175,15 @@ function Header() {
         </div>
       </header>
 
-      {/* Menú móvil: mismos grupos que el desktop, agrupados en secciones. */}
+      {/* Menú móvil: mismos grupos que el desktop, agrupados en secciones.
+          Se oculta con un transform (para poder animarlo), así que sigue
+          técnicamente "visible" para el DOM cuando está cerrado: sin
+          aria-hidden/inert, sus links quedaban en el orden de Tab y su <h2>
+          "Menú" aparecía antes del <h1> de la página para un lector de
+          pantalla. inert además saca los links del orden de tabulación. */}
       <div
+        aria-hidden={!isMobileMenuOpen}
+        inert={!isMobileMenuOpen}
         className={`fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] bg-ink-900 shadow-md transition-transform duration-slow ease-out md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
@@ -201,6 +211,7 @@ function Header() {
                         <Link
                           to={item.path}
                           onClick={closeMobileMenu}
+                          aria-current={location.pathname === item.path ? "page" : undefined}
                           className={`block rounded-md px-3 py-2 text-body-l text-white/90 transition-colors duration-fast hover:bg-white/5 ${
                             location.pathname === item.path ? "bg-white/10 text-white" : ""
                           }`}
@@ -215,6 +226,7 @@ function Header() {
                 <Link
                   to={group.path}
                   onClick={closeMobileMenu}
+                  aria-current={location.pathname === group.path ? "page" : undefined}
                   className={`block rounded-md px-3 py-2 text-body-l text-white/90 transition-colors duration-fast hover:bg-white/5 ${
                     location.pathname === group.path ? "bg-white/10 text-white" : ""
                   }`}
