@@ -8,13 +8,13 @@ function ApartmentImage({ tower, typology }) {
   const imageSrc = data.mainImage || '/images/default.webp';
 
   return (
-    <div className="h-48 w-full overflow-hidden rounded-t-lg shadow-lg sm:h-full">
+    <div className="h-48 w-full overflow-hidden">
       <ProgressiveImage
         src={imageSrc}
         alt={typology}
         sizes="(min-width: 1024px) 400px, 92vw"
         className="size-full"
-        imgClassName="transition-transform duration-300 hover:scale-105"
+        imgClassName="transition-transform duration-base hover:scale-105"
       />
     </div>
   );
