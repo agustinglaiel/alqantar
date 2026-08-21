@@ -17,12 +17,12 @@ export default function AvancesDisplay({ label, completed, total }) {
     <div className="flex flex-col items-center justify-center p-2 md:p-4">
       <div className="relative size-28 md:size-40">
         <svg viewBox="0 0 100 100" className="size-full -rotate-90 drop-shadow-sm">
-          <circle cx="50" cy="50" r={radius} stroke="var(--line)" strokeWidth="8" fill="none" />
+          <circle cx="50" cy="50" r={radius} stroke="rgb(var(--line))" strokeWidth="8" fill="none" />
           <circle
             cx="50"
             cy="50"
             r={radius}
-            stroke="var(--accent-600)"
+            stroke="rgb(var(--accent-600))"
             strokeWidth="8"
             fill="none"
             strokeLinecap="round"

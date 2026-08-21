@@ -27,11 +27,21 @@ function TowerNavigation({ onTowerChange, showAmenities = false }) {
   };
 
   const activeIndex = navigationOptions.findIndex((option) => option.id === activeTower);
+  // A partir de 3 tabs, w-11/12 a 360px queda al límite (§3.8/M7): el pill
+  // deja de repartir el ancho a partes iguales y en cambio scrollea, sin
+  // romper la animación (que asume tabs de igual ancho entre sí).
+  const isScrollable = navigationOptions.length > 2;
 
   return (
     <div className="mx-auto w-11/12 max-w-2xl py-6">
-      <div className="bg-surface/90 rounded-md border border-line p-2 shadow-sm backdrop-blur-xl">
-        <div className="relative flex overflow-hidden rounded-sm">
+      <div
+        className={`rounded-md border border-line bg-surface/90 p-2 shadow-sm backdrop-blur-xl ${
+          isScrollable ? "no-scrollbar overflow-x-auto" : ""
+        }`}
+      >
+        <div
+          className={`relative flex overflow-hidden rounded-sm ${isScrollable ? "min-w-max" : ""}`}
+        >
           <div
             className="absolute left-0 top-0 h-full rounded-sm bg-accent-600 shadow-sm transition-transform duration-base ease-out"
             style={{
@@ -44,9 +54,9 @@ function TowerNavigation({ onTowerChange, showAmenities = false }) {
             <button
               key={option.id}
               onClick={() => handleTowerSelect(option.id)}
-              className={`relative flex-1 px-6 py-4 text-body-l font-medium transition-colors duration-base ease-out ${
-                activeTower === option.id ? "text-white" : "text-ink-700 hover:text-ink-900"
-              }`}
+              className={`relative flex-1 p-4 text-body font-medium transition-colors duration-base ease-out ${
+                isScrollable ? "min-w-[110px]" : ""
+              } ${activeTower === option.id ? "text-white" : "text-ink-700 hover:text-ink-900"}`}
             >
               {option.name}
             </button>

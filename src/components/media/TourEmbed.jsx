@@ -1,5 +1,6 @@
 import { ExternalLink, X } from "lucide-react";
 import Modal from "../ui/Modal";
+import IconButton from "../ui/IconButton";
 
 /**
  * Full-screen Kuula 360° tour embedded in-site via `<Modal>` (D7): keeps the
@@ -14,7 +15,7 @@ import Modal from "../ui/Modal";
  */
 function TourEmbed({ isOpen, onClose, url, title }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={title} className="h-[90vh] w-[95vw] max-w-6xl">
+    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={title} className="h-[90dvh] w-[95vw] max-w-6xl">
       <div className="relative size-full overflow-hidden rounded-md bg-ink-900 shadow-md">
         {isOpen && url && (
           <iframe
@@ -26,24 +27,19 @@ function TourEmbed({ isOpen, onClose, url, title }) {
           />
         )}
 
-        <div className="absolute -right-2 -top-6 flex items-center gap-2 sm:-right-4 sm:-top-4">
+        <div className="absolute right-2 top-2 flex items-center gap-2">
           <a
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-surface/90 flex items-center gap-1.5 rounded-full px-3 py-2 text-caption font-medium text-ink-900 shadow-sm transition-colors duration-fast hover:bg-surface"
+            className="flex min-h-[var(--tap-min)] items-center gap-1.5 rounded-full bg-surface/90 px-3 text-caption font-medium text-ink-900 shadow-sm transition-colors duration-fast hover:bg-surface"
           >
             <ExternalLink className="size-4" aria-hidden="true" />
             Abrir en pestaña nueva
           </a>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Cerrar"
-            className="flex size-10 items-center justify-center rounded-full bg-surface text-ink-900 shadow-sm transition-colors duration-fast hover:bg-surface-alt"
-          >
+          <IconButton onClick={onClose} aria-label="Cerrar" variant="surface">
             <X className="size-6" />
-          </button>
+          </IconButton>
         </div>
       </div>
     </Modal>

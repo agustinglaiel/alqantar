@@ -39,6 +39,9 @@ const project = {
 /** "José María Eguía Zanón 9932, Villa Warcalde, Córdoba" */
 export const addressFull = `${project.address.street}, ${project.address.neighborhood}, ${project.address.city}`;
 
+/** Google Maps link by address query — opens the place card, not a bare pin. */
+export const googleMapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressFull)}`;
+
 /** WhatsApp link, optionally with a prefilled message. */
 export function whatsappLink(message) {
   const base = `https://wa.me/${project.whatsappNumber}`;

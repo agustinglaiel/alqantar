@@ -44,9 +44,9 @@ function Modal({ isOpen, onClose, children, ariaLabel, className = "" }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overscroll-contain">
       <div
-        className="bg-ink-900/80 absolute inset-0"
+        className="absolute inset-0 bg-ink-900/80"
         onClick={onClose}
         aria-hidden="true"
       />

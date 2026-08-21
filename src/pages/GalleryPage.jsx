@@ -42,7 +42,7 @@ function GalleryPage() {
   };
 
   return (
-    <Page className="min-h-screen">
+    <Page className="min-h-svh">
       <Seo
         title="Galería"
         description="Fachadas, amenities y el entorno de Alqantar Condominio en Villa Warcalde: un recorrido visual completo por el proyecto."

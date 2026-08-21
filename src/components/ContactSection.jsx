@@ -45,7 +45,7 @@ function ContactSection() {
               href={channel.href}
               target={channel.external ? "_blank" : undefined}
               rel={channel.external ? "noopener noreferrer" : undefined}
-              className="flex items-center gap-2 text-body text-ink-500 transition-colors duration-fast hover:text-ink-900"
+              className="flex min-h-[var(--tap-min)] items-center gap-2 text-body text-ink-500 transition-colors duration-fast hover:text-ink-900"
             >
               <Icon className="size-5" />
               {channel.label}

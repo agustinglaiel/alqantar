@@ -1,6 +1,6 @@
 // src/components/BackgroundSlider.jsx
 import React, { useEffect, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Rotate3d } from 'lucide-react';
 import ProgressiveImage from './ProgressiveImage';
 import Button from './ui/Button';
 
@@ -59,7 +59,7 @@ function BackgroundSlider() {
   }, []);
 
   return (
-    <div className="relative min-h-svh overflow-hidden">
+    <div className="relative min-h-svh overflow-hidden" data-header-over="media">
       {IMAGES.slice(0, renderedCount).map((src, idx) => (
         <ProgressiveImage
           key={idx}
@@ -94,12 +94,8 @@ function BackgroundSlider() {
           <Button to="/departamentos" variant="primary" size="lg">
             Ver tipologías
           </Button>
-          <Button
-            to="/360"
-            variant="secondary"
-            size="lg"
-            className="!border-white !text-white hover:!bg-white hover:!text-ink-900"
-          >
+          <Button to="/360" variant="primary-deep" size="lg">
+            <Rotate3d size={18} />
             Recorrido 360°
           </Button>
         </div>

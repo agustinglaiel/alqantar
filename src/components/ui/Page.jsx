@@ -9,7 +9,7 @@
  */
 function Page({ children, offset = true, className = "" }) {
   return (
-    <div className={`${offset ? "pt-[var(--header-h)]" : ""} ${className}`}>
+    <div className={`${offset ? "pt-[calc(var(--header-h)+var(--safe-top))]" : ""} ${className}`}>
       {children}
     </div>
   );

@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ChevronLeft, ChevronRight, MessageCircleMore, Rotate3d } from "lucide-react";
+import { ChevronLeft, ChevronRight, MapPin, MessageCircleMore, Rotate3d } from "lucide-react";
 
 import units from "../data/units";
-import project, { whatsappLink } from "../data/project";
+import project, { whatsappLink, googleMapsLink } from "../data/project";
 import iconMap from "../utils/icons";
 import ImageCarousel from "../components/ImageCarousel";
 import Lightbox from "../components/media/Lightbox";
@@ -156,7 +156,11 @@ export default function ApartmentDetailPage() {
           <aside className="lg:col-span-4">
             <div
               className="sticky space-y-4 transition-all duration-base ease-in-out"
-              style={{ top: isHeaderVisible ? "calc(var(--header-h) + 1rem)" : "1rem" }}
+              style={{
+                top: isHeaderVisible
+                  ? "calc(var(--header-h) + var(--safe-top) + 1rem)"
+                  : "1rem",
+              }}
             >
               <div className="rounded-md border border-line bg-surface p-5 shadow-sm">
                 {/* No es un heading: el h1 de la página vive arriba (sr-only)
@@ -180,6 +184,17 @@ export default function ApartmentDetailPage() {
                     </div>
                   )}
                 </div>
+
+                <a
+                  href={googleMapsLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Abrir la dirección de Alqantar en Google Maps"
+                  className="mt-3 inline-flex min-h-[var(--tap-min)] items-center gap-1.5 text-caption text-ink-500 underline decoration-line underline-offset-4 transition-colors duration-fast hover:text-ink-700"
+                >
+                  <MapPin size={14} className="shrink-0" aria-hidden="true" />
+                  {project.address.neighborhood}, {project.address.city}
+                </a>
 
                 {/* 4 datos destacados */}
                 {featuredFeatures.length > 0 && (
@@ -227,10 +242,10 @@ export default function ApartmentDetailPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="whatsapp"
-                    size="lg"
-                    className="w-full justify-center"
+                    size="md"
+                    className="w-full justify-center whitespace-nowrap"
                   >
-                    Comunicate para más información
+                    Consultar por WhatsApp
                     <MessageCircleMore size={18} className="opacity-90" />
                   </Button>
 
@@ -240,8 +255,8 @@ export default function ApartmentDetailPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       variant="secondary"
-                      size="lg"
-                      className="w-full justify-center"
+                      size="md"
+                      className="w-full justify-center whitespace-nowrap"
                     >
                       <Rotate3d size={18} />
                       Recorrido 360°
@@ -257,14 +272,14 @@ export default function ApartmentDetailPage() {
                   >
                     <Link
                       to={`/ficha/${tower}/${encodeURIComponent(prevTypology)}`}
-                      className="flex items-center gap-1 text-ink-700 transition-colors duration-fast hover:text-ink-900"
+                      className="flex min-h-[var(--tap-min)] items-center gap-1 text-ink-700 transition-colors duration-fast hover:text-ink-900"
                     >
                       <ChevronLeft className="size-4" aria-hidden="true" />
                       {prevTypology}
                     </Link>
                     <Link
                       to={`/ficha/${tower}/${encodeURIComponent(nextTypology)}`}
-                      className="flex items-center gap-1 text-ink-700 transition-colors duration-fast hover:text-ink-900"
+                      className="flex min-h-[var(--tap-min)] items-center gap-1 text-ink-700 transition-colors duration-fast hover:text-ink-900"
                     >
                       {nextTypology}
                       <ChevronRight className="size-4" aria-hidden="true" />

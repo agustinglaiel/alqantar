@@ -53,26 +53,40 @@ function Perks() {
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-8">
-      {columns.map((column) => (
-        <div key={column.title}>
-          <Overline>{column.title}</Overline>
-          <p className="mt-2 font-display text-display-l text-ink-900">{column.stat.value}</p>
-          <p className="text-body text-ink-500">{column.stat.label}</p>
+    <div>
+      <div className="mb-10 text-center md:mb-14">
+        <Overline>El proyecto en números</Overline>
+        <h2 className="mt-3 font-display text-h2 text-ink-900">Escala, bienestar y entorno</h2>
+      </div>
 
-          <ul className="mt-6 space-y-3 border-t border-line pt-6">
-            {column.items.map((item) => {
-              const Icon = item.icon;
-              return (
-                <li key={item.text} className="flex items-start gap-3 text-body text-ink-700">
-                  <Icon className="mt-0.5 size-5 shrink-0 text-accent-600" />
-                  <span>{item.text}</span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ))}
+      {/* grid-rows-subgrid (D-R4): las 3 columnas comparten 4 filas
+          (overline / cifra / label / lista), así el border-t de la lista
+          arranca a la misma altura en las tres sin importar si el label
+          ocupa uno o dos renglones. */}
+      <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:grid-rows-[auto_auto_auto_auto] md:gap-0 md:divide-x md:divide-line">
+        {columns.map((column) => (
+          <div
+            key={column.title}
+            className="md:row-span-4 md:grid md:grid-rows-subgrid md:px-8 md:text-center first:md:pl-0 last:md:pr-0"
+          >
+            <Overline>{column.title}</Overline>
+            <p className="mt-2 font-display text-display-l text-ink-900">{column.stat.value}</p>
+            <p className="text-body text-ink-500">{column.stat.label}</p>
+
+            <ul className="mt-6 max-w-xs space-y-3 border-t border-line pt-6 text-left md:mx-auto">
+              {column.items.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.text} className="flex items-start gap-3 text-body text-ink-700">
+                    <Icon className="mt-0.5 size-5 shrink-0 text-accent-600" />
+                    <span>{item.text}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

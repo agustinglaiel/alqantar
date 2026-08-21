@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Modal from "../ui/Modal";
+import IconButton from "../ui/IconButton";
 import ProgressiveImage from "../ProgressiveImage";
 
 const MIN_SWIPE_DISTANCE = 50;
@@ -67,7 +68,7 @@ function Lightbox({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
     <Modal isOpen={isOpen && count > 0} onClose={onClose} ariaLabel="Visor de imágenes">
       {currentItem && (
       <div
-        className="relative h-[80vh] max-h-[90vh] w-[90vw] max-w-5xl sm:h-[85vh] sm:w-[85vw]"
+        className="relative h-[80dvh] max-h-[90dvh] w-[90vw] max-w-5xl overscroll-contain sm:h-[85dvh] sm:w-[85vw]"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -94,37 +95,37 @@ function Lightbox({ isOpen, onClose, mediaItems, initialIndex = 0 }) {
 
         {count > 1 && (
           <>
-            <button
-              type="button"
+            <IconButton
               onClick={goToPrevious}
               aria-label="Imagen anterior"
-              className="bg-surface/80 absolute left-2 top-1/2 -translate-y-1/2 rounded-full p-2 text-ink-900 shadow-sm transition-colors duration-fast hover:bg-surface sm:left-4"
+              variant="surface"
+              className="absolute left-2 top-1/2 -translate-y-1/2 sm:left-4"
             >
               <ChevronLeft className="size-6" />
-            </button>
-            <button
-              type="button"
+            </IconButton>
+            <IconButton
               onClick={goToNext}
               aria-label="Imagen siguiente"
-              className="bg-surface/80 absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2 text-ink-900 shadow-sm transition-colors duration-fast hover:bg-surface sm:right-4"
+              variant="surface"
+              className="absolute right-2 top-1/2 -translate-y-1/2 sm:right-4"
             >
               <ChevronRight className="size-6" />
-            </button>
+            </IconButton>
           </>
         )}
 
-        <button
-          type="button"
+        <IconButton
           onClick={onClose}
           aria-label="Cerrar"
-          className="absolute -right-2 -top-6 flex size-10 items-center justify-center rounded-full bg-surface text-ink-900 shadow-sm transition-colors duration-fast hover:bg-surface-alt sm:-right-4 sm:-top-4"
+          variant="surface"
+          className="absolute right-2 top-2"
         >
           <X className="size-6" />
-        </button>
+        </IconButton>
 
         <div
           aria-live="polite"
-          className="bg-ink-900/70 absolute -bottom-6 left-1/2 -translate-x-1/2 rounded-full px-3 py-1 text-caption text-white sm:-bottom-8"
+          className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-ink-900/70 px-3 py-1 text-caption text-white"
         >
           {currentIndex + 1} de {count}
         </div>

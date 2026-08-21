@@ -19,6 +19,7 @@ function MediaTile({
   imageFit = "cover",
   sizes = "100vw",
   scaleOnHover = false,
+  ...props
 }) {
   const isVideo = type.toLowerCase() === "video";
   // Renders as a real <button> when clickable, so the tile is reachable and
@@ -32,8 +33,13 @@ function MediaTile({
       onClick={onClick}
       aria-label={onClick ? alt || "Ver imagen ampliada" : undefined}
       className={`group relative block cursor-pointer overflow-hidden rounded-md shadow-sm ${sizeClassName} ${className}`}
+      {...props}
     >
-      <div className="absolute size-full">
+      {/* inset-0, no sólo `absolute`: sin top/left un absoluto cae en su
+          static position, y como el tile es un <button> (que centra
+          verticalmente su contenido) la imagen quedaba corrida media altura
+          hacia abajo — franja vacía arriba y foto recortada abajo. */}
+      <div className={`absolute inset-0 size-full ${imageFit === "contain" ? "bg-surface-alt" : ""}`}>
         {isVideo ? (
           <div className="flex size-full items-center justify-center bg-ink-900">
             <svg className="size-16 text-white opacity-70" fill="currentColor" viewBox="0 0 24 24">
@@ -47,15 +53,13 @@ function MediaTile({
             fit={imageFit}
             sizes={sizes}
             className="size-full"
-            imgClassName={`${scaleOnHover ? "transition-transform duration-base group-hover:scale-105" : ""} ${
-              imageFit === "contain" ? "p-1" : ""
-            }`}
+            imgClassName={scaleOnHover ? "transition-transform duration-base group-hover:scale-105" : ""}
           />
         )}
       </div>
 
       {/* Overlay con ícono de zoom */}
-      <div className="bg-ink-900/0 group-hover:bg-ink-900/20 absolute inset-0 flex items-center justify-center transition-colors duration-base">
+      <div className="absolute inset-0 flex items-center justify-center bg-ink-900/0 transition-colors duration-base group-hover:bg-ink-900/20">
         <svg
           className="size-8 text-white opacity-0 transition-opacity duration-base group-hover:opacity-100"
           fill="none"

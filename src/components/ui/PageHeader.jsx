@@ -6,7 +6,7 @@ import Overline from "./Overline";
  *
  * @param {string} [overline]
  * @param {string} title
- * @param {string} [description]
+ * @param {string|import("react").ReactNode} [description]
  * @param {string} [className]
  */
 function PageHeader({ overline, title, description, className = "" }) {

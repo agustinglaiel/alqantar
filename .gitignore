@@ -27,3 +27,6 @@ dist-ssr
 
 # Variantes de imagen generadas por scripts/optimize-images.mjs
 public/images/opt
+
+# Documentos de trabajo del refactor (locales, no se versionan)
+docs

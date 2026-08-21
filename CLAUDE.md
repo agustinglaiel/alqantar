@@ -68,7 +68,10 @@ All content is **static data** — no backend or API calls:
   `superficieCubierta`/`superficieTotal`, and `kuulaUrl`.
 - `src/data/navigation.js` — single source of truth for the header nav (desktop dropdowns +
   mobile drawer sections).
-- `src/utils/amenitiesData.js` — amenity list + carousel image paths.
+- `src/data/amenities.js` — amenity list + carousel image paths. Each amenity is rendered as a
+  row in an editorial index on `AmenitiesPage` (D17), not a photo card — there is no per-item
+  image pairing. An amenity gets a `metric` field only if it has a hard figure to show (pulled
+  from `project.metrics`, e.g. `"24,3 m lineales"`); most don't and render without a `Badge`.
 - `src/utils/imageManifest.js` — **generated**, do not edit by hand. Maps each `/images/*.webp` to its
   intrinsic size, the widths available under `/images/opt/`, and a base64 LQIP placeholder.
 
@@ -79,7 +82,15 @@ show/hide behavior off the same shared `useScrollDirection` hook
 (`src/hooks/useScrollDirection.js`, with a scroll-delta threshold and a `minY` floor so trackpad
 micro-scrolls don't cause flicker) — there is no duplicated scroll logic between them.
 
-**Opaque vs. transparent header**: On `HomePage` the header starts transparent and turns opaque on scroll. All other pages are always opaque. The list of opaque pages is hardcoded in `Header.jsx`.
+**Header theme (`media`/`solid`), not a route list**: `useHeaderTheme()`
+(`src/hooks/useHeaderTheme.js`) drives the header off *content*, not the current route. An
+`IntersectionObserver` watches the header's own strip of the viewport (`rootMargin` trims out
+everything below `--header-h`) for any element carrying `data-header-over="media"` — currently
+only `BackgroundSlider`'s root, on the home hero. While one is intersecting, the header is
+`"media"` (transparent, white text, gold underline on the active link); otherwise it's `"solid"`
+(`bg-accent-700/95` + `backdrop-blur-md`, pill on the active link, `invert` Button variant for the
+CTA). A new route needs zero registration — it's `"solid"` by default — and a new photo hero only
+needs the `data-header-over="media"` attribute on its root element.
 
 **Per-page SEO** (`src/components/ui/Seo.jsx`): each page renders `<Seo title description path ogImage>`
 near the top of its JSX; React 19 hoists the `<title>`/`<meta>`/`<link>` tags it renders to
@@ -102,12 +113,30 @@ override callers like `BackgroundSlider` that need the wrapper absolutely positi
 **Layout wrapper** (`src/components/Layout.jsx`): Wraps every page with a skip link ("Ir al
 contenido" → `#main-content`, visually hidden until focused), `<Header>`, `<Footer>`,
 `<StickyCta>`, site-wide JSON-LD (`<JsonLd>`), Vercel `<Analytics>`, and `<SpeedInsights>`.
+`StickyCta` publishes its own rendered height as `--sticky-cta-h` on `<html>` while visible (and
+back to `0px` while hidden); `Layout`'s root div applies that as `padding-bottom` unconditionally,
+via the `var(--sticky-cta-h, 0px)` fallback — so the reserved space always lands *after* `Footer`
+(the actual last element in flow), not on `<main>`, since padding before an earlier sibling
+doesn't protect content that renders after it.
+
+**Mobile-first, 360px floor**: iPhone 14+ and base Galaxy phones (360–428px) are the primary
+target, not desktop. Tap tokens live in `tokens.css`: `--tap-min` (44px, the minimum
+interactive-control size), `--safe-top`/`--safe-bottom` (`env(safe-area-inset-*)`, meaningful only
+because `index.html`'s viewport meta has `viewport-fit=cover`). `Button`'s three sizes all carry
+`min-h-[var(--tap-min)]`; icon-only controls (footer social links, header hamburger/drawer close,
+carousel and lightbox arrows) use `<IconButton>` (`src/components/ui/IconButton.jsx`), which
+fixes a `size-[var(--tap-min)]` box around the icon regardless of the icon's own size. The header
+adds `--safe-top` to its own height (`pt-[var(--safe-top)]`) rather than to `--header-h` itself,
+so `Page`'s `pt-[calc(var(--header-h)+var(--safe-top))]` offset has to stay in sync with it.
 
 ### External Integrations
 
-- **Mapbox GL** (`react-map-gl/mapbox`) on `LocationPage` — lazy-loaded via `React.lazy()` behind
-  a "Ver mapa interactivo" button (D8), so the ~1 MB `mapbox-gl` chunk isn't in the initial
-  bundle; token from `VITE_MAPBOX_ACCESS_TOKEN` env var
+- **Mapbox GL** (`react-map-gl/mapbox`) on `LocationPage` — mounts on its own, no click gate (D15
+  reverses the earlier button-gated D8): still `React.lazy()`, requested only when the map's
+  container is about to enter the viewport (`IntersectionObserver`, 200px margin), so the ~1 MB
+  `mapbox-gl` chunk stays out of every other route's bundle. Token from
+  `VITE_MAPBOX_ACCESS_TOKEN`; if it's unset, `LocationPage` skips the map entirely and shows the
+  address + Google Maps link instead (no broken Mapbox box).
 - **Vercel Analytics + Speed Insights** — injected globally in `Layout.jsx`
 
 ### Static Assets
@@ -127,6 +156,16 @@ properties (warm-neutral + sierra-green palette, Fraunces/Inter type scale, spac
 shadows, motion durations), mirrored into `tailwind.config.js`'s `theme.extend` as Tailwind
 utilities (`bg-surface-alt`, `text-ink-700`, `font-display`, etc). `eslint-plugin-tailwindcss`
 enforces classname order (warn-level).
+
+**Color tokens are RGB channels, never hex.** `tokens.css` defines each color as
+space-separated channels (`--ink-900: 28 26 23`), and `tailwind.config.js` wraps them as
+`rgb(var(--ink-900) / <alpha-value>)`. This is required for Tailwind's alpha modifier
+(`bg-ink-900/95`) to work — a `var()` pointing at a hex value is opaque, so Tailwind silently
+drops any class with a `/NN` suffix instead of emitting it. If a new color token is added as
+hex, every alpha-modified class using it will compile to nothing with no error. Raw usages
+outside Tailwind classes (e.g. SVG `stroke`) must read `rgb(var(--token))`, not `var(--token)`.
+`--focus-hex` is the one exception: it's consumed directly as a color by the `:focus-visible`
+outline, which doesn't take an alpha modifier.
 
 ### Vite Config Note
 

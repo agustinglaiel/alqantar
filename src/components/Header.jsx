@@ -4,17 +4,51 @@ import { Menu, X } from "lucide-react";
 import logo from "../assets/logo.webp";
 import navigation, { contactCta } from "../data/navigation";
 import useScrollDirection from "../hooks/useScrollDirection";
+import useHeaderTheme from "../hooks/useHeaderTheme";
 import Button from "./ui/Button";
+import IconButton from "./ui/IconButton";
 
-const OPAQUE_PAGES = ["/galeria", "/departamentos", "/ubicacion", "/avances", "/masterplan", "/amenities", "/360"];
+/** Shared classes for a top-level nav link/trigger, active state depends on header mode (D13). */
+function navItemClasses(isActive, mode) {
+  const base = "text-body font-medium text-white/85 transition-colors duration-fast hover:text-white";
+  if (!isActive) return base;
+  return mode === "solid"
+    ? `${base} rounded-full bg-white/15 px-3 py-1 text-white`
+    : `${base} text-white underline decoration-2 decoration-gold-500 underline-offset-4`;
+}
 
 /** Desktop dropdown for one nav group ("El Proyecto", "Unidades", "Experiencia"). */
-function NavGroup({ group, isActive, currentPath }) {
+function NavGroup({ group, isActive, currentPath, mode }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const triggerRef = useRef(null);
+  const closeTimer = useRef(null);
+
+  const clearCloseTimer = () => {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+
+  const openMenu = () => {
+    clearCloseTimer();
+    setOpen(true);
+  };
+
+  const scheduleClose = () => {
+    clearCloseTimer();
+    closeTimer.current = setTimeout(() => setOpen(false), 150);
+  };
+
+  const closeMenu = (focusTrigger = false) => {
+    clearCloseTimer();
+    setOpen(false);
+    if (focusTrigger) triggerRef.current?.focus();
+  };
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) return undefined;
     const handleClickOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
     };
@@ -29,41 +63,86 @@ function NavGroup({ group, isActive, currentPath }) {
     };
   }, [open]);
 
+  useEffect(() => clearCloseTimer, []);
+
+  const focusItemAt = (index) => {
+    const items = ref.current?.querySelectorAll('[role="menuitem"]');
+    if (!items || items.length === 0) return;
+    items[(index + items.length) % items.length]?.focus();
+  };
+
+  const handleTriggerKeyDown = (e) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      openMenu();
+      requestAnimationFrame(() => focusItemAt(0));
+    }
+  };
+
+  const handleMenuKeyDown = (e) => {
+    const items = Array.from(ref.current?.querySelectorAll('[role="menuitem"]') || []);
+    const currentIndex = items.indexOf(document.activeElement);
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      focusItemAt(currentIndex + 1);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      focusItemAt(currentIndex - 1);
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      e.stopPropagation();
+      closeMenu(true);
+    }
+  };
+
+  const handleBlur = (e) => {
+    if (!ref.current?.contains(e.relatedTarget)) setOpen(false);
+  };
+
   return (
     <div
       ref={ref}
       className="relative"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={openMenu}
+      onMouseLeave={scheduleClose}
+      onBlur={handleBlur}
     >
       <button
+        ref={triggerRef}
         type="button"
         aria-haspopup="true"
         aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
-        className={`text-body font-medium transition-colors duration-fast ${
-          isActive ? "text-white" : "text-white/85 hover:text-white"
-        }`}
+        onClick={() => (open ? closeMenu() : openMenu())}
+        onKeyDown={handleTriggerKeyDown}
+        className={navItemClasses(isActive, mode)}
       >
         {group.label}
       </button>
       {open && (
-        <div
-          role="menu"
-          className="absolute left-1/2 top-full z-10 mt-2 w-48 -translate-x-1/2 rounded-md border border-line bg-surface p-2 shadow-md"
-        >
-          {group.items.map((item) => (
-            <Link
-              key={item.path}
-              to={item.path}
-              role="menuitem"
-              aria-current={currentPath === item.path ? "page" : undefined}
-              onClick={() => setOpen(false)}
-              className="block rounded-sm px-3 py-2 text-body text-ink-700 transition-colors duration-fast hover:bg-surface-alt hover:text-ink-900"
-            >
-              {item.label}
-            </Link>
-          ))}
+        // Envolver el panel en top-full + pt-2 (en vez de mt-2 en el panel)
+        // hace que los 8px de separación sean parte de la caja de este
+        // contenedor: el mouse nunca pasa por una franja que no pertenezca
+        // a ningún elemento, así que el trigger→panel diagonal no dispara
+        // onMouseLeave antes de llegar.
+        <div className="absolute left-1/2 top-full w-48 -translate-x-1/2 pt-2">
+          <div
+            role="menu"
+            onKeyDown={handleMenuKeyDown}
+            className="rounded-md border border-line bg-surface p-2 shadow-md"
+          >
+            {group.items.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                role="menuitem"
+                aria-current={currentPath === item.path ? "page" : undefined}
+                onClick={() => closeMenu()}
+                className="block rounded-sm px-3 py-2 text-body text-ink-700 transition-colors duration-fast hover:bg-surface-alt hover:text-ink-900 focus-visible:bg-surface-alt focus-visible:text-ink-900"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -71,21 +150,13 @@ function NavGroup({ group, isActive, currentPath }) {
 }
 
 function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isVisible = useScrollDirection({ threshold: 8, minY: 100 });
-
-  const isOpaquePage = OPAQUE_PAGES.includes(location.pathname) || location.pathname.startsWith("/ficha/");
-  const isTransparent = !isOpaquePage && !isScrolled && isVisible;
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const headerRef = useRef(null);
+  const mode = useHeaderTheme(headerRef);
+  const isMedia = mode === "media";
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -112,25 +183,22 @@ function Header() {
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
-  const bgClass = isTransparent ? "bg-ink-900/0" : "bg-ink-900/95";
-
   return (
     <>
       {/* Gradiente de protección: garantiza contraste del texto blanco sobre
-          fotos claras mientras el header está transparente (home, sin scroll). */}
-      {!isOpaquePage && (
-        <div
-          aria-hidden="true"
-          className={`from-ink-900/60 pointer-events-none fixed inset-x-0 top-0 z-20 h-40 bg-gradient-to-b to-transparent transition-opacity duration-base ${
-            isTransparent ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      )}
+          fotos claras mientras el header está en modo "media". */}
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none fixed inset-x-0 top-0 z-20 h-40 bg-gradient-to-b from-ink-900/60 to-transparent transition-opacity duration-base ${
+          isMedia ? "opacity-100" : "opacity-0"
+        }`}
+      />
 
       <header
-        className={`fixed left-0 top-0 z-30 h-[var(--header-h)] w-full transition-all duration-base ${
+        ref={headerRef}
+        className={`fixed left-0 top-0 z-30 h-[calc(var(--header-h)+var(--safe-top))] w-full pt-[var(--safe-top)] transition-all duration-base ${
           isVisible ? "translate-y-0" : "-translate-y-full"
-        } ${bgClass}`}
+        } ${isMedia ? "bg-transparent" : "bg-accent-700/95 backdrop-blur-md"}`}
       >
         <div className="mx-auto flex h-full max-w-content items-center justify-between px-[var(--gutter)]">
           <Link to="/" onClick={closeMobileMenu} className="flex items-center">
@@ -145,33 +213,37 @@ function Header() {
                   group={group}
                   isActive={group.items.some((item) => item.path === location.pathname)}
                   currentPath={location.pathname}
+                  mode={mode}
                 />
               ) : (
                 <Link
                   key={group.path}
                   to={group.path}
                   aria-current={location.pathname === group.path ? "page" : undefined}
-                  className={`text-body font-medium transition-colors duration-fast ${
-                    location.pathname === group.path ? "text-white" : "text-white/85 hover:text-white"
-                  }`}
+                  className={navItemClasses(location.pathname === group.path, mode)}
                 >
                   {group.label}
                 </Link>
               )
             )}
-            <Button to={contactCta.path} onClick={handleContactClick} variant="primary" size="sm">
+            <Button
+              to={contactCta.path}
+              onClick={handleContactClick}
+              variant={mode === "solid" ? "invert" : "primary"}
+              size="sm"
+            >
               {contactCta.label}
             </Button>
           </nav>
 
-          <button
+          <IconButton
             onClick={() => setIsMobileMenuOpen((o) => !o)}
             aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={isMobileMenuOpen}
-            className="z-50 rounded-md p-2 text-white transition-colors duration-fast hover:bg-white/10 md:hidden"
+            className="z-50 md:hidden"
           >
             {isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
-          </button>
+          </IconButton>
         </div>
       </header>
 
@@ -184,19 +256,15 @@ function Header() {
       <div
         aria-hidden={!isMobileMenuOpen}
         inert={!isMobileMenuOpen}
-        className={`fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] bg-ink-900 shadow-md transition-transform duration-slow ease-out md:hidden ${
+        className={`fixed inset-y-0 left-0 z-40 w-80 max-w-[85vw] bg-accent-700 shadow-md transition-transform duration-slow ease-out md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between border-b border-white/10 p-6">
           <h2 className="text-h3 font-semibold text-white">Menú</h2>
-          <button
-            onClick={closeMobileMenu}
-            aria-label="Cerrar menú"
-            className="rounded-full p-1 text-white transition-colors duration-fast hover:bg-white/10"
-          >
+          <IconButton onClick={closeMobileMenu} aria-label="Cerrar menú">
             <X className="size-6" />
-          </button>
+          </IconButton>
         </div>
 
         <nav className="flex flex-col gap-6 overflow-y-auto p-6">
@@ -250,7 +318,7 @@ function Header() {
 
       {isMobileMenuOpen && (
         <div
-          className="bg-ink-900/60 fixed inset-0 z-30 md:hidden"
+          className="fixed inset-0 z-30 bg-ink-900/60 md:hidden"
           onClick={closeMobileMenu}
         />
       )}

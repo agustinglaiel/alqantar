@@ -1,16 +1,31 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { MapPin, Milestone, GraduationCap, HeartPulse, ShoppingBag } from "lucide-react";
 import Page from "../components/ui/Page";
 import Container from "../components/ui/Container";
 import Section from "../components/ui/Section";
 import PageHeader from "../components/ui/PageHeader";
 import Overline from "../components/ui/Overline";
-import Button from "../components/ui/Button";
 import ProgressiveImage from "../components/ProgressiveImage";
 import Seo from "../components/ui/Seo";
-import project, { addressFull } from "../data/project";
+import project, { addressFull, googleMapsLink } from "../data/project";
 
 const InteractiveMap = lazy(() => import("../components/InteractiveMap"));
+const HAS_MAPBOX_TOKEN = Boolean(import.meta.env?.VITE_MAPBOX_ACCESS_TOKEN);
+
+function AddressLink({ className = "" }) {
+  return (
+    <a
+      href={googleMapsLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Abrir la dirección de Alqantar en Google Maps"
+      className={`inline-flex items-center gap-1.5 underline decoration-line underline-offset-4 transition-colors duration-fast hover:text-ink-900 ${className}`}
+    >
+      <MapPin className="size-4 shrink-0" aria-hidden="true" />
+      {addressFull}
+    </a>
+  );
+}
 
 // Puntos de interés reales de la zona (arregla B6): Villa Warcalde está en el
 // noroeste de Córdoba, entre Villa Belgrano/Cerro de las Rosas y el camino a
@@ -25,9 +40,27 @@ const POINTS_OF_INTEREST = [
 ];
 
 function LocationPage() {
-  const [showMap, setShowMap] = useState(false);
+  const [isMapVisible, setIsMapVisible] = useState(false);
+  const mapContainerRef = useRef(null);
   const center = project.coordinates;
-  const googleMapsLink = `https://www.google.com/maps?q=${center.lat},${center.lng}`;
+
+  // D15: el mapa se monta solo, sin gate de click — pero el chunk de
+  // mapbox-gl (~1 MB) sigue pidiéndose recién cuando el contenedor está por
+  // entrar en viewport, no en cada carga de /ubicacion.
+  useEffect(() => {
+    if (!HAS_MAPBOX_TOKEN || !mapContainerRef.current) return undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsMapVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(mapContainerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <Page>
@@ -38,10 +71,18 @@ function LocationPage() {
         ogImage="/images/06.webp"
       />
       <Container className="py-12">
-        <PageHeader overline="Alqantar" title="Ubicación" description={addressFull} className="mb-10" />
+        <PageHeader
+          overline="Alqantar"
+          title="Ubicación"
+          description={<AddressLink className="text-body-l" />}
+          className="mb-10"
+        />
 
-        <div className="relative aspect-video w-full overflow-hidden rounded-md shadow-sm">
-          {showMap ? (
+        <div
+          ref={mapContainerRef}
+          className="relative aspect-video w-full overflow-hidden rounded-md shadow-sm"
+        >
+          {HAS_MAPBOX_TOKEN ? (
             <Suspense
               fallback={
                 <div className="flex size-full items-center justify-center bg-surface-alt text-body text-ink-500">
@@ -49,26 +90,15 @@ function LocationPage() {
                 </div>
               }
             >
-              <InteractiveMap center={center} />
+              {isMapVisible && <InteractiveMap center={center} />}
             </Suspense>
           ) : (
             <div className="flex size-full flex-col items-center justify-center gap-4 border border-line bg-surface-alt p-8 text-center">
               <MapPin className="size-10 text-accent-600" aria-hidden="true" />
-              <p className="max-w-sm text-body-l text-ink-700">{addressFull}</p>
-              <Button onClick={() => setShowMap(true)} variant="primary">
-                Ver mapa interactivo
-              </Button>
+              <AddressLink className="max-w-sm text-body-l text-ink-700" />
             </div>
           )}
         </div>
-        <a
-          href={googleMapsLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-3 inline-block text-caption text-ink-500 underline transition-colors duration-fast hover:text-ink-700"
-        >
-          Abrir en Google Maps
-        </a>
       </Container>
 
       <Section bg="surface-alt">
